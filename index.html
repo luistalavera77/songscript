@@ -912,6 +912,25 @@ Write only the letter body. No explanations, no title, no quotes around it.`;
   }
 }
 
+function downloadPDF(){
+  const song=document.getElementById('bSongTitle').value.trim();
+  const artist=document.getElementById('bSongArtist').value.trim();
+  const element=document.getElementById('bp5-result');
+  const opt={
+    margin:[15,15,15,15],
+    filename:`SongScript — ${song} by ${artist}.pdf`,
+    image:{type:'jpeg',quality:0.98},
+    html2canvas:{scale:2,useCORS:true,letterRendering:true},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+  };
+  const btn=event.target;
+  btn.textContent='Preparing your letter…';
+  btn.disabled=true;
+  html2pdf().set(opt).from(element).save().then(()=>{
+    btn.textContent='Download PDF Letter + Get More →';
+    btn.disabled=false;
+  });
+}
 function resetBuilder(){
   selectedTone='';
   ['bSongTitle','bSongArtist','bLyric'].forEach(id=>document.getElementById(id).value='');
