@@ -915,21 +915,56 @@ Write only the letter body. No explanations, no title, no quotes around it.`;
 function downloadPDF(){
   const song=document.getElementById('bSongTitle').value.trim();
   const artist=document.getElementById('bSongArtist').value.trim();
-  const element=document.getElementById('bp5-result');
-  const opt={
-    margin:[15,15,15,15],
-    filename:`SongScript — ${song} by ${artist}.pdf`,
-    image:{type:'jpeg',quality:0.98},
-    html2canvas:{scale:2,useCORS:true,letterRendering:true},
-    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-  };
-  const btn=event.target;
-  btn.textContent='Preparing your letter…';
-  btn.disabled=true;
-  html2pdf().set(opt).from(element).save().then(()=>{
-    btn.textContent='Download PDF Letter + Get More →';
-    btn.disabled=false;
-  });
+  const body=document.getElementById('lBody').textContent;
+  const date=document.getElementById('lDate').textContent;
+  const credit=document.getElementById('lCredit').textContent;
+
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SongScript — ${song} by ${artist}</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}
+  @media print{body{padding:40px;background:white}}
+  .header{text-align:center;margin-bottom:48px}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}
+  .song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}
+  .letter-box{background:#f5ede0;border:1px solid #dfd0b0;padding:52px 56px;position:relative}
+  .side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}
+  .date{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:28px;font-style:italic}
+  .salutation{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:16px}
+  .ornament{text-align:center;font-size:18px;color:#c9a84c;margin:14px 0;letter-spacing:8px}
+  .body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.95;color:#1a1208;white-space:pre-wrap;font-weight:300}
+  .sign{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#6b3d2e;margin-top:32px;text-align:right}
+  .credit{font-size:11px;color:#8a7a5a;text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
+  .print-btn{display:block;margin:36px auto 0;padding:14px 40px;background:#6b3d2e;color:white;border:none;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer;letter-spacing:.5px}
+  .print-btn:hover{background:#1a1208}
+  @media print{.print-btn{display:none}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="brand">SongScript · Memory Letter</div>
+  <div class="song-title">"${song}" by ${artist}</div>
+</div>
+<div class="letter-box">
+  <div class="side-line" style="left:28px"></div>
+  <div class="side-line" style="right:28px"></div>
+  <div class="date">${date}</div>
+  <div class="salutation">To the song that never leaves,</div>
+  <div class="ornament">✦ ✦ ✦</div>
+  <div class="body">${body}</div>
+  <div class="sign">With all that you carry,</div>
+  <div class="credit">${credit}</div>
+</div>
+<button class="print-btn" onclick="window.print()">Save as PDF / Print →</button>
+</body>
+</html>`);
+  win.document.close();
 }
 function resetBuilder(){
   selectedTone='';
