@@ -721,6 +721,10 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 </div><!-- /page-builder -->
 
 <script>
+const SUPABASE_URL = 'PASTE_YOUR_SUPABASE_URL_HERE';
+const SUPABASE_ANON_KEY = 'PASTE_YOUR_ANON_KEY_HERE';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 /* ─── PAGE ROUTING ─── */
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -733,6 +737,27 @@ window.addEventListener('scroll',()=>{
   document.getElementById('mainNav')?.classList.toggle('scrolled',window.scrollY>40);
 });
 
+/* ─── AUTH STATE ─── */
+let currentUser = null;
+
+sb.auth.onAuthStateChange(async (event, session) => {
+  if(session?.user){
+    currentUser = session.user;
+    const { data: profile } = await sb
+      .from('profiles')
+      .select('*')
+      .eq('id', currentUser.id)
+      .single();
+    if(profile){
+      const remaining = profile.letters_allowed - profile.letters_used;
+      document.getElementById('builderUserLabel').textContent =
+        `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+    }
+  } else {
+    currentUser = null;
+  }
+});
+
 /* ─── REGISTER ─── */
 function checkStrength(inp){
   const v=inp.value, fill=document.getElementById('strengthFill'), lbl=document.getElementById('strengthLabel');
@@ -741,29 +766,82 @@ function checkStrength(inp){
   if(/[A-Z]/.test(v))score++;
   if(/[0-9]/.test(v))score++;
   if(/[^A-Za-z0-9]/.test(v))score++;
-  const map=[
-    ['0%','',''],
-    ['25%','#c0392b','Weak'],
-    ['50%','#e67e22','Fair'],
-    ['75%','#c9a84c','Good'],
-    ['100%','#27ae60','Strong']
-  ];
+  const map=[['0%','',''],['25%','#c0392b','Weak'],['50%','#e67e22','Fair'],['75%','#c9a84c','Good'],['100%','#27ae60','Strong']];
   const s=map[score];
   fill.style.width=s[0]; fill.style.background=s[1]; lbl.textContent=s[2];
 }
 
-function handleRegister(){
+async function handleRegister(){
   const name=document.getElementById('regName').value.trim();
   const email=document.getElementById('regEmail').value.trim();
   const pass=document.getElementById('regPass').value;
   let ok=true;
-  const show=(id,vis)=>{document.getElementById(id).classList.toggle('show',vis)};
-  const err=(id,inp,vis)=>{show(id,vis); document.getElementById(inp).classList.toggle('err',vis)};
+  const err=(eid,iid,vis)=>{
+    document.getElementById(eid).classList.toggle('show',vis);
+    document.getElementById(iid).classList.toggle('err',vis);
+  };
   err('errName','regName',!name); if(!name)ok=false;
   err('errEmail','regEmail',!email||!email.includes('@')); if(!email||!email.includes('@'))ok=false;
   err('errPass','regPass',pass.length<8); if(pass.length<8)ok=false;
   if(!ok)return;
-  document.getElementById('builderUserLabel').textContent='Welcome, '+name.split(' ')[0]+' · 1 free letter remaining';
+
+  const btn=document.querySelector('.btn-register');
+  btn.textContent='Creating your account…';
+  btn.disabled=true;
+
+  const { data, error } = await sb.auth.signUp({ email, password: pass });
+
+  if(error){
+    btn.textContent='Create My Account & Start Writing →';
+    btn.disabled=false;
+    alert(error.message);
+    return;
+  }
+
+  // Create profile
+  await sb.from('profiles').insert({
+    id: data.user.id,
+    name: name,
+    email: email,
+    letters_used: 0,
+    letters_allowed: 1
+  });
+
+  currentUser = data.user;
+  document.getElementById('builderUserLabel').textContent =
+    `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
+  btn.textContent='Create My Account & Start Writing →';
+  btn.disabled=false;
+  showPage('page-builder');
+}
+
+async function handleLogin(){
+  const email=document.getElementById('regEmail').value.trim();
+  const pass=document.getElementById('regPass').value;
+  if(!email||!pass){ alert('Please enter your email and password.'); return; }
+
+  const btn=document.querySelector('.btn-register');
+  btn.textContent='Signing in…';
+  btn.disabled=true;
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+
+  if(error){
+    btn.textContent='Create My Account & Start Writing →';
+    btn.disabled=false;
+    alert(error.message);
+    return;
+  }
+
+  currentUser = data.user;
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if(profile){
+    const remaining = profile.letters_allowed - profile.letters_used;
+    document.getElementById('builderUserLabel').textContent =
+      `Welcome back, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+  }
+  btn.textContent='Create My Account & Start Writing →';
+  btn.disabled=false;
   showPage('page-builder');
 }
 
@@ -831,6 +909,14 @@ function countLyric(){
 
 async function generateLetter(){
   if(!selectedTone){document.getElementById('toneErr').classList.add('show');return;}
+  if(!currentUser){alert('Please sign in to generate your letter.');return;}
+
+  // Check letter allowance
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  if(!profile || profile.letters_used >= profile.letters_allowed){
+    alert('You have used your free letter. Please purchase more to continue.');
+    return;
+  }
 
   const song=document.getElementById('bSongTitle').value.trim();
   const artist=document.getElementById('bSongArtist').value.trim();
@@ -857,7 +943,6 @@ async function generateLetter(){
   },2200);
 
   const dateContext=month&&year?`The memory took place in ${month} ${year}.`:year?`The memory is from ${year}.`:'';
-
   const prompt=`You are a master letter writer specializing in memory letters. Your job is to transform a person's raw emotional memory of a song into a polished, deeply personal letter they will treasure forever.
 
 THE SONG: "${song}" by ${artist}
@@ -896,6 +981,16 @@ Write only the letter body. No explanations, no title, no quotes around it.`;
     clearInterval(interval);
     const data=await res.json();
     const text=data.content?.[0]?.text||"We couldn't write your letter just now. Please try again.";
+
+    // Increment letters_used
+    await sb.from('profiles')
+      .update({ letters_used: profile.letters_used + 1 })
+      .eq('id', currentUser.id);
+
+    const remaining = profile.letters_allowed - profile.letters_used - 1;
+    document.getElementById('builderUserLabel').textContent =
+      `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+
     const now=new Date();
     const dateStr=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
     document.getElementById('resultSong').textContent=`"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
@@ -967,6 +1062,7 @@ function downloadPDF(){
 </html>`);
   win.document.close();
 }
+
 function resetBuilder(){
   selectedTone='';
   ['bSongTitle','bSongArtist','bLyric'].forEach(id=>document.getElementById(id).value='');
