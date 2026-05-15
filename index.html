@@ -723,7 +723,27 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 <script>
 const SUPABASE_URL = https://qyzjnyoxcuteanidsxav.supabase.co;
 const SUPABASE_ANON_KEY = sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW;
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let sb;
+window.addEventListener('load', () => {
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if(session?.user){
+      currentUser = session.user;
+      const { data: profile } = await sb
+        .from('profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .single();
+      if(profile){
+        const remaining = profile.letters_allowed - profile.letters_used;
+        document.getElementById('builderUserLabel').textContent =
+          `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+      }
+    } else {
+      currentUser = null;
+    }
+  });
+});
 
 /* ─── PAGE ROUTING ─── */
 function showPage(id){
@@ -737,26 +757,6 @@ window.addEventListener('scroll',()=>{
   document.getElementById('mainNav')?.classList.toggle('scrolled',window.scrollY>40);
 });
 
-/* ─── AUTH STATE ─── */
-let currentUser = null;
-
-sb.auth.onAuthStateChange(async (event, session) => {
-  if(session?.user){
-    currentUser = session.user;
-    const { data: profile } = await sb
-      .from('profiles')
-      .select('*')
-      .eq('id', currentUser.id)
-      .single();
-    if(profile){
-      const remaining = profile.letters_allowed - profile.letters_used;
-      document.getElementById('builderUserLabel').textContent =
-        `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
-    }
-  } else {
-    currentUser = null;
-  }
-});
 
 /* ─── REGISTER ─── */
 function checkStrength(inp){
