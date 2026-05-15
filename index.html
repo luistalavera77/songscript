@@ -5,41 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SongScript — Memory Letters for the Songs That Made You</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --ink:#1a1208;
-  --paper:#fdf8f0;
-  --paper2:#f5ede0;
-  --paper3:#ede3d3;
-  --gold:#c9a84c;
-  --gold2:#e8c97a;
-  --gold3:#f5e4b0;
-  --muted:#8a7a5a;
-  --border:#dfd0b0;
-  --border2:#cfc0a0;
-  --accent:#6b3d2e;
-  --accent2:#9b5a3e;
-  --accent3:#c47a55;
-  --text:#2c2010;
-  --white:#fff;
+  --ink:#1a1208;--paper:#fdf8f0;--paper2:#f5ede0;--paper3:#ede3d3;
+  --gold:#c9a84c;--gold2:#e8c97a;--gold3:#f5e4b0;
+  --muted:#8a7a5a;--border:#dfd0b0;--border2:#cfc0a0;
+  --accent:#6b3d2e;--accent2:#9b5a3e;--accent3:#c47a55;
+  --text:#2c2010;--white:#fff;
 }
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;overflow-x:hidden}
-
-/* ── NOISE LAYER ── */
 .noise{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-/* ── PAGES ── */
 .page{display:none;position:relative;z-index:1;min-height:100vh}
 .page.active{display:block}
-
-/* ══════════════════════════════════
-   LANDING PAGE
-══════════════════════════════════ */
-#page-landing{background:var(--paper)}
 
 /* NAV */
 .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 60px;position:sticky;top:0;z-index:100;background:rgba(253,248,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border .3s}
@@ -50,8 +30,8 @@ body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;ove
 .nav-cta:hover{background:var(--accent);color:white}
 
 /* HERO */
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 70px);align-items:center;gap:0;overflow:hidden}
-.hero-left{padding:80px 60px 80px 60px;display:flex;flex-direction:column;justify-content:center}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 70px);align-items:center;overflow:hidden}
+.hero-left{padding:80px 60px;display:flex;flex-direction:column;justify-content:center}
 .hero-eyebrow{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:24px;font-weight:300}
 .hero-headline{font-family:'Playfair Display',serif;font-size:clamp(40px,4.5vw,62px);font-weight:400;line-height:1.12;color:var(--ink);margin-bottom:24px}
 .hero-headline em{font-style:italic;color:var(--accent)}
@@ -61,25 +41,22 @@ body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;ove
 .btn-hero{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:white;background:var(--accent);border:none;padding:18px 40px;border-radius:1px;cursor:pointer;transition:all .25s;letter-spacing:.5px}
 .btn-hero:hover{background:var(--ink);transform:translateY(-1px)}
 .hero-note{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:300}
-.hero-right{position:relative;height:100%;background:var(--paper3);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-image-wrap{width:100%;height:100%;min-height:calc(100vh - 70px);position:relative}
-.hero-bg-art{width:100%;height:100%;object-fit:cover;display:block}
-.hero-image-overlay{position:absolute;inset:0;background:linear-gradient(to right, var(--paper) 0%, transparent 20%, transparent 80%, var(--paper3) 100%)}
-.hero-letter-preview{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);background:var(--paper);border:1px solid var(--border);padding:24px 28px;max-width:300px;box-shadow:0 8px 40px rgba(107,61,46,.12);animation:float 5s ease-in-out infinite}
+.hero-right{position:relative;height:100%;background:var(--paper3);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:calc(100vh - 70px)}
+.hero-bg-art{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+.hero-image-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--paper) 0%,transparent 20%,transparent 80%,var(--paper3) 100%)}
+.hero-letter-preview{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);background:var(--paper);border:1px solid var(--border);padding:24px 28px;max-width:300px;box-shadow:0 8px 40px rgba(107,61,46,.12);animation:float 5s ease-in-out infinite;z-index:2}
 @keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
 .preview-date{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--muted);text-align:right;margin-bottom:10px;font-style:italic}
 .preview-body{font-family:'Cormorant Garamond',serif;font-size:14px;line-height:1.75;color:var(--ink);font-weight:300}
 .preview-sign{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--accent);text-align:right;margin-top:12px}
 .preview-ornament{text-align:center;font-size:14px;color:var(--gold);margin:10px 0;letter-spacing:6px}
-.hero-record{position:absolute;top:48px;right:40px;width:110px;height:110px;animation:spin 18s linear infinite;opacity:.6}
+.hero-record{position:absolute;top:48px;right:40px;width:110px;height:110px;animation:spin 18s linear infinite;opacity:.6;z-index:2}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-/* DIVIDER */
-.section-divider{display:flex;align-items:center;gap:20px;padding:0 60px;margin:0}
+/* SECTIONS */
+.section-divider{display:flex;align-items:center;gap:20px;padding:0 60px}
 .divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
 .divider-ornament{font-size:18px;color:var(--gold);letter-spacing:8px}
-
-/* STORY SECTION */
 .story-section{padding:100px 60px}
 .story-inner{max-width:800px;margin:0 auto;text-align:center}
 .story-label{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
@@ -87,34 +64,28 @@ body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;ove
 .story-headline em{font-style:italic;color:var(--accent)}
 .story-text{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:20px}
 .story-text strong{color:var(--ink);font-weight:400}
-
-/* SONG EXAMPLES */
 .songs-section{padding:60px 60px 100px;background:var(--paper2)}
 .songs-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:48px}
 .songs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.song-card{background:var(--paper2);padding:36px 32px;position:relative;overflow:hidden;cursor:default;transition:background .3s}
+.song-card{background:var(--paper2);padding:36px 32px;transition:background .3s}
 .song-card:hover{background:var(--white)}
 .song-card-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:400;color:var(--border2);line-height:1;margin-bottom:16px;font-style:italic}
-.song-card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px;font-style:italic}
+.song-card-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);margin-bottom:4px;font-style:italic}
 .song-card-artist{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
 .song-card-snippet{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text);line-height:1.75;font-weight:300;font-style:italic}
-
-/* HOW IT WORKS */
 .how-section{padding:100px 60px}
 .how-inner{max-width:900px;margin:0 auto}
 .how-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:16px}
 .how-headline{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,40px);font-weight:400;color:var(--ink);text-align:center;margin-bottom:64px}
-.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);position:relative}
 .steps-grid::before{content:'';position:absolute;top:24px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border) 10%,var(--border) 90%,transparent)}
 .how-step{text-align:center;padding:0 12px}
 .step-num-wrap{width:48px;height:48px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:1;transition:all .3s}
 .how-step:hover .step-num-wrap{border-color:var(--gold);background:var(--gold)}
-.step-num{font-family:'Playfair Display',serif;font-size:16px;color:var(--muted);font-weight:400}
+.step-num{font-family:'Playfair Display',serif;font-size:16px;color:var(--muted)}
 .how-step:hover .step-num{color:white}
 .step-name{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px}
 .step-desc{font-size:12px;color:var(--muted);line-height:1.65;font-weight:300}
-
-/* FINAL CTA */
 .final-cta{padding:100px 60px;background:var(--accent);position:relative;overflow:hidden;text-align:center}
 .final-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.15) 0%,transparent 60%)}
 .final-headline{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--paper);line-height:1.2;margin-bottom:20px}
@@ -123,16 +94,11 @@ body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;ove
 .btn-final{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--accent);background:var(--paper);border:none;padding:18px 48px;border-radius:1px;cursor:pointer;transition:all .25s}
 .btn-final:hover{background:var(--gold2);transform:translateY(-1px)}
 .final-note{font-size:12px;color:rgba(253,248,240,.5);margin-top:16px;letter-spacing:1.5px;text-transform:uppercase}
-
-/* FOOTER */
 footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .footer-brand{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--muted)}
 .footer-copy{font-size:12px;color:var(--muted);font-weight:300}
 
-/* ══════════════════════════════════
-   REGISTER PAGE
-══════════════════════════════════ */
-#page-register{background:var(--paper);display:flex;flex-direction:column}
+/* AUTH PAGE */
 .auth-page{display:flex;min-height:100vh}
 .auth-left{width:420px;min-height:100vh;background:var(--accent);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;flex-shrink:0}
 .auth-left::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;border:1.5px solid rgba(201,168,76,.2)}
@@ -163,7 +129,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .strength-fill{height:100%;width:0;transition:width .3s,background .3s;border-radius:2px}
 .strength-label{font-size:11px;color:var(--muted);margin-top:4px;font-weight:300}
 .btn-register{width:100%;padding:16px;background:var(--accent);color:white;border:none;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;cursor:pointer;transition:all .25s;letter-spacing:.5px;margin-top:8px;border-radius:1px}
-.btn-register:hover{background:var(--ink)}
+.btn-register:hover:not(:disabled){background:var(--ink)}
+.btn-register:disabled{opacity:.6;cursor:not-allowed}
 .divider-or{display:flex;align-items:center;gap:14px;margin:20px 0}
 .divider-or span{font-size:12px;color:var(--muted);letter-spacing:1px;white-space:nowrap}
 .divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -171,38 +138,32 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .btn-google:hover{border-color:var(--muted);background:var(--paper)}
 .google-icon{width:18px;height:18px}
 .auth-switch{text-align:center;font-size:13px;color:var(--muted);margin-top:24px;font-weight:300}
-.auth-switch span{color:var(--accent);cursor:pointer;border-bottom:1px solid var(--border)}
-.auth-switch span:hover{border-color:var(--accent)}
+.auth-switch a{color:var(--accent);cursor:pointer;border-bottom:1px solid var(--border);text-decoration:none}
+.auth-switch a:hover{border-color:var(--accent)}
 .terms-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6;font-weight:300}
+.auth-mode-toggle{display:flex;gap:0;margin-bottom:28px;border:1.5px solid var(--border);border-radius:1px;overflow:hidden}
+.auth-mode-btn{flex:1;padding:10px;background:transparent;border:none;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);cursor:pointer;transition:all .2s}
+.auth-mode-btn.active{background:var(--accent);color:white}
 
-/* ══════════════════════════════════
-   BUILDER PAGE
-══════════════════════════════════ */
-#page-builder{background:var(--paper)}
+/* BUILDER */
 .builder-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(253,248,240,.95)}
 .builder-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);cursor:pointer}
 .builder-user{font-size:13px;color:var(--muted);font-weight:300}
 .builder-inner{max-width:720px;margin:0 auto;padding:52px 24px 80px}
-
-/* Progress */
-.progress-track{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:52px}
+.progress-track{display:flex;align-items:center;justify-content:center;margin-bottom:52px}
 .pdot{display:flex;flex-direction:column;align-items:center;gap:6px}
-.pdot-ring{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:13px;color:var(--muted);transition:all .3s;cursor:default}
+.pdot-ring{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:13px;color:var(--muted);transition:all .3s}
 .pdot.active .pdot-ring{border-color:var(--gold);background:var(--gold);color:white}
 .pdot.done .pdot-ring{border-color:var(--accent);background:var(--accent);color:white}
 .pdot-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .pdot.active .pdot-label{color:var(--accent)}
 .pline{width:36px;height:1px;background:var(--border);margin:0 2px 22px}
-
-/* Card */
 .bcard{background:white;border:1px solid var(--border);border-radius:2px;padding:36px 40px;box-shadow:0 2px 24px rgba(180,140,60,.06);position:relative;overflow:hidden}
 .bcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
 .bcard-corner{position:absolute;top:12px;right:16px;font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--border);letter-spacing:2px;text-transform:uppercase}
 .bcard-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:8px}
 .bcard-sub{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:28px;font-weight:300}
 .bcard-sub em{font-style:italic;color:var(--accent2)}
-
-/* Form elements */
 .blabel{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:400}
 .binput,.btextarea{width:100%;background:var(--paper);border:1px solid var(--border);padding:13px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border .2s;border-radius:1px}
 .binput:focus,.btextarea:focus{border-color:var(--gold);background:white}
@@ -210,28 +171,19 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .btextarea{resize:none;line-height:1.7}
 .bfield{margin-bottom:20px}
 .brow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-.brow-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:20px}
 .char-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .char-count{font-size:11px;color:var(--muted)}
 .char-count.warn{color:var(--accent2)}
 .char-count.over{color:#c0392b}
-
-/* Date selects */
 .bselect{width:100%;background:var(--paper);border:1px solid var(--border);padding:13px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;appearance:none;cursor:pointer;border-radius:1px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7a5a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
 .bselect:focus{border-color:var(--gold);background-color:white}
-
-/* Lyric field */
 .lyric-wrap{position:relative}
 .lyric-quote{position:absolute;top:-6px;left:10px;font-family:'Playfair Display',serif;font-size:44px;color:var(--gold3);line-height:1;pointer-events:none;z-index:1}
 .lyric-input{padding-left:34px!important}
 .lyric-note{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;font-weight:300}
-
-/* Writing prompt */
-.writing-helper{background:var(--paper2);border-left:3px solid var(--gold);padding:14px 16px;margin-bottom:16px;border-radius:0 1px 1px 0}
+.writing-helper{background:var(--paper2);border-left:3px solid var(--gold);padding:14px 16px;margin-bottom:16px}
 .writing-helper p{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--muted);line-height:1.7;font-style:italic;font-weight:300}
 .writing-helper strong{color:var(--accent2);font-style:normal;font-weight:400}
-
-/* Tone grid */
 .tone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}
 .tone-btn{border:1.5px solid var(--border);background:var(--paper);border-radius:2px;padding:16px 8px;cursor:pointer;text-align:center;transition:all .25s;font-family:'Playfair Display',serif}
 .tone-btn:hover{border-color:var(--gold2);background:white;transform:translateY(-1px)}
@@ -241,19 +193,15 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .tone-btn.sel .tone-name{color:rgba(255,255,255,.9)}
 .tone-err{font-size:12px;color:#c0392b;margin-top:4px;display:none}
 .tone-err.show{display:block}
-
-/* Buttons */
 .btn-next{width:100%;padding:16px;background:var(--accent);color:white;border:none;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;cursor:pointer;transition:all .25s;letter-spacing:.5px;margin-top:24px;border-radius:1px}
-.btn-next:hover{background:var(--ink);transform:translateY(-1px)}
-.btn-next:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-next:hover:not(:disabled){background:var(--ink);transform:translateY(-1px)}
+.btn-next:disabled{opacity:.5;cursor:not-allowed}
 .btn-back{width:100%;padding:13px;background:transparent;color:var(--accent);border:1.5px solid var(--border);font-family:'Playfair Display',serif;font-size:15px;font-style:italic;cursor:pointer;margin-top:10px;transition:all .25s;border-radius:1px}
 .btn-back:hover{border-color:var(--accent);background:var(--paper2)}
-
-/* Panels */
 .bpanel{display:none}
 .bpanel.active{display:block}
 
-/* Loading */
+/* LOADING */
 .loading-wrap{text-align:center;padding:52px 20px}
 .quill-anim{width:56px;height:56px;margin:0 auto 28px;animation:quill-bob 1.8s ease-in-out infinite}
 @keyframes quill-bob{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-12px) rotate(10deg)}}
@@ -265,7 +213,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .ink-dot:nth-child(3){animation-delay:.4s}
 @keyframes ink-pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
 
-/* Letter output */
+/* LETTER OUTPUT */
 .letter-outer{background:var(--paper2);border:1px solid var(--border);padding:56px 60px;position:relative;min-height:380px}
 .letter-outer::before,.letter-outer::after{content:'';position:absolute;top:14px;bottom:14px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
 .letter-outer::before{left:30px}
@@ -276,8 +224,6 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .letter-body{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.95;color:var(--ink);white-space:pre-wrap;font-weight:300}
 .letter-sign{font-family:'Playfair Display',serif;font-size:21px;font-style:italic;color:var(--accent);margin-top:36px;text-align:right}
 .letter-credit{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
-
-/* Pricing */
 .pricing-row{display:flex;gap:12px;margin:20px 0}
 .pcard{flex:1;border:1.5px solid var(--border);border-radius:2px;padding:22px 18px;text-align:center;background:var(--paper)}
 .pcard.feat{border-color:var(--gold);background:white}
@@ -285,18 +231,12 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .pcard-price{font-family:'Playfair Display',serif;font-size:28px;color:var(--ink)}
 .pcard-desc{font-size:13px;color:var(--muted);margin-top:6px;font-weight:300}
 .popular-badge{display:inline-block;background:var(--accent);color:white;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:8px;border-radius:1px}
-
-/* ══════════════════════════════════
-   SVG RECORD ANIMATION
-══════════════════════════════════ */
 </style>
 </head>
 <body>
 <div class="noise"></div>
 
-<!-- ════════════════════════
-     LANDING PAGE
-════════════════════════ -->
+<!-- LANDING PAGE -->
 <div class="page active" id="page-landing">
   <nav class="nav" id="mainNav">
     <div class="nav-logo" onclick="showPage('page-landing')">
@@ -311,49 +251,31 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     </div>
     <button class="nav-cta" onclick="showPage('page-register')">Begin Your First Letter →</button>
   </nav>
-
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
       <p class="hero-eyebrow">Memory Letters for the Songs That Made You</p>
       <h1 class="hero-headline">There's a song that takes<br>you back <em>every time.</em></h1>
-      <p class="hero-sub">
-        The first note plays and you're there again — in the car, in that room,
-        with those people. <strong>SongScript turns that feeling into a letter
-        you can hold onto forever.</strong>
-      </p>
+      <p class="hero-sub">The first note plays and you're there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong></p>
       <div class="hero-cta-wrap">
         <button class="btn-hero" onclick="showPage('page-register')">Write Your First Letter — It's Free</button>
         <span class="hero-note">✦ &nbsp; No card required &nbsp; ✦ &nbsp; One free letter on signup</span>
       </div>
     </div>
     <div class="hero-right">
-      <!-- SVG Background Art: vinyl record & musical mood -->
       <svg class="hero-bg-art" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
         <rect width="700" height="700" fill="#ede3d3"/>
-        <!-- Staff lines -->
         <g stroke="#cfc0a0" stroke-width=".5" opacity=".5">
-          <line x1="0" y1="120" x2="700" y2="140"/>
-          <line x1="0" y1="145" x2="700" y2="165"/>
-          <line x1="0" y1="170" x2="700" y2="190"/>
-          <line x1="0" y1="195" x2="700" y2="215"/>
-          <line x1="0" y1="220" x2="700" y2="240"/>
-          <line x1="0" y1="400" x2="700" y2="420"/>
-          <line x1="0" y1="425" x2="700" y2="445"/>
-          <line x1="0" y1="450" x2="700" y2="470"/>
-          <line x1="0" y1="475" x2="700" y2="495"/>
-          <line x1="0" y1="500" x2="700" y2="520"/>
+          <line x1="0" y1="120" x2="700" y2="140"/><line x1="0" y1="145" x2="700" y2="165"/>
+          <line x1="0" y1="170" x2="700" y2="190"/><line x1="0" y1="195" x2="700" y2="215"/>
+          <line x1="0" y1="220" x2="700" y2="240"/><line x1="0" y1="400" x2="700" y2="420"/>
+          <line x1="0" y1="425" x2="700" y2="445"/><line x1="0" y1="450" x2="700" y2="470"/>
+          <line x1="0" y1="475" x2="700" y2="495"/><line x1="0" y1="500" x2="700" y2="520"/>
         </g>
-        <!-- Notes scattered -->
         <g fill="#c9a84c" opacity=".3" font-family="serif" font-size="48">
-          <text x="60" y="105">♩</text>
-          <text x="180" y="380">♪</text>
-          <text x="520" y="350">♫</text>
-          <text x="600" y="90">♩</text>
-          <text x="350" y="600">♩</text>
-          <text x="80" y="580">♪</text>
+          <text x="60" y="105">♩</text><text x="180" y="380">♪</text>
+          <text x="520" y="350">♫</text><text x="600" y="90">♩</text>
+          <text x="350" y="600">♩</text><text x="80" y="580">♪</text>
         </g>
-        <!-- Large vinyl record -->
         <g transform="translate(350,340)">
           <circle r="220" fill="#2a1f0e" opacity=".85"/>
           <circle r="200" fill="none" stroke="#3d2e18" stroke-width="4" opacity=".4"/>
@@ -361,28 +283,22 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <circle r="140" fill="none" stroke="#3d2e18" stroke-width="2" opacity=".3"/>
           <circle r="110" fill="none" stroke="#3d2e18" stroke-width="1.5" opacity=".25"/>
           <circle r="80" fill="none" stroke="#3d2e18" stroke-width="1.5" opacity=".25"/>
-          <!-- Label -->
           <circle r="52" fill="#c9a84c" opacity=".7"/>
           <circle r="45" fill="#b8943f" opacity=".5"/>
           <text x="0" y="-10" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="#1a1208" opacity=".8" letter-spacing="2">SONGSCRIPT</text>
           <text x="0" y="8" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1208" opacity=".6" font-style="italic">memory letters</text>
           <circle r="5" fill="#1a1208" opacity=".6"/>
-          <!-- Shine -->
-          <ellipse cx="-60" cy="-80" rx="40" ry="20" fill="white" opacity=".04" transform="rotate(-30)"/>
         </g>
-        <!-- Treble clef -->
         <text x="580" y="560" font-family="serif" font-size="120" fill="#c9a84c" opacity=".12">𝄞</text>
         <text x="20" y="300" font-family="serif" font-size="80" fill="#c9a84c" opacity=".1">𝄞</text>
       </svg>
       <div class="hero-image-overlay"></div>
-      <!-- Floating letter preview -->
       <div class="hero-letter-preview">
         <div class="preview-date">June 14, 1998</div>
         <div class="preview-ornament">✦ ✦ ✦</div>
         <div class="preview-body">The windows were down on Highway 40. You came through the static and everything — the dust, the heat, the way the sky went gold — suddenly made sense.</div>
         <div class="preview-sign">With all that you carry,</div>
       </div>
-      <!-- Spinning record accent -->
       <svg class="hero-record" viewBox="0 0 110 110">
         <circle cx="55" cy="55" r="52" fill="#2a1f0e" opacity=".7"/>
         <circle cx="55" cy="55" r="46" fill="none" stroke="#3d2e18" stroke-width="3" opacity=".4"/>
@@ -392,10 +308,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </svg>
     </div>
   </section>
-
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦ ✦ ✦</div><div class="divider-line"></div></div>
-
-  <!-- STORY SECTION -->
   <section class="story-section">
     <div class="story-inner">
       <p class="story-label">Why SongScript exists</p>
@@ -405,10 +318,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <p class="story-text">Your first one is free. No templates. No generic output. Just a letter that sounds like <strong>you</strong> — on your best writing day.</p>
     </div>
   </section>
-
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦</div><div class="divider-line"></div></div>
-
-  <!-- SONG EXAMPLES -->
   <section class="songs-section">
     <p class="songs-label">What kind of memories become letters</p>
     <div class="songs-grid">
@@ -427,64 +337,37 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <div class="song-card">
         <div class="song-card-num">III.</div>
         <div class="song-card-title">September</div>
-        <div class="song-card-artist">Earth, Wind & Fire · 1978</div>
+        <div class="song-card-artist">Earth, Wind &amp; Fire · 1978</div>
         <div class="song-card-snippet">"Every single wedding, my father and I would find each other on the dance floor the moment the horns came in. Every. Single. Time."</div>
       </div>
     </div>
   </section>
-
-  <!-- HOW IT WORKS -->
   <section class="how-section">
     <div class="how-inner">
       <p class="how-label">The process</p>
       <h2 class="how-headline">Five steps. One letter. Yours forever.</h2>
       <div class="steps-grid">
-        <div class="how-step">
-          <div class="step-num-wrap"><span class="step-num">1</span></div>
-          <div class="step-name">The Song</div>
-          <div class="step-desc">Tell us the title, artist, and the date the memory lives in.</div>
-        </div>
-        <div class="how-step">
-          <div class="step-num-wrap"><span class="step-num">2</span></div>
-          <div class="step-name">Your Story</div>
-          <div class="step-desc">Write freely. Where were you? Who were you with? What did it feel like?</div>
-        </div>
-        <div class="how-step">
-          <div class="step-num-wrap"><span class="step-num">3</span></div>
-          <div class="step-name">The Line</div>
-          <div class="step-desc">The lyric that stops time for you. Leave it blank and we'll find it.</div>
-        </div>
-        <div class="how-step">
-          <div class="step-num-wrap"><span class="step-num">4</span></div>
-          <div class="step-name">The Tone</div>
-          <div class="step-desc">Choose the emotional register: love letter, nostalgic, heartbreak, family…</div>
-        </div>
-        <div class="how-step">
-          <div class="step-num-wrap"><span class="step-num">5</span></div>
-          <div class="step-name">Your Letter</div>
-          <div class="step-desc">A polished PDF arrives. Calligraphic, personal, and yours to keep.</div>
-        </div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">1</span></div><div class="step-name">The Song</div><div class="step-desc">Title, artist, and the date the memory lives in.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">2</span></div><div class="step-name">Your Story</div><div class="step-desc">Write freely — where, who, and what it felt like.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">3</span></div><div class="step-name">The Line</div><div class="step-desc">The lyric that stops time. Leave blank and we'll find it.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">4</span></div><div class="step-name">The Tone</div><div class="step-desc">Love letter, nostalgic, heartbreak, family…</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">5</span></div><div class="step-name">Your Letter</div><div class="step-desc">A polished PDF. Calligraphic, personal, yours forever.</div></div>
       </div>
     </div>
   </section>
-
-  <!-- FINAL CTA -->
   <section class="final-cta">
     <h2 class="final-headline">Your memory deserves<br>more than <em>a playlist.</em></h2>
     <p class="final-sub">Start with one song. One letter. No card needed.</p>
     <button class="btn-final" onclick="showPage('page-register')">Write My First Letter — Free →</button>
     <p class="final-note">✦ &nbsp; Every account starts with one free letter &nbsp; ✦</p>
   </section>
-
   <footer>
     <span class="footer-brand">SongScript</span>
     <span class="footer-copy">© 2025 SongScript. All rights reserved.</span>
   </footer>
 </div>
 
-<!-- ════════════════════════
-     REGISTER PAGE
-════════════════════════ -->
+<!-- REGISTER PAGE -->
 <div class="page" id="page-register">
   <div class="auth-page">
     <div class="auth-left">
@@ -502,11 +385,14 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     </div>
     <div class="auth-right">
       <div class="auth-form-wrap">
-        <span class="free-pill">One Free Letter Included</span>
-        <h2 class="auth-title">Create your account</h2>
-        <p class="auth-subtitle">Join thousands preserving their most meaningful song memories.</p>
-
-        <div class="form-field">
+        <div class="auth-mode-toggle">
+          <button class="auth-mode-btn active" id="modeRegBtn" onclick="setAuthMode('register')">Create Account</button>
+          <button class="auth-mode-btn" id="modeLoginBtn" onclick="setAuthMode('login')">Sign In</button>
+        </div>
+        <span class="free-pill" id="freePill">One Free Letter Included</span>
+        <h2 class="auth-title" id="authTitle">Create your account</h2>
+        <p class="auth-subtitle" id="authSubtitle">Join thousands preserving their most meaningful song memories.</p>
+        <div class="form-field" id="nameField">
           <label class="form-label">Your Name</label>
           <input type="text" class="form-input" id="regName" placeholder="How should we address your letters?" autocomplete="name"/>
           <div class="field-error" id="errName">Please enter your name.</div>
@@ -518,38 +404,30 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         </div>
         <div class="form-field">
           <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="regPass" placeholder="At least 8 characters" oninput="checkStrength(this)" autocomplete="new-password"/>
-          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          <input type="password" class="form-input" id="regPass" placeholder="At least 8 characters" oninput="checkStrength(this)" autocomplete="current-password"/>
+          <div class="strength-bar" id="strengthBarWrap"><div class="strength-fill" id="strengthFill"></div></div>
           <div class="strength-label" id="strengthLabel"></div>
           <div class="field-error" id="errPass">Password must be at least 8 characters.</div>
         </div>
-
-        <button class="btn-register" onclick="handleRegister()">Create My Account & Start Writing →</button>
-
-        <div class="divider-or"><span>or continue with</span></div>
-        <button class="btn-google" onclick="alert('Google OAuth coming soon. Please use email for now.')">
+        <button class="btn-register" id="authSubmitBtn" onclick="handleAuth()">Create My Account & Start Writing →</button>
+        <div class="divider-or"><span>or</span></div>
+        <button class="btn-google" onclick="alert('Google login coming soon — please use email for now.')">
           <svg class="google-icon" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
           Continue with Google
         </button>
-
-        <p class="auth-switch">Already have an account? <span onclick="handleLogin()">Sign in here</span></p>
-        <p class="terms-note">By creating an account you agree to our Terms of Service and Privacy Policy. We will never share your memories or personal data.</p>
+        <p class="terms-note">By creating an account you agree to our Terms of Service and Privacy Policy. We will never share your memories.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════
-     BUILDER PAGE
-════════════════════════ -->
+<!-- BUILDER PAGE -->
 <div class="page" id="page-builder">
   <nav class="builder-nav">
     <div class="builder-brand" onclick="showPage('page-landing')">← SongScript</div>
-    <span class="builder-user" id="builderUserLabel">Welcome back</span>
+    <span class="builder-user" id="builderUserLabel">Welcome</span>
   </nav>
   <div class="builder-inner">
-
-    <!-- Progress tracker -->
     <div class="progress-track">
       <div class="pdot active" id="pd0"><div class="pdot-ring">1</div><div class="pdot-label">The Song</div></div>
       <div class="pline"></div>
@@ -562,73 +440,54 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <div class="pdot" id="pd4"><div class="pdot-ring">5</div><div class="pdot-label">Your Letter</div></div>
     </div>
 
-    <!-- STEP 1: SONG -->
+    <!-- Step 1 -->
     <div class="bpanel active" id="bp0">
       <div class="bcard">
         <div class="bcard-corner">Step 1 of 5</div>
         <h2 class="bcard-title">Which song carries your memory?</h2>
-        <p class="bcard-sub">Every great letter starts with a song. Tell us what moved you — and roughly <em>when</em> the memory happened.</p>
+        <p class="bcard-sub">Tell us what moved you — and roughly <em>when</em> the memory happened.</p>
         <div class="brow">
-          <div class="bfield">
-            <label class="blabel">Song Title</label>
-            <input type="text" class="binput" id="bSongTitle" placeholder="e.g. Fast Car"/>
-          </div>
-          <div class="bfield">
-            <label class="blabel">Artist / Band</label>
-            <input type="text" class="binput" id="bSongArtist" placeholder="e.g. Tracy Chapman"/>
-          </div>
+          <div class="bfield"><label class="blabel">Song Title</label><input type="text" class="binput" id="bSongTitle" placeholder="e.g. Fast Car"/></div>
+          <div class="bfield"><label class="blabel">Artist / Band</label><input type="text" class="binput" id="bSongArtist" placeholder="e.g. Tracy Chapman"/></div>
         </div>
-        <div class="brow" style="grid-template-columns:1fr 1fr">
+        <div class="brow">
           <div class="bfield">
             <label class="blabel">Month of Memory</label>
             <select class="bselect" id="bMemMonth">
               <option value="">— Month —</option>
-              <option>January</option><option>February</option><option>March</option>
-              <option>April</option><option>May</option><option>June</option>
-              <option>July</option><option>August</option><option>September</option>
-              <option>October</option><option>November</option><option>December</option>
+              <option>January</option><option>February</option><option>March</option><option>April</option>
+              <option>May</option><option>June</option><option>July</option><option>August</option>
+              <option>September</option><option>October</option><option>November</option><option>December</option>
             </select>
           </div>
-          <div class="bfield">
-            <label class="blabel">Year of Memory</label>
-            <select class="bselect" id="bMemYear">
-              <option value="">— Year —</option>
-            </select>
-          </div>
+          <div class="bfield"><label class="blabel">Year of Memory</label><select class="bselect" id="bMemYear"><option value="">— Year —</option></select></div>
         </div>
         <button class="btn-next" onclick="bGoTo(1)">Continue →</button>
       </div>
     </div>
 
-    <!-- STEP 2: STORY -->
+    <!-- Step 2 -->
     <div class="bpanel" id="bp1">
       <div class="bcard">
         <div class="bcard-corner">Step 2 of 5</div>
         <h2 class="bcard-title">Tell us everything.</h2>
-        <p class="bcard-sub">Where were you? Who were you with? What did the song make you feel? <em>Write as little or as much as you want — this is your raw material.</em></p>
-        <div class="writing-helper">
-          <p>Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened right before or after. Let the details come — smell, weather, what you were wearing. The more specific, the more alive your letter will be.</p>
-        </div>
+        <p class="bcard-sub">Where were you? Who were you with? What did the song make you feel? <em>This is your raw material.</em></p>
+        <div class="writing-helper"><p>Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened. Let the details come — smell, weather, what you were wearing.</p></div>
         <div class="bfield">
-          <div class="char-row">
-            <label class="blabel" style="margin:0">Your Memory</label>
-            <span class="char-count" id="memWordCount">0 words</span>
-          </div>
-          <textarea class="btextarea" id="bMemory" rows="9"
-            placeholder="I remember the first time I heard this song. It was summer, 1998. We were driving through New Mexico at dusk, windows down, and the road ahead looked like it went on forever..."
-            oninput="countWordsB()"></textarea>
+          <div class="char-row"><label class="blabel" style="margin:0">Your Memory</label><span class="char-count" id="memWordCount">0 words</span></div>
+          <textarea class="btextarea" id="bMemory" rows="9" placeholder="I remember the first time I heard this song. It was summer, 1998. We were driving through New Mexico at dusk, windows down, and the road ahead looked like it went on forever..." oninput="countWordsB()"></textarea>
         </div>
         <button class="btn-next" onclick="bGoTo(2)">Continue →</button>
         <button class="btn-back" onclick="bGoTo(0)">← Back</button>
       </div>
     </div>
 
-    <!-- STEP 3: LYRIC -->
+    <!-- Step 3 -->
     <div class="bpanel" id="bp2">
       <div class="bcard">
         <div class="bcard-corner">Step 3 of 5</div>
         <h2 class="bcard-title">What line hits you hardest?</h2>
-        <p class="bcard-sub">There's always one lyric that stops time — the one that feels written just for you. What is it? <em>Leave it blank and we'll find it for you.</em></p>
+        <p class="bcard-sub">The lyric that stops time — the one that feels written just for you. <em>Leave blank and we'll find it.</em></p>
         <div class="bfield">
           <div class="char-row">
             <label class="blabel" style="margin:0">That lyric <span style="font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:300">(optional)</span></label>
@@ -638,14 +497,14 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
             <span class="lyric-quote">"</span>
             <input type="text" class="binput lyric-input" id="bLyric" maxlength="150" placeholder="Leave blank and the AI will find the right line..." oninput="countLyric()"/>
           </div>
-          <p class="lyric-note">Limit of 150 characters — we use just enough to give your letter soul, not enough to reproduce the song.</p>
+          <p class="lyric-note">150 character limit — enough to give your letter soul, not enough to reproduce the song.</p>
         </div>
         <button class="btn-next" onclick="bGoTo(3)">Continue →</button>
         <button class="btn-back" onclick="bGoTo(1)">← Back</button>
       </div>
     </div>
 
-    <!-- STEP 4: TONE -->
+    <!-- Step 4 -->
     <div class="bpanel" id="bp3">
       <div class="bcard">
         <div class="bcard-corner">Step 4 of 5</div>
@@ -667,7 +526,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </div>
     </div>
 
-    <!-- STEP 5: LOADING -->
+    <!-- Loading -->
     <div class="bpanel" id="bp5-loading">
       <div class="bcard">
         <div class="loading-wrap">
@@ -683,7 +542,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </div>
     </div>
 
-    <!-- STEP 5: RESULT -->
+    <!-- Result -->
     <div class="bpanel" id="bp5-result">
       <div class="bcard">
         <div class="bcard-title" style="margin-bottom:4px">Your Memory Letter</div>
@@ -692,181 +551,174 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <div class="letter-date" id="lDate"></div>
           <div class="letter-salutation">To the song that never leaves,</div>
           <div class="letter-ornament">✦ ✦ ✦</div>
-          <div class="letter-body" id="lBody">Loading…</div>
+          <div class="letter-body" id="lBody"></div>
           <div class="letter-sign">With all that you carry,</div>
           <div class="letter-credit" id="lCredit"></div>
         </div>
         <div style="margin-top:28px">
           <p style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px;font-weight:300">This was your <strong style="color:var(--accent);font-weight:400">free letter</strong>. Ready to preserve more memories?</p>
           <div class="pricing-row">
-            <div class="pcard">
-              <div class="pcard-badge">Starter</div>
-              <div class="pcard-price">$9.99</div>
-              <div class="pcard-desc">5 Song Letters</div>
-            </div>
-            <div class="pcard feat">
-              <div class="pcard-badge">Best Value</div>
-              <div class="popular-badge">Most Popular</div>
-              <div class="pcard-price">$14.99</div>
-              <div class="pcard-desc">10 Song Letters</div>
-            </div>
+            <div class="pcard"><div class="pcard-badge">Starter</div><div class="pcard-price">$9.99</div><div class="pcard-desc">5 Song Letters</div></div>
+            <div class="pcard feat"><div class="pcard-badge">Best Value</div><div class="popular-badge">Most Popular</div><div class="pcard-price">$14.99</div><div class="pcard-desc">10 Song Letters</div></div>
           </div>
           <button class="btn-next" onclick="downloadPDF()">Download PDF Letter + Get More →</button>
           <button class="btn-back" onclick="resetBuilder()">← Write another letter</button>
         </div>
       </div>
     </div>
-
-  </div><!-- /builder-inner -->
-</div><!-- /page-builder -->
+  </div>
+</div>
 
 <script>
-const SUPABASE_URL = https://qyzjnyoxcuteanidsxav.supabase.co;
-const SUPABASE_ANON_KEY = sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW;
-let sb;
-window.addEventListener('load', () => {
-  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if(session?.user){
-      currentUser = session.user;
-      const { data: profile } = await sb
-        .from('profiles')
-        .select('*')
-        .eq('id', currentUser.id)
-        .single();
-      if(profile){
-        const remaining = profile.letters_allowed - profile.letters_used;
-        document.getElementById('builderUserLabel').textContent =
-          `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
-      }
-    } else {
-      currentUser = null;
-    }
-  });
+// ── PASTE YOUR SUPABASE CREDENTIALS HERE ──
+const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW';
+// ──────────────────────────────────────────
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let currentProfile = null;
+let authMode = 'register';
+
+// Restore session on load
+sb.auth.getSession().then(({ data: { session } }) => {
+  if(session?.user){
+    currentUser = session.user;
+    loadProfile(currentUser.id);
+  }
 });
 
-/* ─── PAGE ROUTING ─── */
+sb.auth.onAuthStateChange(async (event, session) => {
+  if(session?.user){
+    currentUser = session.user;
+    await loadProfile(currentUser.id);
+  } else {
+    currentUser = null;
+    currentProfile = null;
+  }
+});
+
+async function loadProfile(uid){
+  const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
+  if(data){
+    currentProfile = data;
+    const remaining = data.letters_allowed - data.letters_used;
+    document.getElementById('builderUserLabel').textContent =
+      `Welcome, ${data.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+  }
+}
+
+/* ── PAGE ROUTING ── */
 function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
 
-/* ─── NAV SCROLL ─── */
-window.addEventListener('scroll',()=>{
-  document.getElementById('mainNav')?.classList.toggle('scrolled',window.scrollY>40);
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 40);
 });
 
+/* ── AUTH MODE TOGGLE ── */
+function setAuthMode(mode){
+  authMode = mode;
+  const isReg = mode === 'register';
+  document.getElementById('modeRegBtn').classList.toggle('active', isReg);
+  document.getElementById('modeLoginBtn').classList.toggle('active', !isReg);
+  document.getElementById('nameField').style.display = isReg ? 'block' : 'none';
+  document.getElementById('freePill').style.display = isReg ? 'inline-block' : 'none';
+  document.getElementById('authTitle').textContent = isReg ? 'Create your account' : 'Welcome back';
+  document.getElementById('authSubtitle').textContent = isReg
+    ? 'Join thousands preserving their most meaningful song memories.'
+    : 'Sign in to access your letters and write new ones.';
+  document.getElementById('authSubmitBtn').textContent = isReg
+    ? 'Create My Account & Start Writing →'
+    : 'Sign In & Continue →';
+  document.getElementById('strengthBarWrap').style.display = isReg ? 'block' : 'none';
+  document.getElementById('strengthLabel').style.display = isReg ? 'block' : 'none';
+}
 
-/* ─── REGISTER ─── */
+/* ── PASSWORD STRENGTH ── */
 function checkStrength(inp){
-  const v=inp.value, fill=document.getElementById('strengthFill'), lbl=document.getElementById('strengthLabel');
-  let score=0;
-  if(v.length>=8)score++;
-  if(/[A-Z]/.test(v))score++;
-  if(/[0-9]/.test(v))score++;
-  if(/[^A-Za-z0-9]/.test(v))score++;
-  const map=[['0%','',''],['25%','#c0392b','Weak'],['50%','#e67e22','Fair'],['75%','#c9a84c','Good'],['100%','#27ae60','Strong']];
-  const s=map[score];
-  fill.style.width=s[0]; fill.style.background=s[1]; lbl.textContent=s[2];
+  const v = inp.value;
+  const fill = document.getElementById('strengthFill');
+  const lbl = document.getElementById('strengthLabel');
+  let score = 0;
+  if(v.length >= 8) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  const map = [['0%','',''],['25%','#c0392b','Weak'],['50%','#e67e22','Fair'],['75%','#c9a84c','Good'],['100%','#27ae60','Strong']];
+  fill.style.width = map[score][0];
+  fill.style.background = map[score][1];
+  lbl.textContent = map[score][2];
 }
 
-async function handleRegister(){
-  const name=document.getElementById('regName').value.trim();
-  const email=document.getElementById('regEmail').value.trim();
-  const pass=document.getElementById('regPass').value;
-  let ok=true;
-  const err=(eid,iid,vis)=>{
-    document.getElementById(eid).classList.toggle('show',vis);
-    document.getElementById(iid).classList.toggle('err',vis);
+/* ── HANDLE AUTH (register or login) ── */
+async function handleAuth(){
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const name = document.getElementById('regName').value.trim();
+
+  const showErr = (eid, iid, show) => {
+    document.getElementById(eid).classList.toggle('show', show);
+    document.getElementById(iid).classList.toggle('err', show);
   };
-  err('errName','regName',!name); if(!name)ok=false;
-  err('errEmail','regEmail',!email||!email.includes('@')); if(!email||!email.includes('@'))ok=false;
-  err('errPass','regPass',pass.length<8); if(pass.length<8)ok=false;
-  if(!ok)return;
 
-  const btn=document.querySelector('.btn-register');
-  btn.textContent='Creating your account…';
-  btn.disabled=true;
+  let ok = true;
+  if(authMode === 'register'){
+    showErr('errName','regName',!name); if(!name) ok = false;
+  }
+  showErr('errEmail','regEmail',!email||!email.includes('@')); if(!email||!email.includes('@')) ok = false;
+  showErr('errPass','regPass',pass.length < 8); if(pass.length < 8) ok = false;
+  if(!ok) return;
 
-  const { data, error } = await sb.auth.signUp({ email, password: pass });
+  const btn = document.getElementById('authSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = authMode === 'register' ? 'Creating your account…' : 'Signing in…';
 
-  if(error){
-    btn.textContent='Create My Account & Start Writing →';
-    btn.disabled=false;
-    alert(error.message);
-    return;
+  if(authMode === 'register'){
+    const { data, error } = await sb.auth.signUp({ email, password: pass });
+    if(error){ btn.disabled=false; btn.textContent='Create My Account & Start Writing →'; alert(error.message); return; }
+    await sb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
+    currentUser = data.user;
+    document.getElementById('builderUserLabel').textContent = `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
+  } else {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+    if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
+    currentUser = data.user;
+    await loadProfile(currentUser.id);
   }
 
-  // Create profile
-  await sb.from('profiles').insert({
-    id: data.user.id,
-    name: name,
-    email: email,
-    letters_used: 0,
-    letters_allowed: 1
-  });
-
-  currentUser = data.user;
-  document.getElementById('builderUserLabel').textContent =
-    `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
-  btn.textContent='Create My Account & Start Writing →';
-  btn.disabled=false;
+  btn.disabled = false;
+  btn.textContent = authMode === 'register' ? 'Create My Account & Start Writing →' : 'Sign In & Continue →';
   showPage('page-builder');
 }
 
-async function handleLogin(){
-  const email=document.getElementById('regEmail').value.trim();
-  const pass=document.getElementById('regPass').value;
-  if(!email||!pass){ alert('Please enter your email and password.'); return; }
-
-  const btn=document.querySelector('.btn-register');
-  btn.textContent='Signing in…';
-  btn.disabled=true;
-
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-
-  if(error){
-    btn.textContent='Create My Account & Start Writing →';
-    btn.disabled=false;
-    alert(error.message);
-    return;
-  }
-
-  currentUser = data.user;
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-  if(profile){
-    const remaining = profile.letters_allowed - profile.letters_used;
-    document.getElementById('builderUserLabel').textContent =
-      `Welcome back, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
-  }
-  btn.textContent='Create My Account & Start Writing →';
-  btn.disabled=false;
-  showPage('page-builder');
-}
-
-/* ─── YEAR DROPDOWN ─── */
+/* ── YEAR DROPDOWN ── */
 (function(){
-  const sel=document.getElementById('bMemYear');
-  const yr=new Date().getFullYear();
-  for(let y=yr;y>=1940;y--){
-    const o=document.createElement('option');
-    o.value=y; o.textContent=y; sel.appendChild(o);
+  const sel = document.getElementById('bMemYear');
+  const yr = new Date().getFullYear();
+  for(let y = yr; y >= 1940; y--){
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y; sel.appendChild(o);
   }
 })();
 
-/* ─── BUILDER STATE ─── */
-let selectedTone='';
+/* ── BUILDER ── */
+let selectedTone = '';
 
 function bGoTo(step){
-  if(step===1){
-    const t=document.getElementById('bSongTitle').value.trim();
-    const a=document.getElementById('bSongArtist').value.trim();
-    if(!t||!a){alert('Please enter both the song title and the artist.');return;}
+  if(step === 1){
+    const t = document.getElementById('bSongTitle').value.trim();
+    const a = document.getElementById('bSongArtist').value.trim();
+    if(!t||!a){ alert('Please enter both the song title and the artist.'); return; }
   }
-  if(step===2){
-    const m=document.getElementById('bMemory').value.trim();
-    if(m.length<20){alert('Please share a bit more about your memory — even a few sentences help.');return;}
+  if(step === 2){
+    const m = document.getElementById('bMemory').value.trim();
+    if(m.length < 20){ alert('Please share a bit more about your memory — even a few sentences help.'); return; }
   }
   hideBPanels();
   document.getElementById('bp'+step).classList.add('active');
@@ -874,81 +726,80 @@ function bGoTo(step){
 }
 
 function hideBPanels(){
-  ['bp0','bp1','bp2','bp3','bp5-loading','bp5-result'].forEach(id=>{
+  ['bp0','bp1','bp2','bp3','bp5-loading','bp5-result'].forEach(id => {
     document.getElementById(id).classList.remove('active');
   });
 }
 
 function updateProgress(active){
-  for(let i=0;i<5;i++){
-    const d=document.getElementById('pd'+i);
+  for(let i = 0; i < 5; i++){
+    const d = document.getElementById('pd'+i);
     d.classList.remove('active','done');
-    if(i<active)d.classList.add('done');
-    if(i===active)d.classList.add('active');
+    if(i < active) d.classList.add('done');
+    if(i === active) d.classList.add('active');
   }
 }
 
-function selTone(el,tone){
-  document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('sel'));
+function selTone(el, tone){
+  document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
-  selectedTone=tone;
+  selectedTone = tone;
   document.getElementById('toneErr').classList.remove('show');
 }
 
 function countWordsB(){
-  const words=document.getElementById('bMemory').value.trim().split(/\s+/).filter(w=>w.length>0).length;
-  document.getElementById('memWordCount').textContent=words+' word'+(words!==1?'s':'');
+  const words = document.getElementById('bMemory').value.trim().split(/\s+/).filter(w=>w.length>0).length;
+  document.getElementById('memWordCount').textContent = words + ' word' + (words!==1?'s':'');
 }
 
 function countLyric(){
-  const len=document.getElementById('bLyric').value.length;
-  const el=document.getElementById('lyricCount');
-  el.textContent=len+' / 150';
-  el.className='char-count'+(len>120?' warn':'')+(len>=150?' over':'');
+  const len = document.getElementById('bLyric').value.length;
+  const el = document.getElementById('lyricCount');
+  el.textContent = len + ' / 150';
+  el.className = 'char-count' + (len>120?' warn':'') + (len>=150?' over':'');
 }
 
 async function generateLetter(){
-  if(!selectedTone){document.getElementById('toneErr').classList.add('show');return;}
-  if(!currentUser){alert('Please sign in to generate your letter.');return;}
+  if(!selectedTone){ document.getElementById('toneErr').classList.add('show'); return; }
+  if(!currentUser){ alert('Please sign in to generate your letter.'); return; }
 
-  // Check letter allowance
   const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
   if(!profile || profile.letters_used >= profile.letters_allowed){
-    alert('You have used your free letter. Please purchase more to continue.');
+    alert('You have used your free letter. Purchase more letters to continue writing.');
     return;
   }
 
-  const song=document.getElementById('bSongTitle').value.trim();
-  const artist=document.getElementById('bSongArtist').value.trim();
-  const month=document.getElementById('bMemMonth').value;
-  const year=document.getElementById('bMemYear').value;
-  const memory=document.getElementById('bMemory').value.trim();
-  const lyric=document.getElementById('bLyric').value.trim();
+  const song = document.getElementById('bSongTitle').value.trim();
+  const artist = document.getElementById('bSongArtist').value.trim();
+  const month = document.getElementById('bMemMonth').value;
+  const year = document.getElementById('bMemYear').value;
+  const memory = document.getElementById('bMemory').value.trim();
+  const lyric = document.getElementById('bLyric').value.trim();
 
   hideBPanels();
   document.getElementById('bp5-loading').classList.add('active');
   updateProgress(4);
 
-  const msgs=[
+  const msgs = [
     ['Finding the thread of your memory…','The AI is listening between the words you wrote.'],
     ['Honoring every detail…','Keeping what makes it yours — your voice, your moment.'],
     ['Setting the tone…','Crafting the emotional register of '+selectedTone.toLowerCase()+'.'],
     ['Almost there…','The final lines are taking shape.']
   ];
-  let mi=0;
-  const interval=setInterval(()=>{
-    mi=(mi+1)%msgs.length;
-    document.getElementById('loadTitle').textContent=msgs[mi][0];
-    document.getElementById('loadSub').textContent=msgs[mi][1];
-  },2200);
+  let mi = 0;
+  const interval = setInterval(() => {
+    mi = (mi+1) % msgs.length;
+    document.getElementById('loadTitle').textContent = msgs[mi][0];
+    document.getElementById('loadSub').textContent = msgs[mi][1];
+  }, 2200);
 
-  const dateContext=month&&year?`The memory took place in ${month} ${year}.`:year?`The memory is from ${year}.`:'';
-  const prompt=`You are a master letter writer specializing in memory letters. Your job is to transform a person's raw emotional memory of a song into a polished, deeply personal letter they will treasure forever.
+  const dateContext = month&&year ? `The memory took place in ${month} ${year}.` : year ? `The memory is from ${year}.` : '';
+  const prompt = `You are a master letter writer specializing in memory letters. Your job is to transform a person's raw emotional memory of a song into a polished, deeply personal letter they will treasure forever.
 
 THE SONG: "${song}" by ${artist}
 THE TONE REQUESTED: ${selectedTone}
 ${dateContext}
-${lyric?`THE LINE THAT HITS THEM HARDEST: "${lyric}"`:'(No lyric provided — find the most resonant line from this song yourself and weave it in naturally.)'}
+${lyric ? `THE LINE THAT HITS THEM HARDEST: "${lyric}"` : '(No lyric provided — find the most resonant line from this song yourself and weave it in naturally.)'}
 
 THE PERSON'S RAW MEMORY:
 ${memory}
@@ -961,117 +812,75 @@ CRITICAL RULES:
 2. Emotional preservation — don't water down the feeling. If it's heartbreak, let it ache. If it's love, let it soar.
 3. Sensory specificity — use sight, sound, smell, texture. Ground every abstract feeling in a concrete physical detail from their memory.
 4. Human tone — no AI-sounding phrases. No "tapestry of emotions." No "journey." Write like a gifted human writer.
-5. Weave in the lyric naturally — let it arrive like a revelation, not a quote dropped in. If no lyric was given, find the song's most resonant line yourself.
-6. End with an image or line that lingers. Something they'll still be thinking about later. Not a moral. A final frame.
+5. Weave in the lyric naturally — let it arrive like a revelation. If no lyric was given, find the song's most resonant line yourself.
+6. End with an image or line that lingers. Not a moral. A final frame.
 7. Match the tone: ${selectedTone}.
 8. Do NOT include a salutation or sign-off — just the body paragraphs.
 
 Write only the letter body. No explanations, no title, no quotes around it.`;
 
   try{
-    const res=await fetch("/api/generate",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        model:"claude-sonnet-4-5",
-        max_tokens:1000,
-        messages:[{role:"user",content:prompt}]
-      })
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
     });
     clearInterval(interval);
-    const data=await res.json();
-    const text=data.content?.[0]?.text||"We couldn't write your letter just now. Please try again.";
+    const data = await res.json();
+    const text = data.content?.[0]?.text || "We couldn't write your letter just now. Please try again.";
 
-    // Increment letters_used
-    await sb.from('profiles')
-      .update({ letters_used: profile.letters_used + 1 })
-      .eq('id', currentUser.id);
-
+    await sb.from('profiles').update({ letters_used: profile.letters_used + 1 }).eq('id', currentUser.id);
     const remaining = profile.letters_allowed - profile.letters_used - 1;
     document.getElementById('builderUserLabel').textContent =
       `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
 
-    const now=new Date();
-    const dateStr=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-    document.getElementById('resultSong').textContent=`"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
-    document.getElementById('lDate').textContent=dateStr;
-    document.getElementById('lBody').textContent=text;
-    document.getElementById('lCredit').textContent=`"${song}" · ${artist} · ${selectedTone}`;
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+    document.getElementById('resultSong').textContent = `"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
+    document.getElementById('lDate').textContent = dateStr;
+    document.getElementById('lBody').textContent = text;
+    document.getElementById('lCredit').textContent = `"${song}" · ${artist} · ${selectedTone}`;
     hideBPanels();
     document.getElementById('bp5-result').classList.add('active');
     updateProgress(4);
-  }catch(e){
+  } catch(e){
     clearInterval(interval);
-    document.getElementById('lBody').textContent="Something went wrong. Please try again.";
+    document.getElementById('lBody').textContent = "Something went wrong. Please try again.";
     hideBPanels();
     document.getElementById('bp5-result').classList.add('active');
   }
 }
 
 function downloadPDF(){
-  const song=document.getElementById('bSongTitle').value.trim();
-  const artist=document.getElementById('bSongArtist').value.trim();
-  const body=document.getElementById('lBody').textContent;
-  const date=document.getElementById('lDate').textContent;
-  const credit=document.getElementById('lCredit').textContent;
-
-  const win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+  const song = document.getElementById('bSongTitle').value.trim();
+  const artist = document.getElementById('bSongArtist').value.trim();
+  const body = document.getElementById('lBody').textContent;
+  const date = document.getElementById('lDate').textContent;
+  const credit = document.getElementById('lCredit').textContent;
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
 <title>SongScript — ${song} by ${artist}</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}
-  @media print{body{padding:40px;background:white}}
-  .header{text-align:center;margin-bottom:48px}
-  .brand{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}
-  .song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}
-  .letter-box{background:#f5ede0;border:1px solid #dfd0b0;padding:52px 56px;position:relative}
-  .side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}
-  .date{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:28px;font-style:italic}
-  .salutation{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:16px}
-  .ornament{text-align:center;font-size:18px;color:#c9a84c;margin:14px 0;letter-spacing:8px}
-  .body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.95;color:#1a1208;white-space:pre-wrap;font-weight:300}
-  .sign{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#6b3d2e;margin-top:32px;text-align:right}
-  .credit{font-size:11px;color:#8a7a5a;text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
-  .print-btn{display:block;margin:36px auto 0;padding:14px 40px;background:#6b3d2e;color:white;border:none;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer;letter-spacing:.5px}
-  .print-btn:hover{background:#1a1208}
-  @media print{.print-btn{display:none}}
-</style>
-</head>
-<body>
-<div class="header">
-  <div class="brand">SongScript · Memory Letter</div>
-  <div class="song-title">"${song}" by ${artist}</div>
-</div>
-<div class="letter-box">
-  <div class="side-line" style="left:28px"></div>
-  <div class="side-line" style="right:28px"></div>
-  <div class="date">${date}</div>
-  <div class="salutation">To the song that never leaves,</div>
-  <div class="ornament">✦ ✦ ✦</div>
-  <div class="body">${body}</div>
-  <div class="sign">With all that you carry,</div>
-  <div class="credit">${credit}</div>
-</div>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}@media print{body{padding:40px;background:white}}.header{text-align:center;margin-bottom:48px}.brand{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}.song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}.letter-box{background:#f5ede0;border:1px solid #dfd0b0;padding:52px 56px;position:relative}.side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}.date{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:28px;font-style:italic}.salutation{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:16px}.ornament{text-align:center;font-size:18px;color:#c9a84c;margin:14px 0;letter-spacing:8px}.body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.95;color:#1a1208;white-space:pre-wrap;font-weight:300}.sign{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#6b3d2e;margin-top:32px;text-align:right}.credit{font-size:11px;color:#8a7a5a;text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}.print-btn{display:block;margin:36px auto 0;padding:14px 40px;background:#6b3d2e;color:white;border:none;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer}.print-btn:hover{background:#1a1208}@media print{.print-btn{display:none}}</style></head>
+<body><div class="header"><div class="brand">SongScript · Memory Letter</div><div class="song-title">"${song}" by ${artist}</div></div>
+<div class="letter-box"><div class="side-line" style="left:28px"></div><div class="side-line" style="right:28px"></div>
+<div class="date">${date}</div><div class="salutation">To the song that never leaves,</div>
+<div class="ornament">✦ ✦ ✦</div><div class="body">${body}</div>
+<div class="sign">With all that you carry,</div><div class="credit">${credit}</div></div>
 <button class="print-btn" onclick="window.print()">Save as PDF / Print →</button>
-</body>
-</html>`);
+</body></html>`);
   win.document.close();
 }
 
 function resetBuilder(){
-  selectedTone='';
-  ['bSongTitle','bSongArtist','bLyric'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('bMemory').value='';
-  document.getElementById('bMemMonth').value='';
-  document.getElementById('bMemYear').value='';
-  document.getElementById('memWordCount').textContent='0 words';
-  document.getElementById('lyricCount').textContent='0 / 150';
-  document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('sel'));
+  selectedTone = '';
+  ['bSongTitle','bSongArtist','bLyric'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('bMemory').value = '';
+  document.getElementById('bMemMonth').value = '';
+  document.getElementById('bMemYear').value = '';
+  document.getElementById('memWordCount').textContent = '0 words';
+  document.getElementById('lyricCount').textContent = '0 / 150';
+  document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('sel'));
   hideBPanels();
   document.getElementById('bp0').classList.add('active');
   updateProgress(0);
