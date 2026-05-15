@@ -586,7 +586,7 @@ let authMode = 'register';
 sb.auth.getSession().then(({ data: { session } }) => {
   if(session?.user){
     currentUser = session.user;
-    loadProfile(currentUser.id);
+await loadProfile(currentUser.id).catch(()=>{});
   }
 });
 
@@ -601,12 +601,16 @@ sb.auth.onAuthStateChange(async (event, session) => {
 });
 
 async function loadProfile(uid){
-  const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
-  if(data){
-    currentProfile = data;
-    const remaining = data.letters_allowed - data.letters_used;
-    document.getElementById('builderUserLabel').textContent =
-      `Welcome, ${data.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+  try{
+    const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
+    if(data){
+      currentProfile = data;
+      const remaining = data.letters_allowed - data.letters_used;
+      document.getElementById('builderUserLabel').textContent =
+        `Welcome, ${data.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+    }
+  } catch(e){
+    console.log('Profile load error:', e);
   }
 }
 
