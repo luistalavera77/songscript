@@ -656,47 +656,55 @@ function checkStrength(inp){
   lbl.textContent = map[score][2];
 }
 
-/* ── HANDLE AUTH (register or login) ── */
 async function handleAuth(){
   const email = document.getElementById('regEmail').value.trim();
   const pass = document.getElementById('regPass').value;
   const name = document.getElementById('regName').value.trim();
 
-  const showErr = (eid, iid, show) => {
-    document.getElementById(eid).classList.toggle('show', show);
-    document.getElementById(iid).classList.toggle('err', show);
-  };
-
-  let ok = true;
-  if(authMode === 'register'){
-    showErr('errName','regName',!name); if(!name) ok = false;
-  }
-  showErr('errEmail','regEmail',!email||!email.includes('@')); if(!email||!email.includes('@')) ok = false;
-  showErr('errPass','regPass',pass.length < 8); if(pass.length < 8) ok = false;
-  if(!ok) return;
-
   const btn = document.getElementById('authSubmitBtn');
   btn.disabled = true;
-  btn.textContent = authMode === 'register' ? 'Creating your account…' : 'Signing in…';
+  btn.textContent = 'Signing in…';
 
-  if(authMode === 'register'){
-    const { data, error } = await sb.auth.signUp({ email, password: pass });
-    if(error){ btn.disabled=false; btn.textContent='Create My Account & Start Writing →'; alert(error.message); return; }
-    await sb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
-    currentUser = data.user;
-    document.getElementById('builderUserLabel').textContent = `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
-  } else {
+  alert('Step 1: Attempting sign in for ' + email);
+
+  try {
     const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-    if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
+    
+    alert('Step 2: Response received. Error: ' + (error ? error.message : 'none') + ' | User: ' + (data?.user ? data.user.id : 'none'));
+
+    if(error){
+      btn.disabled = false;
+      btn.textContent = 'Sign In & Continue →';
+      alert('Auth error: ' + error.message);
+      return;
+    }
+
     currentUser = data.user;
-    await loadProfile(currentUser.id);
+    alert('Step 3: Signed in successfully. Loading profile...');
+    
+    try {
+      const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+      alert('Step 4: Profile loaded: ' + JSON.stringify(profile));
+      if(profile){
+        currentProfile = profile;
+        const remaining = profile.letters_allowed - profile.letters_used;
+        document.getElementById('builderUserLabel').textContent =
+          `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+      }
+    } catch(pe){
+      alert('Profile error: ' + pe.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Sign In & Continue →';
+    showPage('page-builder');
+
+  } catch(e){
+    alert('Caught exception: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = 'Sign In & Continue →';
   }
-
-  btn.disabled = false;
-  btn.textContent = authMode === 'register' ? 'Create My Account & Start Writing →' : 'Sign In & Continue →';
-  showPage('page-builder');
 }
-
 /* ── YEAR DROPDOWN ── */
 (function(){
   const sel = document.getElementById('bMemYear');
