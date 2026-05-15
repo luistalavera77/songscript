@@ -572,7 +572,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 <script>
 // ── PASTE YOUR SUPABASE CREDENTIALS HERE ──
 const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
 // ──────────────────────────────────────────
 
 const { createClient } = supabase;
@@ -586,7 +586,7 @@ let authMode = 'register';
 sb.auth.getSession().then(({ data: { session } }) => {
   if(session?.user){
     currentUser = session.user;
-await loadProfile(currentUser.id).catch(()=>{});
+    loadProfile(currentUser.id);
   }
 });
 
@@ -601,16 +601,12 @@ sb.auth.onAuthStateChange(async (event, session) => {
 });
 
 async function loadProfile(uid){
-  try{
-    const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
-    if(data){
-      currentProfile = data;
-      const remaining = data.letters_allowed - data.letters_used;
-      document.getElementById('builderUserLabel').textContent =
-        `Welcome, ${data.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
-    }
-  } catch(e){
-    console.log('Profile load error:', e);
+  const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
+  if(data){
+    currentProfile = data;
+    const remaining = data.letters_allowed - data.letters_used;
+    document.getElementById('builderUserLabel').textContent =
+      `Welcome, ${data.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
   }
 }
 
