@@ -575,8 +575,7 @@ const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW';
 // ──────────────────────────────────────────
 
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
 let currentProfile = null;
