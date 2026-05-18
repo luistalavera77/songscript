@@ -758,7 +758,8 @@ async function generateLetter(){
   if(!selectedTone){ document.getElementById('toneErr').classList.add('show'); return; }
   if(!currentUser){ alert('Please sign in to generate your letter.'); return; }
 
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
   if(!profile || profile.letters_used >= profile.letters_allowed){
     alert('You have used your free letter. Purchase more letters to continue writing.');
     return;
@@ -824,7 +825,7 @@ Write only the letter body. No explanations, no title, no quotes around it.`;
     const data = await res.json();
     const text = data.content?.[0]?.text || "We couldn't write your letter just now. Please try again.";
 
-    await sb.from('profiles').update({ letters_used: profile.letters_used + 1 }).eq('id', currentUser.id);
+    await freshSb.from('profiles').update({ letters_used: profile.letters_used + 1 }).eq('id', currentUser.id);
     const remaining = profile.letters_allowed - profile.letters_used - 1;
     document.getElementById('builderUserLabel').textContent =
       `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
