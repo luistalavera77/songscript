@@ -672,7 +672,7 @@ async function handleAuth(){
     const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
     if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
     currentUser = data.user;
-    
+    await sb.auth.setSession({ access_token: data.session.access_token, refresh_token: data.session.refresh_token });
     await loadProfile(currentUser.id);
   }
 
