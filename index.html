@@ -572,32 +572,23 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 <script>
 // ── PASTE YOUR SUPABASE CREDENTIALS HERE ──
 const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
 // ──────────────────────────────────────────
 
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+let sb;
 let currentUser = null;
 let currentProfile = null;
 let authMode = 'register';
 
-// Restore session on load
-sb.auth.getSession().then(({ data: { session } }) => {
-  if(session?.user){
-    currentUser = session.user;
-    loadProfile(currentUser.id);
-  }
-});
-
-sb.auth.onAuthStateChange(async (event, session) => {
-  if(session?.user){
-    currentUser = session.user;
-    await loadProfile(currentUser.id);
-  } else {
-    currentUser = null;
-    currentProfile = null;
-  }
+window.addEventListener('load', () => {
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  sb.auth.getSession().then(({ data: { session } }) => {
+    if(session?.user){ currentUser = session.user; loadProfile(currentUser.id); }
+  });
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if(session?.user){ currentUser = session.user; loadProfile(currentUser.id); }
+    else { currentUser = null; currentProfile = null; }
+  });
 });
 
 async function loadProfile(uid){
@@ -679,14 +670,16 @@ async function handleAuth(){
   btn.disabled = true;
   btn.textContent = authMode === 'register' ? 'Creating your account…' : 'Signing in…';
 
+  const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   if(authMode === 'register'){
-    const { data, error } = await sb.auth.signUp({ email, password: pass });
+    const { data, error } = await freshSb.auth.signUp({ email, password: pass });
     if(error){ btn.disabled=false; btn.textContent='Create My Account & Start Writing →'; alert(error.message); return; }
-    await sb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
+    await freshSb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
     currentUser = data.user;
+    sb = freshSb;
     document.getElementById('builderUserLabel').textContent = `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
- } else {
-    const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } else {
     const { data, error } = await freshSb.auth.signInWithPassword({ email, password: pass });
     if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
     currentUser = data.user;
