@@ -576,7 +576,14 @@ const SUPABASE_ANON_KEY = 'sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW';
 // ──────────────────────────────────────────
 
 const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false,
+    flowType: 'implicit'
+  }
+});
 
 let currentUser = null;
 let currentProfile = null;
