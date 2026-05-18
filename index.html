@@ -592,7 +592,8 @@ window.addEventListener('load', () => {
 });
 
 async function loadProfile(uid){
-  const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
+  const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const { data } = await freshSb.from('profiles').select('*').eq('id', uid).single();
   if(data){
     currentProfile = data;
     const remaining = data.letters_allowed - data.letters_used;
