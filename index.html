@@ -593,7 +593,7 @@ window.addEventListener('load', () => {
 
 async function loadProfile(uid){
   const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const { data } = await freshSb.from('profiles').select('*').eq('id', uid).single();
+  const { data } = await freshSb.from('profiles').select('*').eq('id', uid).single();
   if(data){
     currentProfile = data;
     const remaining = data.letters_allowed - data.letters_used;
@@ -760,7 +760,7 @@ async function generateLetter(){
   if(!currentUser){ alert('Please sign in to generate your letter.'); return; }
 
   const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
+  const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
   if(!profile || profile.letters_used >= profile.letters_allowed){
     alert('You have used your free letter. Purchase more letters to continue writing.');
     return;
