@@ -576,24 +576,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_uRnOAAigjcm-Z5RCFgP5TQ_OAYOeLWW';
 // ──────────────────────────────────────────
 
 const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  // Handle password recovery redirect
-const hashParams = new URLSearchParams(window.location.hash.substring(1));
-if(hashParams.get('type') === 'recovery'){
-  const newPass = prompt('Enter your new password (min 8 characters):');
-  if(newPass && newPass.length >= 8){
-    sb.auth.updateUser({ password: newPass }).then(({ error }) => {
-      if(error){ alert('Error: ' + error.message); }
-      else{ alert('Password updated! You can now sign in.'); window.location.hash = ''; }
-    });
-  }
-}
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false
-  }
-});
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
 let currentProfile = null;
