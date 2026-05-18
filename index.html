@@ -575,25 +575,15 @@ const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
 // ──────────────────────────────────────────
 
-let sb;
 let currentUser = null;
 let currentProfile = null;
 let authMode = 'register';
 
-window.addEventListener('load', () => {
-  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  sb.auth.getSession().then(({ data: { session } }) => {
-    if(session?.user){ currentUser = session.user; loadProfile(currentUser.id); }
-  });
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if(session?.user){ currentUser = session.user; loadProfile(currentUser.id); }
-    else { currentUser = null; currentProfile = null; }
-  });
-});
+// Single shared client — initialized once after library loads
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function loadProfile(uid){
-  const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data } = await freshSb.from('profiles').select('*').eq('id', uid).single();
+  const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
   if(data){
     currentProfile = data;
     const remaining = data.letters_allowed - data.letters_used;
@@ -671,20 +661,18 @@ async function handleAuth(){
   btn.disabled = true;
   btn.textContent = authMode === 'register' ? 'Creating your account…' : 'Signing in…';
 
-  const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   if(authMode === 'register'){
-    const { data, error } = await freshSb.auth.signUp({ email, password: pass });
+    const { data, error } = await sb.auth.signUp({ email, password: pass });
     if(error){ btn.disabled=false; btn.textContent='Create My Account & Start Writing →'; alert(error.message); return; }
-    await freshSb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
+    await sb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
     currentUser = data.user;
-    sb = freshSb;
+    
     document.getElementById('builderUserLabel').textContent = `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
   } else {
-    const { data, error } = await freshSb.auth.signInWithPassword({ email, password: pass });
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
     if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
     currentUser = data.user;
-    sb = freshSb;
+    
     await loadProfile(currentUser.id);
   }
 
@@ -758,9 +746,7 @@ function countLyric(){
 async function generateLetter(){
   if(!selectedTone){ document.getElementById('toneErr').classList.add('show'); return; }
   if(!currentUser){ alert('Please sign in to generate your letter.'); return; }
-
-  const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
   if(!profile || profile.letters_used >= profile.letters_allowed){
     alert('You have used your free letter. Purchase more letters to continue writing.');
     return;
@@ -826,7 +812,7 @@ Write only the letter body. No explanations, no title, no quotes around it.`;
     const data = await res.json();
     const text = data.content?.[0]?.text || "We couldn't write your letter just now. Please try again.";
 
-    await freshSb.from('profiles').update({ letters_used: profile.letters_used + 1 }).eq('id', currentUser.id);
+    await sb.from('profiles').update({ letters_used: profile.letters_used + 1 }).eq('id', currentUser.id);
     const remaining = profile.letters_allowed - profile.letters_used - 1;
     document.getElementById('builderUserLabel').textContent =
       `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
