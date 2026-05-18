@@ -685,10 +685,12 @@ async function handleAuth(){
     await sb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
     currentUser = data.user;
     document.getElementById('builderUserLabel').textContent = `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
-  } else {
-    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+ } else {
+    const freshSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { data, error } = await freshSb.auth.signInWithPassword({ email, password: pass });
     if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
     currentUser = data.user;
+    sb = freshSb;
     await loadProfile(currentUser.id);
   }
 
