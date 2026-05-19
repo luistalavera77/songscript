@@ -561,7 +561,25 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
             <div class="pcard"><div class="pcard-badge">Starter</div><div class="pcard-price">$9.99</div><div class="pcard-desc">5 Song Letters</div></div>
             <div class="pcard feat"><div class="pcard-badge">Best Value</div><div class="popular-badge">Most Popular</div><div class="pcard-price">$14.99</div><div class="pcard-desc">10 Song Letters</div></div>
           </div>
-          <button class="btn-next" onclick="downloadPDF()">Download PDF Letter + Get More →</button>
+          <button class="btn-next" onclick="downloadPDF()">Download My PDF Letter →</button>
+          <div style="margin-top:20px">
+            <p style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:12px;font-weight:300">Need more letters? Get a pack:</p>
+            <div class="pricing-row">
+              <div class="pcard" style="cursor:pointer" onclick="startCheckout('price_1TYaViLXzHWT8avwfQ5Ccfn3')">
+                <div class="pcard-badge">Starter</div>
+                <div class="pcard-price">$9.99</div>
+                <div class="pcard-desc">5 Song Letters</div>
+                <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent)">Buy Now →</div>
+              </div>
+              <div class="pcard feat" style="cursor:pointer" onclick="startCheckout('price_1TYaW6LXzHWT8avwLdV6dNfA')">
+                <div class="pcard-badge">Best Value</div>
+                <div class="popular-badge">Most Popular</div>
+                <div class="pcard-price">$14.99</div>
+                <div class="pcard-desc">10 Song Letters</div>
+                <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent)">Buy Now →</div>
+              </div>
+            </div>
+          </div>
           <button class="btn-back" onclick="resetBuilder()">← Write another letter</button>
         </div>
       </div>
@@ -853,6 +871,26 @@ function downloadPDF(){
 <button class="print-btn" onclick="window.print()">Save as PDF / Print →</button>
 </body></html>`);
   win.document.close();
+}
+
+async function startCheckout(priceId){
+  if(!currentUser){ alert('Please sign in first.'); return; }
+  const btn = event.currentTarget;
+  btn.style.opacity = '0.6';
+  btn.style.pointerEvents = 'none';
+  try{
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ priceId, userId: currentUser.id, userEmail: currentUser.email })
+    });
+    const data = await res.json();
+    if(data.url){ window.location.href = data.url; }
+    else { alert('Something went wrong. Please try again.'); btn.style.opacity='1'; btn.style.pointerEvents='auto'; }
+  } catch(e){
+    alert('Something went wrong. Please try again.');
+    btn.style.opacity='1'; btn.style.pointerEvents='auto';
+  }
 }
 
 function resetBuilder(){
