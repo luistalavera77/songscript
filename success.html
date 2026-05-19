@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SongScript — Payment Successful</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fdf8f0;font-family:'Lato',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{background:white;border:1px solid #dfd0b0;border-radius:2px;padding:56px 48px;max-width:480px;width:90%;text-align:center;box-shadow:0 2px 24px rgba(180,140,60,.08);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6b3d2e,#c9a84c,#9b5a3e)}
+.ornament{font-size:48px;margin-bottom:24px}
+h1{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:#1a1208;margin-bottom:12px}
+h1 em{font-style:italic;color:#6b3d2e}
+.sub{font-family:'Cormorant Garamond',serif;font-size:19px;color:#8a7a5a;line-height:1.7;font-weight:300;margin-bottom:32px}
+.letters-badge{display:inline-block;background:#6b3d2e;color:white;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:8px 20px;margin-bottom:32px;border-radius:1px}
+.btn{display:inline-block;background:#6b3d2e;color:white;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;padding:16px 40px;border-radius:1px;cursor:pointer;text-decoration:none;transition:background .25s}
+.btn:hover{background:#1a1208}
+.note{font-size:12px;color:#8a7a5a;margin-top:20px;font-weight:300}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="ornament">✦</div>
+  <h1>Your letters are <em>ready.</em></h1>
+  <p class="sub">Your payment was successful. Your new letters have been added to your account — go write something beautiful.</p>
+  <div class="letters-badge" id="lettersBadge">Letters added to your account</div>
+  <br><br>
+  <a class="btn" href="/">Start Writing →</a>
+  <p class="note">A receipt has been sent to your email.</p>
+</div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  if(sessionId){
+    // Determine pack from session - we'll show generic message
+    document.getElementById('lettersBadge').textContent = 'Letters added to your account ✓';
+  }
+</script>
+</body>
+</html>
