@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SongScript — Memory Letters for the Songs That Made You</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,8 +26,14 @@ body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;ove
 .nav.scrolled{border-bottom-color:var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);letter-spacing:.5px}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-signin{font-family:'Lato',sans-serif;font-size:13px;color:var(--muted);cursor:pointer;font-weight:300;transition:color .2s}
+.nav-signin:hover{color:var(--accent)}
 .nav-cta{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:9px 22px;border-radius:1px;cursor:pointer;transition:all .25s;background:transparent}
 .nav-cta:hover{background:var(--accent);color:white}
+.lang-toggle{display:flex;border:1.5px solid var(--border);border-radius:1px;overflow:hidden}
+.lang-btn{padding:6px 12px;font-size:12px;font-weight:400;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .2s;letter-spacing:1px}
+.lang-btn.active{background:var(--accent);color:white}
 
 /* HERO */
 .hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 70px);align-items:center;overflow:hidden}
@@ -64,10 +70,27 @@ body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;ove
 .story-headline em{font-style:italic;color:var(--accent)}
 .story-text{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:20px}
 .story-text strong{color:var(--ink);font-weight:400}
-.songs-section{padding:60px 60px 100px;background:var(--paper2)}
+
+/* SAMPLE LETTERS */
+.samples-section{padding:80px 60px;background:var(--paper2)}
+.samples-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:16px}
+.samples-headline{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);font-weight:400;color:var(--ink);text-align:center;margin-bottom:48px}
+.samples-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.sample-card{background:var(--paper);border:1px solid var(--border);padding:32px 28px;position:relative;overflow:hidden}
+.sample-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
+.sample-card::after{content:'';position:absolute;top:10px;bottom:10px;left:16px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
+.sample-sal{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px;padding-left:12px}
+.sample-orn{text-align:center;font-size:13px;color:var(--gold);margin:8px 0;letter-spacing:6px}
+.sample-body{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.85;color:var(--ink);font-weight:300;font-style:italic;padding-left:12px;margin-bottom:16px}
+.sample-meta{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border)}
+.sample-song{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:var(--accent)}
+.sample-tone{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* SONGS + HOW */
+.songs-section{padding:60px 60px 100px;background:var(--paper3)}
 .songs-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:48px}
 .songs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.song-card{background:var(--paper2);padding:36px 32px;transition:background .3s}
+.song-card{background:var(--paper3);padding:36px 32px;transition:background .3s}
 .song-card:hover{background:var(--white)}
 .song-card-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:400;color:var(--border2);line-height:1;margin-bottom:16px;font-style:italic}
 .song-card-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);margin-bottom:4px;font-style:italic}
@@ -98,7 +121,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .footer-brand{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--muted)}
 .footer-copy{font-size:12px;color:var(--muted);font-weight:300}
 
-/* AUTH PAGE */
+/* AUTH */
 .auth-page{display:flex;min-height:100vh}
 .auth-left{width:420px;min-height:100vh;background:var(--accent);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;flex-shrink:0}
 .auth-left::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;border:1.5px solid rgba(201,168,76,.2)}
@@ -137,13 +160,52 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .btn-google{width:100%;padding:14px;background:white;color:var(--text);border:1.5px solid var(--border);font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:1px}
 .btn-google:hover{border-color:var(--muted);background:var(--paper)}
 .google-icon{width:18px;height:18px}
-.auth-switch{text-align:center;font-size:13px;color:var(--muted);margin-top:24px;font-weight:300}
-.auth-switch a{color:var(--accent);cursor:pointer;border-bottom:1px solid var(--border);text-decoration:none}
-.auth-switch a:hover{border-color:var(--accent)}
 .terms-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6;font-weight:300}
 .auth-mode-toggle{display:flex;gap:0;margin-bottom:28px;border:1.5px solid var(--border);border-radius:1px;overflow:hidden}
 .auth-mode-btn{flex:1;padding:10px;background:transparent;border:none;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);cursor:pointer;transition:all .2s}
 .auth-mode-btn.active{background:var(--accent);color:white}
+.opt-in-row{display:flex;align-items:flex-start;gap:10px;margin-top:16px}
+.opt-in-row input[type=checkbox]{margin-top:2px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0}
+.opt-in-label{font-size:12px;color:var(--muted);line-height:1.5;font-weight:300}
+
+/* DASHBOARD */
+.dashboard-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(253,248,240,.95)}
+.dashboard-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);cursor:pointer}
+.dashboard-inner{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+.dashboard-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px}
+.dashboard-welcome{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:var(--ink)}
+.dashboard-welcome em{font-style:italic;color:var(--accent)}
+.credits-card{background:white;border:1px solid var(--border);padding:20px 24px;border-radius:2px;text-align:center;min-width:200px;position:relative;overflow:hidden}
+.credits-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold))}
+.credits-num{font-family:'Playfair Display',serif;font-size:44px;color:var(--accent);line-height:1}
+.credits-label{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.btn-buy-more{display:block;margin-top:12px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:7px 16px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s;width:100%}
+.btn-buy-more:hover{background:var(--accent);color:white}
+.btn-new-letter{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:white;background:var(--accent);border:none;padding:16px 36px;border-radius:1px;cursor:pointer;transition:all .25s;margin-bottom:36px;display:block}
+.btn-new-letter:hover{background:var(--ink);transform:translateY(-1px)}
+.letters-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:20px}
+.letter-row{background:white;border:1px solid var(--border);padding:20px 24px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border .2s}
+.letter-row:hover{border-color:var(--gold)}
+.letter-row-info{flex:1}
+.letter-row-song{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:4px}
+.letter-row-meta{font-size:12px;color:var(--muted);letter-spacing:1px}
+.letter-row-actions{display:flex;gap:8px;flex-shrink:0}
+.btn-view{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--border);padding:7px 14px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s}
+.btn-view:hover{border-color:var(--accent)}
+.btn-dl{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:7px 14px;border-radius:1px;cursor:pointer;transition:all .25s}
+.btn-dl:hover{background:var(--ink)}
+.btn-del{font-size:13px;color:var(--muted);border:none;background:transparent;cursor:pointer;padding:7px 10px;transition:color .2s}
+.btn-del:hover{color:#c0392b}
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state-icon{font-size:48px;margin-bottom:16px;opacity:.4}
+.empty-state-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic}
+
+/* LETTER VIEWER MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--paper);border:1px solid var(--border);max-width:620px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:48px 52px}
+.modal-close{position:absolute;top:16px;right:20px;font-size:20px;cursor:pointer;color:var(--muted);background:none;border:none;line-height:1}
+.modal-close:hover{color:var(--ink)}
 
 /* BUILDER */
 .builder-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(253,248,240,.95)}
@@ -213,28 +275,79 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .ink-dot:nth-child(3){animation-delay:.4s}
 @keyframes ink-pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
 
-/* LETTER OUTPUT */
-.letter-outer{background:var(--paper2);border:1px solid var(--border);padding:56px 60px;position:relative;min-height:380px}
+/* RESULT */
+.result-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.result-col-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center}
+.letter-outer{background:var(--paper2);border:1px solid var(--border);padding:32px 36px;position:relative;min-height:300px}
 .letter-outer::before,.letter-outer::after{content:'';position:absolute;top:14px;bottom:14px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
-.letter-outer::before{left:30px}
-.letter-outer::after{right:30px}
-.letter-date{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);text-align:right;margin-bottom:28px;font-style:italic}
-.letter-salutation{font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:var(--ink);margin-bottom:20px}
-.letter-ornament{text-align:center;font-size:20px;color:var(--gold);margin:16px 0;letter-spacing:8px}
-.letter-body{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.95;color:var(--ink);white-space:pre-wrap;font-weight:300}
-.letter-sign{font-family:'Playfair Display',serif;font-size:21px;font-style:italic;color:var(--accent);margin-top:36px;text-align:right}
-.letter-credit{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
-.pricing-row{display:flex;gap:12px;margin:20px 0}
-.pcard{flex:1;border:1.5px solid var(--border);border-radius:2px;padding:22px 18px;text-align:center;background:var(--paper)}
+.letter-outer::before{left:18px}
+.letter-outer::after{right:18px}
+.letter-outer.original{opacity:.65}
+.letter-editable{width:100%;background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--ink);outline:none;padding:4px 0;margin-bottom:12px;transition:border .2s}
+.letter-editable:focus{border-bottom-color:var(--gold)}
+.letter-date{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--muted);text-align:right;margin-bottom:16px;font-style:italic}
+.letter-ornament{text-align:center;font-size:16px;color:var(--gold);margin:10px 0;letter-spacing:6px}
+.letter-body{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300}
+.letter-sign-wrap{margin-top:20px;text-align:right}
+.letter-sign-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.letter-sign-editable{background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--accent);outline:none;text-align:right;width:100%;padding:4px 0;transition:border .2s}
+.letter-sign-editable:focus{border-bottom-color:var(--gold)}
+.letter-credit{font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--muted);text-align:right;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.edit-hint{font-size:11px;color:var(--muted);font-style:italic;text-align:center;margin-bottom:16px}
+
+/* RESULT ACTIONS */
+.result-actions{background:var(--paper2);border:1px solid var(--border);padding:24px 28px;margin-bottom:20px}
+.result-actions-title{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:16px}
+.result-tone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.result-tone-btn{border:1.5px solid var(--border);background:var(--paper);border-radius:2px;padding:10px 6px;cursor:pointer;text-align:center;transition:all .25s;font-family:'Playfair Display',serif;position:relative}
+.result-tone-btn:hover{border-color:var(--gold2);background:white}
+.result-tone-btn.sel{border-color:var(--accent);background:var(--accent);color:white}
+.result-tone-btn.used::after{content:'✓';position:absolute;top:4px;right:6px;font-size:10px;color:var(--gold)}
+.result-tone-btn.sel.used::after{color:rgba(255,255,255,.7)}
+.result-tone-icon{font-size:18px;display:block;margin-bottom:4px}
+.result-tone-name{font-size:11px;font-style:italic;display:block}
+.result-tone-btn.sel .result-tone-name{color:rgba(255,255,255,.9)}
+.credit-info{font-size:12px;color:var(--muted);margin-bottom:16px;text-align:center;font-style:italic}
+.credit-info span{color:var(--accent);font-weight:400}
+.btn-regen{width:100%;padding:13px;background:transparent;color:var(--accent);border:1.5px solid var(--accent);font-family:'Playfair Display',serif;font-size:15px;font-style:italic;cursor:pointer;transition:all .25s;border-radius:1px;margin-bottom:8px}
+.btn-regen:hover:not(:disabled){background:var(--accent);color:white}
+.btn-regen:disabled{opacity:.4;cursor:not-allowed}
+.btn-edit-memory{width:100%;padding:11px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;cursor:pointer;transition:all .25s;border-radius:1px;margin-bottom:8px}
+.btn-edit-memory:hover:not(:disabled){border-color:var(--muted);color:var(--ink)}
+.btn-edit-memory:disabled{opacity:.4;cursor:not-allowed}
+
+/* COMING SOON TEASER */
+.teaser-box{background:linear-gradient(135deg,var(--ink) 0%,#2c1a0e 100%);border:1px solid var(--border2);padding:28px 32px;margin:20px 0;position:relative;overflow:hidden;text-align:center}
+.teaser-box::before{content:'✦';position:absolute;top:-10px;left:20px;font-size:60px;color:var(--gold);opacity:.08}
+.teaser-badge{display:inline-block;background:var(--gold);color:var(--ink);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:1px;margin-bottom:12px;font-weight:700}
+.teaser-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--paper);margin-bottom:8px}
+.teaser-title em{font-style:italic;color:var(--gold2)}
+.teaser-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(253,248,240,.7);line-height:1.7;font-weight:300;margin-bottom:16px}
+.teaser-notify{background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;padding:10px 24px;border-radius:1px;cursor:pointer;transition:all .25s}
+.teaser-notify:hover{background:var(--gold);color:var(--ink)}
+
+/* PRICING */
+.pricing-row{display:flex;gap:12px;margin:16px 0}
+.pcard{flex:1;border:1.5px solid var(--border);border-radius:2px;padding:22px 18px;text-align:center;background:var(--paper);cursor:pointer;transition:all .25s}
+.pcard:hover{border-color:var(--gold);transform:translateY(-1px)}
 .pcard.feat{border-color:var(--gold);background:white}
 .pcard-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
 .pcard-price{font-family:'Playfair Display',serif;font-size:28px;color:var(--ink)}
 .pcard-desc{font-size:13px;color:var(--muted);margin-top:6px;font-weight:300}
 .popular-badge{display:inline-block;background:var(--accent);color:white;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:8px;border-radius:1px}
+.pcard-cta{margin-top:10px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent)}
 </style>
 </head>
 <body>
 <div class="noise"></div>
+
+<!-- LETTER VIEWER MODAL -->
+<div class="modal-overlay" id="letterModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
 
 <!-- LANDING PAGE -->
 <div class="page active" id="page-landing">
@@ -249,16 +362,24 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </svg>
       <span class="nav-brand">SongScript</span>
     </div>
-    <button class="nav-cta" onclick="showPage('page-register')">Begin Your First Letter →</button>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="langEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="langES" onclick="setLang('es')">ES</button>
+      </div>
+      <span class="nav-signin" onclick="goToSignIn()" data-i18n="nav_signin">Sign In</span>
+      <button class="nav-cta" onclick="showPage('page-register')" data-i18n="nav_cta">Begin Your First Letter →</button>
+    </div>
   </nav>
+
   <section class="hero">
     <div class="hero-left">
-      <p class="hero-eyebrow">Memory Letters for the Songs That Made You</p>
-      <h1 class="hero-headline">There's a song that takes<br>you back <em>every time.</em></h1>
-      <p class="hero-sub">The first note plays and you're there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong></p>
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">Memory Letters for the Songs That Made You</p>
+      <h1 class="hero-headline" data-i18n="hero_headline">There's a song that takes<br>you back <em>every time.</em></h1>
+      <p class="hero-sub" data-i18n="hero_sub">The first note plays and you're there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong></p>
       <div class="hero-cta-wrap">
-        <button class="btn-hero" onclick="showPage('page-register')">Write Your First Letter — It's Free</button>
-        <span class="hero-note">✦ &nbsp; No card required &nbsp; ✦ &nbsp; One free letter on signup</span>
+        <button class="btn-hero" onclick="showPage('page-register')" data-i18n="hero_cta">Write Your First Letter — It's Free</button>
+        <span class="hero-note" data-i18n="hero_note">✦ &nbsp; No card required &nbsp; ✦ &nbsp; One free letter on signup</span>
       </div>
     </div>
     <div class="hero-right">
@@ -308,63 +429,70 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </svg>
     </div>
   </section>
+
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦ ✦ ✦</div><div class="divider-line"></div></div>
+
   <section class="story-section">
     <div class="story-inner">
-      <p class="story-label">Why SongScript exists</p>
-      <h2 class="story-headline">Some songs don't just play.<br>They <em>transport.</em></h2>
-      <p class="story-text">There's a song — you know the one. The first two seconds and you're back. Not just remembering, but <strong>actually there</strong>: the smell of the room, the feeling in your chest, the person sitting next to you.</p>
-      <p class="story-text">Those memories deserve more than a playlist. They deserve words. <strong>SongScript uses AI to take everything you felt about that song and shape it into a polished, personal letter</strong> — written in your voice, beautiful enough to keep forever.</p>
-      <p class="story-text">Your first one is free. No templates. No generic output. Just a letter that sounds like <strong>you</strong> — on your best writing day.</p>
+      <p class="story-label" data-i18n="story_label">Why SongScript exists</p>
+      <h2 class="story-headline" data-i18n="story_headline">Some songs don't just play.<br>They <em>transport.</em></h2>
+      <p class="story-text" data-i18n="story_text1">There's a song — you know the one. The first two seconds and you're back. Not just remembering, but <strong>actually there</strong>: the smell of the room, the feeling in your chest, the person sitting next to you.</p>
+      <p class="story-text" data-i18n="story_text2">Those memories deserve more than a playlist. They deserve words. <strong>SongScript uses AI to take everything you felt about that song and shape it into a polished, personal letter</strong> — written in your voice, beautiful enough to keep forever.</p>
+      <p class="story-text" data-i18n="story_text3">Your first one is free. No templates. No generic output. Just a letter that sounds like <strong>you</strong> — on your best writing day.</p>
     </div>
   </section>
+
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦</div><div class="divider-line"></div></div>
-  <section class="songs-section">
-    <p class="songs-label">What kind of memories become letters</p>
-    <div class="songs-grid">
-      <div class="song-card">
-        <div class="song-card-num">I.</div>
-        <div class="song-card-title">Fast Car</div>
-        <div class="song-card-artist">Tracy Chapman · 1988</div>
-        <div class="song-card-snippet">"We were nineteen and invincible. The windows down, the tank half-full, the whole country ahead of us like a sentence we hadn't finished yet."</div>
+
+  <!-- SAMPLE LETTERS -->
+  <section class="samples-section">
+    <p class="samples-label" data-i18n="samples_label">Real letters, real memories</p>
+    <h2 class="samples-headline" data-i18n="samples_headline">This is what your letter could look like</h2>
+    <div class="samples-grid">
+      <div class="sample-card">
+        <div class="sample-sal">To Fast Car, and the road you opened up,</div>
+        <div class="sample-orn">✦ ✦ ✦</div>
+        <div class="sample-body">I was eighteen when I first heard you. The lyrics hit me hard — and that voice, unlike anything I'd ever heard. You were about me: living fast, leaving my small town, heading for something bigger than what I could see from my front porch.</div>
+        <div class="sample-meta"><span class="sample-song">"Fast Car" · Tracy Chapman</span><span class="sample-tone">Nostalgic</span></div>
       </div>
-      <div class="song-card">
-        <div class="song-card-num">II.</div>
-        <div class="song-card-title">Landslide</div>
-        <div class="song-card-artist">Fleetwood Mac · 1975</div>
-        <div class="song-card-snippet">"She played it the night before I left for college. Neither of us said anything. The song said everything we couldn't."</div>
+      <div class="sample-card">
+        <div class="sample-sal">To Landslide, and the night before everything changed,</div>
+        <div class="sample-orn">✦ ✦ ✦</div>
+        <div class="sample-body">She played you the night before I left for college. We sat in the kitchen, late, neither of us wanting to say what we both knew. You said it for us. When you ended she held me for a long time and said I was ready. I wasn't sure she was right.</div>
+        <div class="sample-meta"><span class="sample-song">"Landslide" · Fleetwood Mac</span><span class="sample-tone">Family</span></div>
       </div>
-      <div class="song-card">
-        <div class="song-card-num">III.</div>
-        <div class="song-card-title">September</div>
-        <div class="song-card-artist">Earth, Wind &amp; Fire · 1978</div>
-        <div class="song-card-snippet">"Every single wedding, my father and I would find each other on the dance floor the moment the horns came in. Every. Single. Time."</div>
+      <div class="sample-card">
+        <div class="sample-sal">To September, and every dance floor you ever found me on,</div>
+        <div class="sample-orn">✦ ✦ ✦</div>
+        <div class="sample-body">Every wedding, without fail, my father and I would find each other the moment your horns came in. He was a terrible dancer. He never cared. He'd grab my hand and pull me out like we were the only two people there. Three years since he's been gone. Last summer I stood at the edge of the floor for the whole song.</div>
+        <div class="sample-meta"><span class="sample-song">"September" · Earth, Wind &amp; Fire</span><span class="sample-tone">Family</span></div>
       </div>
     </div>
   </section>
+
+  <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦</div><div class="divider-line"></div></div>
+
   <section class="how-section">
     <div class="how-inner">
-      <p class="how-label">The process</p>
-      <h2 class="how-headline">Five steps. One letter. Yours forever.</h2>
+      <p class="how-label" data-i18n="how_label">The process</p>
+      <h2 class="how-headline" data-i18n="how_headline">Five steps. One letter. Yours forever.</h2>
       <div class="steps-grid">
-        <div class="how-step"><div class="step-num-wrap"><span class="step-num">1</span></div><div class="step-name">The Song</div><div class="step-desc">Title, artist, and the date the memory lives in.</div></div>
-        <div class="how-step"><div class="step-num-wrap"><span class="step-num">2</span></div><div class="step-name">Your Story</div><div class="step-desc">Write freely — where, who, and what it felt like.</div></div>
-        <div class="how-step"><div class="step-num-wrap"><span class="step-num">3</span></div><div class="step-name">The Line</div><div class="step-desc">The lyric that stops time. Leave blank and we'll find it.</div></div>
-        <div class="how-step"><div class="step-num-wrap"><span class="step-num">4</span></div><div class="step-name">The Tone</div><div class="step-desc">Love letter, nostalgic, heartbreak, family…</div></div>
-        <div class="how-step"><div class="step-num-wrap"><span class="step-num">5</span></div><div class="step-name">Your Letter</div><div class="step-desc">A polished PDF. Calligraphic, personal, yours forever.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">1</span></div><div class="step-name" data-i18n="step1_name">The Song</div><div class="step-desc" data-i18n="step1_desc">Title, artist, and the date the memory lives in.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">2</span></div><div class="step-name" data-i18n="step2_name">Your Story</div><div class="step-desc" data-i18n="step2_desc">Write freely — where, who, and what it felt like.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">3</span></div><div class="step-name" data-i18n="step3_name">The Line</div><div class="step-desc" data-i18n="step3_desc">The lyric that stops time. Leave blank and we'll find it.</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">4</span></div><div class="step-name" data-i18n="step4_name">The Tone</div><div class="step-desc" data-i18n="step4_desc">Love letter, nostalgic, heartbreak, family…</div></div>
+        <div class="how-step"><div class="step-num-wrap"><span class="step-num">5</span></div><div class="step-name" data-i18n="step5_name">Your Letter</div><div class="step-desc" data-i18n="step5_desc">A polished PDF. Calligraphic, personal, yours forever.</div></div>
       </div>
     </div>
   </section>
+
   <section class="final-cta">
-    <h2 class="final-headline">Your memory deserves<br>more than <em>a playlist.</em></h2>
-    <p class="final-sub">Start with one song. One letter. No card needed.</p>
-    <button class="btn-final" onclick="showPage('page-register')">Write My First Letter — Free →</button>
-    <p class="final-note">✦ &nbsp; Every account starts with one free letter &nbsp; ✦</p>
+    <h2 class="final-headline" data-i18n="final_headline">Your memory deserves<br>more than <em>a playlist.</em></h2>
+    <p class="final-sub" data-i18n="final_sub">Start with one song. One letter. No card needed.</p>
+    <button class="btn-final" onclick="showPage('page-register')" data-i18n="final_cta">Write My First Letter — Free →</button>
+    <p class="final-note" data-i18n="final_note">✦ &nbsp; Every account starts with one free letter &nbsp; ✦</p>
   </section>
-  <footer>
-    <span class="footer-brand">SongScript</span>
-    <span class="footer-copy">© 2025 SongScript. All rights reserved.</span>
-  </footer>
+  <footer><span class="footer-brand">SongScript</span><span class="footer-copy">© 2025 SongScript. All rights reserved.</span></footer>
 </div>
 
 <!-- REGISTER PAGE -->
@@ -409,6 +537,17 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <div class="strength-label" id="strengthLabel"></div>
           <div class="field-error" id="errPass">Password must be at least 8 characters.</div>
         </div>
+        <div class="form-field" id="langField">
+          <label class="form-label">Preferred Language</label>
+          <select class="form-input" id="regLang" style="appearance:auto">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+        <div class="opt-in-row" id="optInRow">
+          <input type="checkbox" id="emailOptIn"/>
+          <label class="opt-in-label" for="emailOptIn">Send me updates about new SongScript features and products. You can unsubscribe anytime.</label>
+        </div>
         <button class="btn-register" id="authSubmitBtn" onclick="handleAuth()">Create My Account & Start Writing →</button>
         <div class="divider-or"><span>or</span></div>
         <button class="btn-google" onclick="alert('Google login coming soon — please use email for now.')">
@@ -421,10 +560,39 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
   </div>
 </div>
 
+<!-- DASHBOARD PAGE -->
+<div class="page" id="page-dashboard">
+  <nav class="dashboard-nav">
+    <div class="dashboard-brand" onclick="showPage('page-landing')">← SongScript</div>
+    <span style="font-size:13px;color:var(--muted);cursor:pointer" onclick="handleSignOut()">Sign Out</span>
+  </nav>
+  <div class="dashboard-inner">
+    <div class="dashboard-header">
+      <div>
+        <div class="dashboard-welcome" id="dashWelcome">Welcome back, <em>friend</em></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--muted);margin-top:6px;font-style:italic" id="dashSubtitle">Ready to preserve another memory?</div>
+      </div>
+      <div class="credits-card">
+        <div class="credits-num" id="dashCredits">—</div>
+        <div class="credits-label">Letters Remaining</div>
+        <button class="btn-buy-more" onclick="showBuyModal()">Get More Letters →</button>
+      </div>
+    </div>
+    <button class="btn-new-letter" onclick="startNewLetter()">✦ Write a New Letter</button>
+    <div class="letters-title" id="dashLettersTitle">Your Letters</div>
+    <div id="dashLettersList">
+      <div class="empty-state">
+        <div class="empty-state-icon">✦</div>
+        <div class="empty-state-text">No letters yet — write your first one above.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- BUILDER PAGE -->
 <div class="page" id="page-builder">
   <nav class="builder-nav">
-    <div class="builder-brand" onclick="showPage('page-landing')">← SongScript</div>
+    <div class="builder-brand" onclick="showPage('page-dashboard')">← Dashboard</div>
     <span class="builder-user" id="builderUserLabel">Welcome</span>
   </nav>
   <div class="builder-inner">
@@ -546,82 +714,179 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="bpanel" id="bp5-result">
       <div class="bcard">
         <div class="bcard-title" style="margin-bottom:4px">Your Memory Letter</div>
-        <p class="bcard-sub" style="margin-bottom:24px"><em id="resultSong"></em></p>
-        <div class="letter-outer">
-          <div class="letter-date" id="lDate"></div>
-          <div class="letter-salutation">To the song that never leaves,</div>
-          <div class="letter-ornament">✦ ✦ ✦</div>
-          <div class="letter-body" id="lBody"></div>
-          <div class="letter-sign">With all that you carry,</div>
-          <div class="letter-credit" id="lCredit"></div>
-        </div>
-        <div style="margin-top:28px">
-          <p style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px;font-weight:300">This was your <strong style="color:var(--accent);font-weight:400">free letter</strong>. Ready to preserve more memories?</p>
-          <div class="pricing-row">
-            <div class="pcard"><div class="pcard-badge">Starter</div><div class="pcard-price">$9.99</div><div class="pcard-desc">5 Song Letters</div></div>
-            <div class="pcard feat"><div class="pcard-badge">Best Value</div><div class="popular-badge">Most Popular</div><div class="pcard-price">$14.99</div><div class="pcard-desc">10 Song Letters</div></div>
-          </div>
-          <button class="btn-next" onclick="downloadPDF()">Download My PDF Letter →</button>
-          <div style="margin-top:20px">
-            <p style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:12px;font-weight:300">Need more letters? Get a pack:</p>
-            <div class="pricing-row">
-              <div class="pcard" style="cursor:pointer" onclick="startCheckout('price_1TYaViLXzHWT8avwfQ5Ccfn3')">
-                <div class="pcard-badge">Starter</div>
-                <div class="pcard-price">$9.99</div>
-                <div class="pcard-desc">5 Song Letters</div>
-                <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent)">Buy Now →</div>
-              </div>
-              <div class="pcard feat" style="cursor:pointer" onclick="startCheckout('price_1TYaW6LXzHWT8avwLdV6dNfA')">
-                <div class="pcard-badge">Best Value</div>
-                <div class="popular-badge">Most Popular</div>
-                <div class="pcard-price">$14.99</div>
-                <div class="pcard-desc">10 Song Letters</div>
-                <div style="margin-top:10px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent)">Buy Now →</div>
-              </div>
+        <p class="bcard-sub" style="margin-bottom:8px"><em id="resultSong"></em></p>
+        <p class="edit-hint">✎ Click the salutation or sign-off to personalize before downloading</p>
+
+        <div class="result-cols">
+          <div>
+            <div class="result-col-label">Your original</div>
+            <div class="letter-outer original">
+              <div class="letter-date" id="lDateOrig"></div>
+              <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px;padding-left:12px" id="lSalOrig"></div>
+              <div class="letter-ornament">✦ ✦ ✦</div>
+              <div class="letter-body" id="lBodyOrig"></div>
+              <div style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--accent);margin-top:20px;text-align:right" id="lSignOrig"></div>
+              <div class="letter-credit" id="lCreditOrig"></div>
             </div>
           </div>
-          <button class="btn-back" onclick="resetBuilder()">← Write another letter</button>
+          <div>
+            <div class="result-col-label" id="currentColLabel">Current version</div>
+            <div class="letter-outer">
+              <div class="letter-date" id="lDateCurr"></div>
+              <input class="letter-editable" id="lSalCurr" placeholder="Salutation…"/>
+              <div class="letter-ornament">✦ ✦ ✦</div>
+              <div class="letter-body" id="lBodyCurr"></div>
+              <div class="letter-sign-wrap">
+                <div class="letter-sign-label">Sign-off</div>
+                <input class="letter-sign-editable" id="lSignCurr" placeholder="Your name…"/>
+              </div>
+              <div class="letter-credit" id="lCreditCurr"></div>
+            </div>
+          </div>
         </div>
+
+        <!-- ACTIONS -->
+        <div class="result-actions">
+          <div class="result-actions-title">Try a different tone or regenerate</div>
+          <div class="result-tone-grid">
+            <div class="result-tone-btn" onclick="switchTone(this,'Love Letter')"><span class="result-tone-icon">💌</span><span class="result-tone-name">Love Letter</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Nostalgic')"><span class="result-tone-icon">🌅</span><span class="result-tone-name">Nostalgic</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Adventure')"><span class="result-tone-icon">🌍</span><span class="result-tone-name">Adventure</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Family')"><span class="result-tone-icon">🏡</span><span class="result-tone-name">Family</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Heartbreak')"><span class="result-tone-icon">💔</span><span class="result-tone-name">Heartbreak</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Inspirational')"><span class="result-tone-icon">✨</span><span class="result-tone-name">Inspirational</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Funny')"><span class="result-tone-icon">😄</span><span class="result-tone-name">Funny</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Friendship')"><span class="result-tone-icon">🤝</span><span class="result-tone-name">Friendship</span></div>
+          </div>
+          <div class="credit-info">Free attempts: <span id="freeAttemptsLeft"></span></div>
+          <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ Regenerate with same tone</button>
+          <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ Edit my memory and regenerate</button>
+        </div>
+
+        <!-- COMING SOON PHYSICAL PRINT -->
+        <div class="teaser-box">
+          <div class="teaser-badge">Coming Soon</div>
+          <div class="teaser-title">Love your letter? <em>Frame it.</em></div>
+          <div class="teaser-text">We're launching a premium print service — your letter beautifully printed on archival paper, framed with a mat, and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries.</div>
+          <button class="teaser-notify" onclick="notifyMe()">Notify Me When Available →</button>
+        </div>
+
+        <button class="btn-next" onclick="downloadPDF()">Download My PDF Letter →</button>
+        <div style="margin-top:20px">
+          <p style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:12px;font-weight:300">Need more letters? Get a pack:</p>
+          <div class="pricing-row">
+            <div class="pcard" onclick="startCheckout('price_1TYaViLXzHWT8avwfQ5Ccfn3')">
+              <div class="pcard-badge">Starter</div>
+              <div class="pcard-price">$9.99</div>
+              <div class="pcard-desc">5 Song Letters</div>
+              <div class="pcard-cta">Buy Now →</div>
+            </div>
+            <div class="pcard feat" onclick="startCheckout('price_1TYaW6LXzHWT8avwLdV6dNfA')">
+              <div class="pcard-badge">Best Value</div>
+              <div class="popular-badge">Most Popular</div>
+              <div class="pcard-price">$14.99</div>
+              <div class="pcard-desc">10 Song Letters</div>
+              <div class="pcard-cta">Buy Now →</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-back" onclick="showPage('page-dashboard')">← Back to Dashboard</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ── PASTE YOUR SUPABASE CREDENTIALS HERE ──
 const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
-// ──────────────────────────────────────────
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentUser = null;
 let currentProfile = null;
 let authMode = 'register';
+let currentLang = 'en';
 
-// Single shared client — initialized once after library loads
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-async function loadProfile(uid){
-  const { data } = await sb.from('profiles').select('*').eq('id', uid).single();
-  if(data){
-    currentProfile = data;
-    const remaining = data.letters_allowed - data.letters_used;
-    document.getElementById('builderUserLabel').textContent =
-      `Welcome, ${data.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+/* ── I18N ── */
+const i18n = {
+  en: {
+    nav_signin:'Sign In', nav_cta:'Begin Your First Letter →',
+    hero_eyebrow:'Memory Letters for the Songs That Made You',
+    hero_headline:"There's a song that takes<br>you back <em>every time.</em>",
+    hero_sub:"The first note plays and you’re there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong>",
+    hero_cta:"Write Your First Letter — It’s Free",
+    hero_note:'❖ &nbsp; No card required &nbsp; ❖ &nbsp; One free letter on signup',
+    story_label:'Why SongScript exists',
+    story_headline:"Some songs don’t just play.<br>They <em>transport.</em>",
+    story_text1:"There’s a song — you know the one. The first two seconds and you’re back. Not just remembering, but <strong>actually there</strong>: the smell of the room, the feeling in your chest, the person sitting next to you.",
+    story_text2:"Those memories deserve more than a playlist. They deserve words. <strong>SongScript uses AI to take everything you felt about that song and shape it into a polished, personal letter</strong> — written in your voice, beautiful enough to keep forever.",
+    story_text3:"Your first one is free. No templates. No generic output. Just a letter that sounds like <strong>you</strong> — on your best writing day.",
+    samples_label:'Real letters, real memories',
+    samples_headline:'This is what your letter could look like',
+    how_label:'The process',
+    how_headline:'Five steps. One letter. Yours forever.',
+    step1_name:'The Song', step1_desc:'Title, artist, and the date the memory lives in.',
+    step2_name:'Your Story', step2_desc:'Write freely — where, who, and what it felt like.',
+    step3_name:'The Line', step3_desc:"The lyric that stops time. Leave blank and we'll find it.",
+    step4_name:'The Tone', step4_desc:'Love letter, nostalgic, heartbreak, family…',
+    step5_name:'Your Letter', step5_desc:'A polished PDF. Calligraphic, personal, yours forever.',
+    final_headline:"Your memory deserves<br>more than <em>a playlist.</em>",
+    final_sub:'Start with one song. One letter. No card needed.',
+    final_cta:'Write My First Letter — Free →',
+    final_note:'❖ &nbsp; Every account starts with one free letter &nbsp; ❖'
+  },
+  es: {
+    nav_signin:'Iniciar Sesión', nav_cta:'Comienza Tu Primera Carta →',
+    hero_eyebrow:'Cartas de Memoria para las Canciones que Te Formaron',
+    hero_headline:"Hay una canción que te<br>regresa <em>cada vez.</em>",
+    hero_sub:"Suena la primera nota y ya estás ahí — en el carro, en ese cuarto, con esa gente. <strong>SongScript convierte ese sentimiento en una carta que puedes guardar para siempre.</strong>",
+    hero_cta:"Escribe Tu Primera Carta — Es Gratis",
+    hero_note:'❖ &nbsp; Sin tarjeta &nbsp; ❖ &nbsp; Una carta gratis al registrarte',
+    story_label:'Por qué existe SongScript',
+    story_headline:"Algunas canciones no solo suenan.<br>Te <em>transportan.</em>",
+    story_text1:"Hay una canción — tú sabes cuál. Los primeros dos segundos y ya estás de vuelta. No solo recordando, sino <strong>realmente ahí</strong>: el olor del cuarto, la sensación en el pecho, la persona sentada a tu lado.",
+    story_text2:"Esos recuerdos merecen más que una playlist. Merecen palabras. <strong>SongScript usa inteligencia artificial para tomar todo lo que sentiste con esa canción y convertirlo en una carta personal y pulida</strong> — escrita con tu voz, hermosa para guardar para siempre.",
+    story_text3:"Tu primera carta es gratis. Sin plantillas. Sin resultados genéricos. Solo una carta que suena como <strong>tú</strong> — en tu mejor día de escritura.",
+    samples_label:'Cartas reales, recuerdos reales',
+    samples_headline:'Así podría lucir tu carta',
+    how_label:'El proceso',
+    how_headline:'Cinco pasos. Una carta. Tuya para siempre.',
+    step1_name:'La Canción', step1_desc:'Título, artista y la fecha en que vive el recuerdo.',
+    step2_name:'Tu Historia', step2_desc:'Escribe libremente — dónde, con quién y cómo se sintió.',
+    step3_name:'La Línea', step3_desc:'La letra que detiene el tiempo. Déjala en blanco y la encontramos.',
+    step4_name:'El Tono', step4_desc:'Carta de amor, nostálgico, desamor, familia…',
+    step5_name:'Tu Carta', step5_desc:'Un PDF pulido. Caligráfico, personal, tuyo para siempre.',
+    final_headline:"Tu recuerdo merece<br>más que <em>una playlist.</em>",
+    final_sub:'Empieza con una canción. Una carta. Sin tarjeta.',
+    final_cta:'Escribe Mi Primera Carta — Gratis →',
+    final_note:'❖ &nbsp; Cada cuenta comienza con una carta gratis &nbsp; ❖'
   }
+};
+
+function setLang(lang){
+  currentLang = lang;
+  document.getElementById('langEN').classList.toggle('active', lang==='en');
+  document.getElementById('langES').classList.toggle('active', lang==='es');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(i18n[lang][key]) el.innerHTML = i18n[lang][key];
+  });
 }
 
-/* ── PAGE ROUTING ── */
+function closeModal(){ document.getElementById('letterModal').classList.remove('open'); }
+
 function showPage(id){
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  if(id === 'page-dashboard') loadDashboard();
 }
+
+function goToSignIn(){ setAuthMode('login'); showPage('page-register'); }
 
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 40);
 });
 
-/* ── AUTH MODE TOGGLE ── */
 function setAuthMode(mode){
   authMode = mode;
   const isReg = mode === 'register';
@@ -629,282 +894,410 @@ function setAuthMode(mode){
   document.getElementById('modeLoginBtn').classList.toggle('active', !isReg);
   document.getElementById('nameField').style.display = isReg ? 'block' : 'none';
   document.getElementById('freePill').style.display = isReg ? 'inline-block' : 'none';
+  document.getElementById('langField').style.display = isReg ? 'block' : 'none';
+  document.getElementById('optInRow').style.display = isReg ? 'flex' : 'none';
   document.getElementById('authTitle').textContent = isReg ? 'Create your account' : 'Welcome back';
-  document.getElementById('authSubtitle').textContent = isReg
-    ? 'Join thousands preserving their most meaningful song memories.'
-    : 'Sign in to access your letters and write new ones.';
-  document.getElementById('authSubmitBtn').textContent = isReg
-    ? 'Create My Account & Start Writing →'
-    : 'Sign In & Continue →';
+  document.getElementById('authSubtitle').textContent = isReg ? 'Join thousands preserving their most meaningful song memories.' : 'Sign in to access your letters and write new ones.';
+  document.getElementById('authSubmitBtn').textContent = isReg ? 'Create My Account & Start Writing →' : 'Sign In & Continue →';
   document.getElementById('strengthBarWrap').style.display = isReg ? 'block' : 'none';
   document.getElementById('strengthLabel').style.display = isReg ? 'block' : 'none';
 }
 
-/* ── PASSWORD STRENGTH ── */
 function checkStrength(inp){
-  const v = inp.value;
-  const fill = document.getElementById('strengthFill');
-  const lbl = document.getElementById('strengthLabel');
-  let score = 0;
-  if(v.length >= 8) score++;
-  if(/[A-Z]/.test(v)) score++;
-  if(/[0-9]/.test(v)) score++;
-  if(/[^A-Za-z0-9]/.test(v)) score++;
-  const map = [['0%','',''],['25%','#c0392b','Weak'],['50%','#e67e22','Fair'],['75%','#c9a84c','Good'],['100%','#27ae60','Strong']];
-  fill.style.width = map[score][0];
-  fill.style.background = map[score][1];
-  lbl.textContent = map[score][2];
+  const v=inp.value; const fill=document.getElementById('strengthFill'); const lbl=document.getElementById('strengthLabel');
+  let score=0;
+  if(v.length>=8)score++; if(/[A-Z]/.test(v))score++; if(/[0-9]/.test(v))score++; if(/[^A-Za-z0-9]/.test(v))score++;
+  const map=[['0%','',''],['25%','#c0392b','Weak'],['50%','#e67e22','Fair'],['75%','#c9a84c','Good'],['100%','#27ae60','Strong']];
+  fill.style.width=map[score][0]; fill.style.background=map[score][1]; lbl.textContent=map[score][2];
 }
 
-/* ── HANDLE AUTH (register or login) ── */
 async function handleAuth(){
-  const email = document.getElementById('regEmail').value.trim();
-  const pass = document.getElementById('regPass').value;
-  const name = document.getElementById('regName').value.trim();
-
-  const showErr = (eid, iid, show) => {
-    document.getElementById(eid).classList.toggle('show', show);
-    document.getElementById(iid).classList.toggle('err', show);
-  };
-
-  let ok = true;
-  if(authMode === 'register'){
-    showErr('errName','regName',!name); if(!name) ok = false;
-  }
-  showErr('errEmail','regEmail',!email||!email.includes('@')); if(!email||!email.includes('@')) ok = false;
-  showErr('errPass','regPass',pass.length < 8); if(pass.length < 8) ok = false;
-  if(!ok) return;
-
-  const btn = document.getElementById('authSubmitBtn');
-  btn.disabled = true;
-  btn.textContent = authMode === 'register' ? 'Creating your account…' : 'Signing in…';
-
-  if(authMode === 'register'){
-    const { data, error } = await sb.auth.signUp({ email, password: pass });
+  const email=document.getElementById('regEmail').value.trim();
+  const pass=document.getElementById('regPass').value;
+  const name=document.getElementById('regName').value.trim();
+  const lang=document.getElementById('regLang')?.value||'en';
+  const emailOptIn=document.getElementById('emailOptIn')?.checked||false;
+  const showErr=(eid,iid,show)=>{ document.getElementById(eid).classList.toggle('show',show); document.getElementById(iid).classList.toggle('err',show); };
+  let ok=true;
+  if(authMode==='register'){ showErr('errName','regName',!name); if(!name)ok=false; }
+  showErr('errEmail','regEmail',!email||!email.includes('@')); if(!email||!email.includes('@'))ok=false;
+  showErr('errPass','regPass',pass.length<8); if(pass.length<8)ok=false;
+  if(!ok)return;
+  const btn=document.getElementById('authSubmitBtn');
+  btn.disabled=true;
+  btn.textContent=authMode==='register'?'Creating your account…':'Signing in…';
+  const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  if(authMode==='register'){
+    const {data,error}=await freshSb.auth.signUp({email,password:pass});
     if(error){ btn.disabled=false; btn.textContent='Create My Account & Start Writing →'; alert(error.message); return; }
-    await sb.from('profiles').insert({ id: data.user.id, name, email, letters_used: 0, letters_allowed: 1 });
-    currentUser = data.user;
-    
-    document.getElementById('builderUserLabel').textContent = `Welcome, ${name.split(' ')[0]} · 1 letter remaining`;
+    await freshSb.from('profiles').insert({id:data.user.id,name,email,letters_used:0,letters_allowed:1,language:lang,email_marketing:emailOptIn});
+    currentUser=data.user; currentProfile={name,email,letters_used:0,letters_allowed:1,language:lang};
+    if(lang!=='en')setLang(lang);
   } else {
-    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+    const {data,error}=await freshSb.auth.signInWithPassword({email,password:pass});
     if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
-    currentUser = data.user;
-    await sb.auth.setSession({ access_token: data.session.access_token, refresh_token: data.session.refresh_token });
-    await loadProfile(currentUser.id);
+    currentUser=data.user;
+    await freshSb.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});
+    const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
+    if(profile){ currentProfile=profile; if(profile.language&&profile.language!=='en')setLang(profile.language); }
   }
-
-  btn.disabled = false;
-  btn.textContent = authMode === 'register' ? 'Create My Account & Start Writing →' : 'Sign In & Continue →';
-  showPage('page-builder');
+  btn.disabled=false;
+  btn.textContent=authMode==='register'?'Create My Account & Start Writing →':'Sign In & Continue →';
+  showPage('page-dashboard');
 }
 
-/* ── YEAR DROPDOWN ── */
-(function(){
-  const sel = document.getElementById('bMemYear');
-  const yr = new Date().getFullYear();
-  for(let y = yr; y >= 1940; y--){
-    const o = document.createElement('option');
-    o.value = y; o.textContent = y; sel.appendChild(o);
+async function handleSignOut(){ await sb.auth.signOut(); currentUser=null; currentProfile=null; showPage('page-landing'); }
+
+async function loadDashboard(){
+  if(!currentUser)return;
+  const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
+  if(profile){
+    currentProfile=profile;
+    const firstName=profile.name?.split(' ')[0]||'friend';
+    const remaining=profile.letters_allowed-profile.letters_used;
+    document.getElementById('dashWelcome').innerHTML=`Welcome back, <em>${firstName}</em>`;
+    document.getElementById('dashCredits').textContent=remaining;
+    document.getElementById('builderUserLabel').textContent=`${firstName} · ${remaining} letter${remaining!==1?'s':''} remaining`;
   }
+  const {data:letters}=await freshSb.from('letters').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
+  const list=document.getElementById('dashLettersList');
+  if(!letters||letters.length===0){
+    list.innerHTML='<div class="empty-state"><div class="empty-state-icon">❖</div><div class="empty-state-text">No letters yet — write your first one above.</div></div>';
+    return;
+  }
+  document.getElementById('dashLettersTitle').textContent=`Your Letters (${letters.length})`;
+  list.innerHTML=letters.map(l=>{
+    const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    return `<div class="letter-row" id="row-${l.id}">
+      <div class="letter-row-info">
+        <div class="letter-row-song">&#8220;${l.song}&#8221; · ${l.artist}</div>
+        <div class="letter-row-meta">${l.tone} · ${date}</div>
+      </div>
+      <div class="letter-row-actions">
+        <button class="btn-view" onclick="viewLetter('${l.id}')">View</button>
+        <button class="btn-dl" onclick="downloadLetterPDF('${l.id}')">PDF</button>
+        <button class="btn-del" onclick="deleteLetter('${l.id}')" title="Delete">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+  window._letters={};
+  letters.forEach(l=>window._letters[l.id]=l);
+}
+
+function viewLetter(id){
+  const l=window._letters[id]; if(!l)return;
+  const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('modalContent').innerHTML=`
+    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--muted);text-align:right;margin-bottom:20px;font-style:italic">${date}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--ink);margin-bottom:12px">${l.salutation||'To the song that never leaves,'}</div>
+    <div style="text-align:center;font-size:18px;color:var(--gold);margin:12px 0;letter-spacing:8px">❖ ❖ ❖</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300">${l.letter_body}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:var(--accent);margin-top:28px;text-align:right">${l.sign_off||'With all that you carry,'}</div>
+    <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase">&#8220;${l.song}&#8221; · ${l.artist} · ${l.tone}</div>
+    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download PDF →</button>
+  `;
+  document.getElementById('letterModal').classList.add('open');
+}
+
+function downloadLetterPDF(id){
+  const l=window._letters[id]; if(!l)return;
+  const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  openPDFWindow(l.song,l.artist,l.salutation||`To ${l.song},`,l.letter_body,l.sign_off||'With all that you carry,',`&#8220;${l.song}&#8221; · ${l.artist} · ${l.tone}`,date);
+}
+
+async function deleteLetter(id){
+  if(!confirm('Delete this letter? This cannot be undone.'))return;
+  const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  await freshSb.from('letters').delete().eq('id',id).eq('user_id',currentUser.id);
+  delete window._letters[id];
+  document.getElementById('row-'+id)?.remove();
+}
+
+function startNewLetter(){ resetBuilder(); showPage('page-builder'); }
+function showBuyModal(){ hideBPanels(); document.getElementById('bp5-result').classList.add('active'); showPage('page-builder'); }
+
+(function(){
+  const sel=document.getElementById('bMemYear'); const yr=new Date().getFullYear();
+  for(let y=yr;y>=1940;y--){ const o=document.createElement('option'); o.value=y; o.textContent=y; sel.appendChild(o); }
 })();
 
-/* ── BUILDER ── */
-let selectedTone = '';
+let selectedTone='';
+let sessionState={song:'',artist:'',month:'',year:'',memory:'',lyric:'',salutation:'',signOff:'',originalTone:'',currentTone:'',originalText:'',currentText:'',tonesUsed:[],regenUsed:false,memEditUsed:false,isFirstLetter:false};
 
 function bGoTo(step){
-  if(step === 1){
-    const t = document.getElementById('bSongTitle').value.trim();
-    const a = document.getElementById('bSongArtist').value.trim();
-    if(!t||!a){ alert('Please enter both the song title and the artist.'); return; }
-  }
-  if(step === 2){
-    const m = document.getElementById('bMemory').value.trim();
-    if(m.length < 20){ alert('Please share a bit more about your memory — even a few sentences help.'); return; }
-  }
-  hideBPanels();
-  document.getElementById('bp'+step).classList.add('active');
-  updateProgress(step);
+  if(step===1){ const t=document.getElementById('bSongTitle').value.trim(); const a=document.getElementById('bSongArtist').value.trim(); if(!t||!a){alert('Please enter both the song title and the artist.');return;} }
+  if(step===2){ const m=document.getElementById('bMemory').value.trim(); if(m.length<20){alert('Please share a bit more about your memory.');return;} }
+  hideBPanels(); document.getElementById('bp'+step).classList.add('active'); updateProgress(step);
 }
 
-function hideBPanels(){
-  ['bp0','bp1','bp2','bp3','bp5-loading','bp5-result'].forEach(id => {
-    document.getElementById(id).classList.remove('active');
+function hideBPanels(){ ['bp0','bp1','bp2','bp3','bp5-loading','bp5-result'].forEach(id=>document.getElementById(id).classList.remove('active')); }
+function updateProgress(active){ for(let i=0;i<5;i++){ const d=document.getElementById('pd'+i); d.classList.remove('active','done'); if(i<active)d.classList.add('done'); if(i===active)d.classList.add('active'); } }
+function selTone(el,tone){ document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); selectedTone=tone; document.getElementById('toneErr').classList.remove('show'); }
+function countWordsB(){ const w=document.getElementById('bMemory').value.trim().split(/\s+/).filter(w=>w.length>0).length; document.getElementById('memWordCount').textContent=w+' word'+(w!==1?'s':''); }
+function countLyric(){ const len=document.getElementById('bLyric').value.length; const el=document.getElementById('lyricCount'); el.textContent=len+' / 150'; el.className='char-count'+(len>120?' warn':'')+(len>=150?' over':''); }
+
+function buildPrompt(song,artist,tone,memory,lyric,dateContext,lang){
+  const sentences=memory.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>0);
+  const sentenceList=sentences.map((s,i)=>`Sentence ${i+1}: "${s}"`).join('\n');
+  const langInstruction=lang==='es'?'Write the letter in Spanish. Write naturally as a native Spanish speaker would.':'';
+  return `You are a copy editor. Rewrite each sentence to be more vivid and precise. Return exactly ${sentences.length} sentences plus a personalized salutation.
+
+THE SONG: "${song}" by ${artist}
+TONE: ${tone}
+${dateContext}
+${lyric?`LYRIC TO WEAVE IN NATURALLY: "${lyric}"`:''}
+${langInstruction}
+
+THE ${sentences.length} SENTENCES TO POLISH:
+${sentenceList}
+
+RULES:
+1. Return exactly ${sentences.length} polished sentences as flowing prose.
+2. Same meaning, same subject - better words. Do NOT add new sentences.
+3. Do NOT add details not in the original. Do NOT use the song own story or lyrics.
+4. If a lyric was provided, weave it into one sentence naturally.
+5. Preserve their voice. No AI filler. No invented endings.
+
+Then on a new line write:
+SALUTATION: [a personalized poetic salutation for this letter, e.g. "To Fast Car, and the road you opened up,"] Keep it under 12 words. Make it specific to this song and memory.`;
+}
+
+async function callAPI(prompt){
+  const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{role:'user',content:prompt}]})});
+  const data=await res.json();
+  return data.content?.[0]?.text||'';
+}
+
+function parseResponse(raw){
+  const salMatch=raw.match(/SALUTATION:\s*(.+)/);
+  const salutation=salMatch?salMatch[1].trim():'';
+  const body=raw.replace(/SALUTATION:.+/s,'').trim();
+  return {body,salutation};
+}
+
+function showLoading(tone){
+  hideBPanels(); document.getElementById('bp5-loading').classList.add('active'); updateProgress(4);
+  document.getElementById('loadTitle').textContent='The quill is moving…';
+  document.getElementById('loadSub').textContent=`Crafting the ${tone.toLowerCase()} tone for your memory.`;
+}
+
+function renderResult(body,salutation,tone,isNew){
+  const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const credit=`"${sessionState.song}" · ${sessionState.artist} · ${tone}`;
+  const signOff=currentProfile?.name||'With all that you carry,';
+  if(isNew){
+    document.getElementById('lDateOrig').textContent=now;
+    document.getElementById('lSalOrig').textContent=salutation;
+    document.getElementById('lBodyOrig').textContent=body;
+    document.getElementById('lSignOrig').textContent=signOff;
+    document.getElementById('lCreditOrig').textContent=credit;
+    sessionState.originalText=body; sessionState.originalTone=tone; sessionState.salutation=salutation; sessionState.signOff=signOff;
+  }
+  document.getElementById('lDateCurr').textContent=now;
+  document.getElementById('lSalCurr').value=salutation;
+  document.getElementById('lBodyCurr').textContent=body;
+  document.getElementById('lSignCurr').value=signOff;
+  document.getElementById('lCreditCurr').textContent=credit;
+  document.getElementById('currentColLabel').textContent=isNew?'Current version':`Current · ${tone}`;
+  sessionState.currentText=body; sessionState.currentTone=tone;
+  document.querySelectorAll('.result-tone-btn').forEach(b=>{
+    b.classList.remove('sel');
+    const btnTone=b.querySelector('.result-tone-name').textContent;
+    if(sessionState.tonesUsed.includes(btnTone))b.classList.add('used');
+    if(btnTone===tone){b.classList.add('sel');b.classList.add('used');}
   });
+  updateCreditInfo();
+  hideBPanels(); document.getElementById('bp5-result').classList.add('active'); updateProgress(4);
 }
 
-function updateProgress(active){
-  for(let i = 0; i < 5; i++){
-    const d = document.getElementById('pd'+i);
-    d.classList.remove('active','done');
-    if(i < active) d.classList.add('done');
-    if(i === active) d.classList.add('active');
+function updateCreditInfo(){
+  if(sessionState.isFirstLetter){
+    document.getElementById('freeAttemptsLeft').textContent='Unlimited — enjoy your first letter!';
+    document.getElementById('regenBtn').disabled=false;
+    document.getElementById('editMemoryBtn').disabled=false;
+  } else {
+    const toneLeft=Math.max(0,3-sessionState.tonesUsed.length);
+    const regenLeft=sessionState.regenUsed?0:1;
+    const editLeft=sessionState.memEditUsed?0:1;
+    document.getElementById('freeAttemptsLeft').textContent=`${toneLeft} tone change${toneLeft!==1?'s':''} · ${regenLeft} regen · ${editLeft} memory edit`;
+    document.getElementById('regenBtn').disabled=regenLeft===0;
+    document.getElementById('editMemoryBtn').disabled=editLeft===0;
   }
 }
 
-function selTone(el, tone){
-  document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('sel'));
-  el.classList.add('sel');
-  selectedTone = tone;
-  document.getElementById('toneErr').classList.remove('show');
-}
-
-function countWordsB(){
-  const words = document.getElementById('bMemory').value.trim().split(/\s+/).filter(w=>w.length>0).length;
-  document.getElementById('memWordCount').textContent = words + ' word' + (words!==1?'s':'');
-}
-
-function countLyric(){
-  const len = document.getElementById('bLyric').value.length;
-  const el = document.getElementById('lyricCount');
-  el.textContent = len + ' / 150';
-  el.className = 'char-count' + (len>120?' warn':'') + (len>=150?' over':'');
+async function saveLetter(song,artist,tone,salutation,signOff,body,memory){
+  try{
+    const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+    await freshSb.from('letters').insert({user_id:currentUser.id,song,artist,tone,salutation,sign_off:signOff,letter_body:body,memory});
+  }catch(e){console.log('Save error:',e);}
 }
 
 async function generateLetter(){
-  if(!selectedTone){ document.getElementById('toneErr').classList.add('show'); return; }
-  if(!currentUser){ alert('Please sign in to generate your letter.'); return; }
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-  if(!profile || profile.letters_used >= profile.letters_allowed){
-    alert('You have used your free letter. Purchase more letters to continue writing.');
-    return;
-  }
-
-  const song = document.getElementById('bSongTitle').value.trim();
-  const artist = document.getElementById('bSongArtist').value.trim();
-  const month = document.getElementById('bMemMonth').value;
-  const year = document.getElementById('bMemYear').value;
-  const memory = document.getElementById('bMemory').value.trim();
-  const lyric = document.getElementById('bLyric').value.trim();
-
-  hideBPanels();
-  document.getElementById('bp5-loading').classList.add('active');
-  updateProgress(4);
-
-  const msgs = [
-    ['Finding the thread of your memory…','The AI is listening between the words you wrote.'],
-    ['Honoring every detail…','Keeping what makes it yours — your voice, your moment.'],
-    ['Setting the tone…','Crafting the emotional register of '+selectedTone.toLowerCase()+'.'],
-    ['Almost there…','The final lines are taking shape.']
-  ];
-  let mi = 0;
-  const interval = setInterval(() => {
-    mi = (mi+1) % msgs.length;
-    document.getElementById('loadTitle').textContent = msgs[mi][0];
-    document.getElementById('loadSub').textContent = msgs[mi][1];
-  }, 2200);
-
-  const dateContext = month&&year ? `The memory took place in ${month} ${year}.` : year ? `The memory is from ${year}.` : '';
-  const prompt = `You are a master letter writer specializing in memory letters. Your job is to transform a person's raw emotional memory of a song into a polished, deeply personal letter they will treasure forever.
-
-THE SONG: "${song}" by ${artist}
-THE TONE REQUESTED: ${selectedTone}
-${dateContext}
-${lyric ? `THE LINE THAT HITS THEM HARDEST: "${lyric}"` : '(No lyric provided — find the most resonant line from this song yourself and weave it in naturally.)'}
-
-THE PERSON'S RAW MEMORY:
-${memory}
-
-YOUR TASK:
-Write a beautiful, personal memory letter of 3-4 paragraphs (around 200-280 words). This letter speaks from the person to the song itself, or to the memory it holds.
-
-CRITICAL RULES:
-1. Preserve authenticity — it must sound like THEM, polished and elevated. Keep their specific details, their places, their people, their moments.
-2. Emotional preservation — don't water down the feeling. If it's heartbreak, let it ache. If it's love, let it soar.
-3. Sensory specificity — use sight, sound, smell, texture. Ground every abstract feeling in a concrete physical detail from their memory.
-4. Human tone — no AI-sounding phrases. No "tapestry of emotions." No "journey." Write like a gifted human writer.
-5. Weave in the lyric naturally — let it arrive like a revelation. If no lyric was given, find the song's most resonant line yourself.
-6. End with an image or line that lingers. Not a moral. A final frame.
-7. Match the tone: ${selectedTone}.
-8. Do NOT include a salutation or sign-off — just the body paragraphs.
-
-Write only the letter body. No explanations, no title, no quotes around it.`;
-
+  if(!selectedTone){document.getElementById('toneErr').classList.add('show');return;}
+  if(!currentUser){alert('Please sign in to generate your letter.');return;}
+  const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
+  if(!profile||profile.letters_used>=profile.letters_allowed){alert('You have used all your letters. Purchase more to continue writing.');return;}
+  const song=document.getElementById('bSongTitle').value.trim();
+  const artist=document.getElementById('bSongArtist').value.trim();
+  const month=document.getElementById('bMemMonth').value;
+  const year=document.getElementById('bMemYear').value;
+  const memory=document.getElementById('bMemory').value.trim();
+  const lyric=document.getElementById('bLyric').value.trim();
+  const dateContext=month&&year?`The memory took place in ${month} ${year}.`:year?`The memory is from ${year}.`:'';
+  const lang=currentProfile?.language||'en';
+  sessionState={song,artist,month,year,memory,lyric,salutation:'',signOff:'',originalTone:selectedTone,currentTone:selectedTone,originalText:'',currentText:'',tonesUsed:[selectedTone],regenUsed:false,memEditUsed:false,isFirstLetter:profile.letters_used===0};
+  document.getElementById('resultSong').textContent=`"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
+  showLoading(selectedTone);
   try{
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
-    });
-    clearInterval(interval);
-    const data = await res.json();
-    const text = data.content?.[0]?.text || "We couldn't write your letter just now. Please try again.";
-
-    await sb.from('profiles').update({ letters_used: profile.letters_used + 1 }).eq('id', currentUser.id);
-    const remaining = profile.letters_allowed - profile.letters_used - 1;
-    document.getElementById('builderUserLabel').textContent =
-      `Welcome, ${profile.name?.split(' ')[0]} · ${remaining} letter${remaining!==1?'s':''} remaining`;
-
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
-    document.getElementById('resultSong').textContent = `"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
-    document.getElementById('lDate').textContent = dateStr;
-    document.getElementById('lBody').textContent = text;
-    document.getElementById('lCredit').textContent = `"${song}" · ${artist} · ${selectedTone}`;
-    hideBPanels();
-    document.getElementById('bp5-result').classList.add('active');
-    updateProgress(4);
-  } catch(e){
-    clearInterval(interval);
-    document.getElementById('lBody').textContent = "Something went wrong. Please try again.";
-    hideBPanels();
-    document.getElementById('bp5-result').classList.add('active');
+    const raw=await callAPI(buildPrompt(song,artist,selectedTone,memory,lyric,dateContext,lang));
+    const {body,salutation}=parseResponse(raw);
+    const signOff=currentProfile?.name||'With all that you carry,';
+    await freshSb.from('profiles').update({letters_used:profile.letters_used+1}).eq('id',currentUser.id);
+    const remaining=profile.letters_allowed-profile.letters_used-1;
+    document.getElementById('builderUserLabel').textContent=`${currentProfile?.name?.split(' ')[0]||''} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+    document.getElementById('dashCredits').textContent=remaining;
+    await saveLetter(song,artist,selectedTone,salutation,signOff,body,memory);
+    renderResult(body,salutation,selectedTone,true);
+  }catch(e){
+    hideBPanels(); document.getElementById('bp5-result').classList.add('active');
+    document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";
   }
 }
 
-function downloadPDF(){
-  const song = document.getElementById('bSongTitle').value.trim();
-  const artist = document.getElementById('bSongArtist').value.trim();
-  const body = document.getElementById('lBody').textContent;
-  const date = document.getElementById('lDate').textContent;
-  const credit = document.getElementById('lCredit').textContent;
-  const win = window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-<title>SongScript — ${song} by ${artist}</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}@media print{body{padding:40px;background:white}}.header{text-align:center;margin-bottom:48px}.brand{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}.song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}.letter-box{background:#f5ede0;border:1px solid #dfd0b0;padding:52px 56px;position:relative}.side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}.date{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:28px;font-style:italic}.salutation{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:16px}.ornament{text-align:center;font-size:18px;color:#c9a84c;margin:14px 0;letter-spacing:8px}.body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.95;color:#1a1208;white-space:pre-wrap;font-weight:300}.sign{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#6b3d2e;margin-top:32px;text-align:right}.credit{font-size:11px;color:#8a7a5a;text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}.print-btn{display:block;margin:36px auto 0;padding:14px 40px;background:#6b3d2e;color:white;border:none;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer}.print-btn:hover{background:#1a1208}@media print{.print-btn{display:none}}</style></head>
-<body><div class="header"><div class="brand">SongScript · Memory Letter</div><div class="song-title">"${song}" by ${artist}</div></div>
-<div class="letter-box"><div class="side-line" style="left:28px"></div><div class="side-line" style="right:28px"></div>
-<div class="date">${date}</div><div class="salutation">To the song that never leaves,</div>
-<div class="ornament">✦ ✦ ✦</div><div class="body">${body}</div>
-<div class="sign">With all that you carry,</div><div class="credit">${credit}</div></div>
+async function switchTone(el,tone){
+  if(tone===sessionState.currentTone)return;
+  const tonesUsedNew=[...new Set([...sessionState.tonesUsed,tone])];
+  if(!sessionState.isFirstLetter&&tonesUsedNew.length>3&&!sessionState.tonesUsed.includes(tone)){
+    const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+    const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
+    if(!profile||profile.letters_used>=profile.letters_allowed){alert('Purchase more letters to try more tones.');return;}
+    await freshSb.from('profiles').update({letters_used:profile.letters_used+1}).eq('id',currentUser.id);
+    document.getElementById('dashCredits').textContent=profile.letters_allowed-profile.letters_used-1;
+  }
+  sessionState.tonesUsed=tonesUsedNew; sessionState.currentTone=tone;
+  const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
+  const lang=currentProfile?.language||'en';
+  showLoading(tone);
+  try{
+    const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,tone,sessionState.memory,sessionState.lyric,dateContext,lang));
+    const {body,salutation}=parseResponse(raw);
+    renderResult(body,salutation,tone,false);
+  }catch(e){hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";}
+}
+
+async function regenerateLetter(){
+  if(sessionState.regenUsed&&!sessionState.isFirstLetter){
+    const freshSb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+    const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
+    if(!profile||profile.letters_used>=profile.letters_allowed){alert('Purchase more letters to regenerate.');return;}
+    await freshSb.from('profiles').update({letters_used:profile.letters_used+1}).eq('id',currentUser.id);
+    document.getElementById('dashCredits').textContent=profile.letters_allowed-profile.letters_used-1;
+  }
+  sessionState.regenUsed=true;
+  const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
+  const lang=currentProfile?.language||'en';
+  showLoading(sessionState.currentTone);
+  try{
+    const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang));
+    const {body,salutation}=parseResponse(raw);
+    renderResult(body,salutation,sessionState.currentTone,false);
+  }catch(e){hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";}
+}
+
+function editMemory(){
+  const newMemory=prompt('Edit your memory below:\n\nCurrent memory:',sessionState.memory);
+  if(!newMemory||newMemory.trim()===sessionState.memory)return;
+  sessionState.memory=newMemory.trim();
+  if(!sessionState.isFirstLetter)sessionState.memEditUsed=true;
+  const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
+  const lang=currentProfile?.language||'en';
+  showLoading(sessionState.currentTone);
+  callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang))
+    .then(raw=>{const {body,salutation}=parseResponse(raw);renderResult(body,salutation,sessionState.currentTone,false);})
+    .catch(()=>{hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";});
+}
+
+function notifyMe(){
+  const email=prompt("Enter your email and we'll notify you when the print service launches:");
+  if(email&&email.includes('@')){alert('Thank you! We'll let you know as soon as it's available.');}
+}
+
+function openPDFWindow(song,artist,salutation,body,signOff,credit,date){
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SongScript — ${song} by ${artist}</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}
+@media print{
+  body{padding:40px;background:white;max-width:100%}
+  .print-btn{display:none}
+  .letter-box{border:none;background:white;padding:20px 0}
+  .side-line{display:none}
+}
+.header{text-align:center;margin-bottom:48px}
+.brand{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}
+.song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}
+.letter-box{background:#f5ede0;border:1px solid #dfd0b0;padding:52px 56px;position:relative}
+.side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}
+.date{font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:28px;font-style:italic}
+.salutation{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:16px}
+.ornament{text-align:center;font-size:18px;color:#c9a84c;margin:14px 0;letter-spacing:8px}
+.letter-body{font-family:'Great Vibes',cursive;font-size:22px;line-height:2.1;color:#1a1208;white-space:pre-wrap}
+.sign{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#6b3d2e;margin-top:32px;text-align:right}
+.credit{font-size:11px;color:#8a7a5a;text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
+.print-btn{display:block;margin:36px auto 0;padding:14px 40px;background:#6b3d2e;color:white;border:none;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer}
+</style></head>
+<body>
+<div class="header"><div class="brand">SongScript · Memory Letter</div><div class="song-title">"${song}" by ${artist}</div></div>
+<div class="letter-box">
+  <div class="side-line" style="left:28px"></div><div class="side-line" style="right:28px"></div>
+  <div class="date">${date}</div>
+  <div class="salutation">${salutation}</div>
+  <div class="ornament">❖ ❖ ❖</div>
+  <div class="letter-body">${body}</div>
+  <div class="sign">${signOff}</div>
+  <div class="credit">${credit}</div>
+</div>
 <button class="print-btn" onclick="window.print()">Save as PDF / Print →</button>
 </body></html>`);
   win.document.close();
 }
 
+function downloadPDF(){
+  const song=sessionState.song; const artist=sessionState.artist;
+  const salutation=document.getElementById('lSalCurr').value||`To ${song},`;
+  const body=document.getElementById('lBodyCurr').textContent;
+  const signOff=document.getElementById('lSignCurr').value||'With all that you carry,';
+  const credit=document.getElementById('lCreditCurr').textContent;
+  const date=document.getElementById('lDateCurr').textContent;
+  openPDFWindow(song,artist,salutation,body,signOff,credit,date);
+}
+
 async function startCheckout(priceId){
-  if(!currentUser){ alert('Please sign in first.'); return; }
-  const btn = event.currentTarget;
-  btn.style.opacity = '0.6';
-  btn.style.pointerEvents = 'none';
+  if(!currentUser){alert('Please sign in first.');return;}
   try{
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId, userId: currentUser.id, userEmail: currentUser.email })
-    });
-    const data = await res.json();
-    if(data.url){ window.location.href = data.url; }
-    else { alert('Something went wrong. Please try again.'); btn.style.opacity='1'; btn.style.pointerEvents='auto'; }
-  } catch(e){
-    alert('Something went wrong. Please try again.');
-    btn.style.opacity='1'; btn.style.pointerEvents='auto';
-  }
+    const res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({priceId,userId:currentUser.id,userEmail:currentUser.email})});
+    const data=await res.json();
+    if(data.url){window.location.href=data.url;}
+    else{alert('Something went wrong. Please try again.');}
+  }catch(e){alert('Something went wrong. Please try again.');}
 }
 
 function resetBuilder(){
-  selectedTone = '';
-  ['bSongTitle','bSongArtist','bLyric'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('bMemory').value = '';
-  document.getElementById('bMemMonth').value = '';
-  document.getElementById('bMemYear').value = '';
-  document.getElementById('memWordCount').textContent = '0 words';
-  document.getElementById('lyricCount').textContent = '0 / 150';
-  document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('sel'));
-  hideBPanels();
-  document.getElementById('bp0').classList.add('active');
-  updateProgress(0);
+  selectedTone='';
+  sessionState={song:'',artist:'',month:'',year:'',memory:'',lyric:'',salutation:'',signOff:'',originalTone:'',currentTone:'',originalText:'',currentText:'',tonesUsed:[],regenUsed:false,memEditUsed:false,isFirstLetter:false};
+  ['bSongTitle','bSongArtist','bLyric'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('bMemory').value='';
+  document.getElementById('bMemMonth').value='';
+  document.getElementById('bMemYear').value='';
+  document.getElementById('memWordCount').textContent='0 words';
+  document.getElementById('lyricCount').textContent='0 / 150';
+  document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.result-tone-btn').forEach(b=>b.classList.remove('sel','used'));
+  hideBPanels(); document.getElementById('bp0').classList.add('active'); updateProgress(0);
 }
 </script>
 </body>
