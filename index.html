@@ -6,6 +6,11 @@
 <title>SongScript — Memory Letters for the Songs That Made You</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
+<script>
+// Pre-declare globals so onclick handlers work before init
+var sb, currentUser=null, currentProfile=null, authMode="register", currentLang="en";
+var selectedTone="", sessionState={};
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -799,12 +804,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 <script>
 const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-let currentUser = null;
-let currentProfile = null;
-let authMode = 'register';
-let currentLang = 'en';
+sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ── I18N ── */
 const i18n = {
@@ -1022,8 +1022,8 @@ function showBuyModal(){ hideBPanels(); document.getElementById('bp5-result').cl
   for(let y=yr;y>=1940;y--){ const o=document.createElement('option'); o.value=y; o.textContent=y; sel.appendChild(o); }
 })();
 
-let selectedTone='';
-let sessionState={song:'',artist:'',month:'',year:'',memory:'',lyric:'',salutation:'',signOff:'',originalTone:'',currentTone:'',originalText:'',currentText:'',tonesUsed:[],regenUsed:false,memEditUsed:false,isFirstLetter:false};
+selectedTone='';
+sessionState={song:'',artist:'',month:'',year:'',memory:'',lyric:'',salutation:'',signOff:'',originalTone:'',currentTone:'',originalText:'',currentText:'',tonesUsed:[],regenUsed:false,memEditUsed:false,isFirstLetter:false};
 
 function bGoTo(step){
   if(step===1){ const t=document.getElementById('bSongTitle').value.trim(); const a=document.getElementById('bSongArtist').value.trim(); if(!t||!a){alert('Please enter both the song title and the artist.');return;} }
@@ -1299,6 +1299,7 @@ function resetBuilder(){
   document.querySelectorAll('.result-tone-btn').forEach(b=>b.classList.remove('sel','used'));
   hideBPanels(); document.getElementById('bp0').classList.add('active'); updateProgress(0);
 }
+
 </script>
 </body>
 </html>
