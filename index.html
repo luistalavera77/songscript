@@ -579,14 +579,6 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     </div>
     <button class="btn-new-letter" onclick="startNewLetter()">✦ Write a New Letter</button>
     <div class="letters-title" id="dashLettersTitle">Your Letters</div>
-    <!-- COMING SOON TEASER -->
-    <div class="teaser-box" style="margin-bottom:32px">
-      <div class="teaser-badge">Coming Soon</div>
-      <div class="teaser-title">Love your letter? <em>Frame it.</em></div>
-      <div class="teaser-text">We're launching a premium print service — your letter beautifully printed on archival paper, framed and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries.</div>
-      <button class="teaser-notify" onclick="notifyMe()">Notify Me When Available →</button>
-    </div>
-
     <div id="dashLettersList">
       <div class="empty-state">
         <div class="empty-state-icon">✦</div>
@@ -594,6 +586,14 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </div>
     </div>
   </div>
+    <!-- COMING SOON TEASER -->
+    <div class="teaser-box" style="margin-top:32px">
+      <div class="teaser-badge" id="ts-badge">Coming Soon</div>
+      <div class="teaser-title" id="ts-title">Love your letter? <em>Frame it.</em></div>
+      <div class="teaser-text" id="ts-text">We're launching a premium print service — your letter beautifully printed on archival paper, framed and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries. Currently available in the United States only.</div>
+      <button class="teaser-notify" onclick="notifyMe()" id="ts-btn">Notify Me When Available →</button>
+    </div>
+
 </div>
 
 <!-- BUILDER PAGE -->
@@ -782,6 +782,10 @@ const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
 sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Restore saved language
+const _savedLang = localStorage.getItem('ss_lang');
+if(_savedLang && _savedLang !== 'en'){ currentLang = _savedLang; }
+
 /* ── I18N ── */
 const i18n = {
   en: {
@@ -812,15 +816,15 @@ const i18n = {
   },
   es: {
     nav_signin:'Iniciar Sesión', nav_cta:'Comienza Tu Primera Carta →',
-    hero_eyebrow:'Cartas de Memoria para las Canciones que Te Formaron',
-    hero_headline:"Hay una canción que te<br>regresa <em>cada vez.</em>",
+    hero_eyebrow:'Una carta para recordar las canciones que te marcaron',
+    hero_headline:"Hay una canción que siempre te regresa en el tiempo.",
     hero_sub:"Suena la primera nota y ya estás ahí — en el carro, en ese cuarto, con esa gente. <strong>SongScript convierte ese sentimiento en una carta que puedes guardar para siempre.</strong>",
     hero_cta:"Escribe Tu Primera Carta — Es Gratis",
-    hero_note:'❖ &nbsp; Sin tarjeta &nbsp; ❖ &nbsp; Una carta gratis al registrarte',
+    hero_note:'Una carta gratis al registrarte',
     story_label:'Por qué existe SongScript',
     story_headline:"Algunas canciones no solo suenan.<br>Te <em>transportan.</em>",
     story_text1:"Hay una canción — tú sabes cuál. Los primeros dos segundos y ya estás de vuelta. No solo recordando, sino <strong>realmente ahí</strong>: el olor del cuarto, la sensación en el pecho, la persona sentada a tu lado.",
-    story_text2:"Esos recuerdos merecen más que una playlist. Merecen palabras. <strong>SongScript usa inteligencia artificial para tomar todo lo que sentiste con esa canción y convertirlo en una carta personal y pulida</strong> — escrita con tu voz, hermosa para guardar para siempre.",
+    story_text2:"Esos recuerdos merecen más que una lista de canciones. Merecen palabras. <strong>SongScript usa inteligencia artificial para tomar todo lo que sentiste con esa canción y convertirlo en una carta personal y pulida</strong> — escrita con tu voz, hermosa para guardar para siempre.",
     story_text3:"Tu primera carta es gratis. Sin plantillas. Sin resultados genéricos. Solo una carta que suena como <strong>tú</strong> — en tu mejor día de escritura.",
     samples_label:'Cartas reales, recuerdos reales',
     samples_headline:'Así podría lucir tu carta',
@@ -831,7 +835,7 @@ const i18n = {
     step3_name:'La Línea', step3_desc:'La letra que detiene el tiempo. Déjala en blanco y la encontramos.',
     step4_name:'El Tono', step4_desc:'Carta de amor, nostálgico, desamor, familia…',
     step5_name:'Tu Carta', step5_desc:'Un PDF pulido. Caligráfico, personal, tuyo para siempre.',
-    final_headline:"Tu recuerdo merece<br>más que <em>una playlist.</em>",
+    final_headline:"Tu recuerdo merece<br>más que <em>una lista de canciones.</em>",
     final_sub:'Empieza con una canción. Una carta. Sin tarjeta.',
     final_cta:'Escribe Mi Primera Carta — Gratis →',
     final_note:'❖ &nbsp; Cada cuenta comienza con una carta gratis &nbsp; ❖'
@@ -840,11 +844,70 @@ const i18n = {
 
 function setLang(lang){
   currentLang = lang;
+  localStorage.setItem('ss_lang', lang);
   document.getElementById('langEN').classList.toggle('active', lang==='en');
   document.getElementById('langES').classList.toggle('active', lang==='es');
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if(i18n[lang][key]) el.innerHTML = i18n[lang][key];
+  });
+  // Apply to hardcoded elements that aren't in data-i18n
+  applyLangToUI(lang);
+}
+
+function applyLangToUI(lang){
+  const es = lang === 'es';
+  // Auth page
+  const modeReg = document.getElementById('modeRegBtn');
+  const modeLogin = document.getElementById('modeLoginBtn');
+  if(modeReg) modeReg.textContent = es ? 'Crear cuenta' : 'Create Account';
+  if(modeLogin) modeLogin.textContent = es ? 'Iniciar sesión' : 'Sign In';
+  const freePill = document.getElementById('freePill');
+  if(freePill) freePill.textContent = es ? 'Una carta gratis incluida' : 'One Free Letter Included';
+  const authTitle = document.getElementById('authTitle');
+  if(authTitle) authTitle.textContent = authMode==='register' ? (es?'Crea tu cuenta':'Create your account') : (es?'Bienvenido de vuelta':'Welcome back');
+  const authSub = document.getElementById('authSubtitle');
+  if(authSub) authSub.textContent = authMode==='register'
+    ? (es?'Únete a quienes ya están preservando sus recuerdos más valiosos.':'Join thousands preserving their most meaningful song memories.')
+    : (es?'Inicia sesión para ver tus cartas y escribir nuevas.':'Sign in to access your letters and write new ones.');
+  const authBtn = document.getElementById('authSubmitBtn');
+  if(authBtn) authBtn.textContent = authMode==='register'
+    ? (es?'Crear mi cuenta y empezar a escribir →':'Create My Account & Start Writing →')
+    : (es?'Iniciar sesión y continuar →':'Sign In & Continue →');
+  const nameField = document.querySelector('#regName');
+  if(nameField) nameField.placeholder = es?'¿Cómo firmamos tus cartas?':'How should we address your letters?';
+  // Dashboard
+  const dashSub = document.getElementById('dashSubtitle');
+  if(dashSub) dashSub.textContent = es?'¿Listo para preservar otro recuerdo?':'Ready to preserve another memory?';
+  const credLabel = document.querySelector('.credits-label');
+  if(credLabel) credLabel.textContent = es?'Cartas disponibles':'Letters Remaining';
+  const buyBtn = document.querySelector('.btn-buy-more');
+  if(buyBtn) buyBtn.textContent = es?'Conseguir más cartas →':'Get More Letters →';
+  const newLetterBtn = document.querySelector('.btn-new-letter');
+  if(newLetterBtn) newLetterBtn.textContent = es?'✦ Escribir una nueva carta':'✦ Write a New Letter';
+  const lettersTitle = document.getElementById('dashLettersTitle');
+  if(lettersTitle) lettersTitle.textContent = es?'Tus cartas':'Your Letters';
+  // Coming soon teaser
+  const tsBadge = document.getElementById('ts-badge');
+  if(tsBadge) tsBadge.textContent = es?'Próximamente':'Coming Soon';
+  const tsTitle = document.getElementById('ts-title');
+  if(tsTitle) tsTitle.innerHTML = es?'¿Te encantó tu carta? <em>Enmárcala.</em>':'Love your letter? <em>Frame it.</em>';
+  const tsText = document.getElementById('ts-text');
+  if(tsText) tsText.textContent = es
+    ?'Pronto lanzaremos un servicio de impresión premium — tu carta impresa en papel de archivo, enmarcada y enviada a ti o a alguien que amas. Perfecta para el Día de la Madre, el Día del Padre, bodas y aniversarios. Por ahora disponible solo en Estados Unidos.'
+    :"We're launching a premium print service — your letter beautifully printed on archival paper, framed and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries.";
+  const tsBtn = document.getElementById('ts-btn');
+  if(tsBtn) tsBtn.textContent = es?'Avísame cuando esté disponible →':'Notify Me When Available →';
+  // Builder steps
+  const stepLabels = [
+    ['La canción','The Song'],['Tu historia','Your Story'],['La línea','The Line'],['El tono','The Tone'],['Tu carta','Your Letter']
+  ];
+  document.querySelectorAll('.pdot-label').forEach((el,i) => {
+    if(stepLabels[i]) el.textContent = es ? stepLabels[i][0] : stepLabels[i][1];
+  });
+  // Sign out button
+  document.querySelectorAll('[onclick="handleSignOut()"]').forEach(el => {
+    el.textContent = es?'Cerrar sesión':'Sign Out';
   });
 }
 
@@ -855,6 +918,14 @@ function showPage(id){
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
   if(id === 'page-dashboard') loadDashboard();
+  // Re-apply language on every page change
+  if(currentLang !== 'en'){
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(i18n[currentLang]?.[key]) el.innerHTML = i18n[currentLang][key];
+    });
+    applyLangToUI(currentLang);
+  }
 }
 
 function goToSignIn(){ setAuthMode('login'); showPage('page-register'); }
