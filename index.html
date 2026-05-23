@@ -325,6 +325,23 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .teaser-notify{background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;padding:10px 24px;border-radius:1px;cursor:pointer;transition:all .25s}
 .teaser-notify:hover{background:var(--gold);color:var(--ink)}
 
+/* CUSTOM MODAL */
+.custom-modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.6);z-index:300;display:none;align-items:center;justify-content:center;padding:24px}
+.custom-modal-overlay.open{display:flex}
+.custom-modal-box{background:var(--paper);border:1px solid var(--border);border-radius:2px;width:100%;max-width:560px;padding:36px 40px;position:relative}
+.custom-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
+.custom-modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.custom-modal-sub{font-size:13px;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.6}
+.custom-modal-textarea{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;border-radius:1px;resize:vertical;line-height:1.7;min-height:140px;transition:border .2s}
+.custom-modal-textarea:focus{border-color:var(--gold);background:white}
+.custom-modal-input{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;border-radius:1px;transition:border .2s}
+.custom-modal-input:focus{border-color:var(--gold);background:white}
+.custom-modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.custom-modal-cancel{padding:12px 24px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
+.custom-modal-cancel:hover{border-color:var(--muted);color:var(--ink)}
+.custom-modal-confirm{padding:12px 24px;background:var(--accent);color:white;border:none;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
+.custom-modal-confirm:hover{background:var(--ink)}
+
 /* PRICING */
 .pricing-row{display:flex;gap:12px;margin:16px 0}
 .pcard{flex:1;border:1.5px solid var(--border);border-radius:2px;padding:22px 18px;text-align:center;background:var(--paper);cursor:pointer;transition:all .25s}
@@ -500,8 +517,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="auth-left">
       <div class="auth-left-brand" onclick="showPage('page-landing')">← SongScript</div>
       <div class="auth-left-body">
-        <h2 class="auth-left-headline">Your first letter<br>is waiting<br>to be <em>written.</em></h2>
-        <p class="auth-left-text">Create a free account and we'll give you one complete memory letter — no strings, no card, no trial period. Just yours.</p>
+        <h2 class="auth-left-headline" id="authLeftHeadline">Your first letter<br>is waiting<br>to be <em>written.</em></h2>
+        <p class="auth-left-text" id="authLeftText">Create a free account and we'll give you one complete memory letter — no strings, no card, no trial period. Just yours.</p>
         <div class="auth-preview">
           <div class="auth-left-quote">"</div>
           <div class="auth-preview-line">The windows were down and the whole summer smelled like cedar and gasoline and you, and that song was playing, and nothing — nothing — has ever felt more like a beginning.</div>
@@ -619,8 +636,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="bpanel active" id="bp0">
       <div class="bcard">
         <div class="bcard-corner">Step 1 of 5</div>
-        <h2 class="bcard-title">Which song carries your memory?</h2>
-        <p class="bcard-sub">Tell us what moved you — and roughly <em>when</em> the memory happened.</p>
+        <h2 class="bcard-title" id="b1Title">Which song carries your memory?</h2>
+        <p class="bcard-sub" id="b1Sub">Tell us what moved you — and roughly <em>when</em> the memory happened.</p>
         <div class="brow">
           <div class="bfield"><label class="blabel">Song Title</label><input type="text" class="binput" id="bSongTitle" placeholder="e.g. Fast Car"/></div>
           <div class="bfield"><label class="blabel">Artist / Band</label><input type="text" class="binput" id="bSongArtist" placeholder="e.g. Tracy Chapman"/></div>
@@ -637,7 +654,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           </div>
           <div class="bfield"><label class="blabel">Year of Memory</label><select class="bselect" id="bMemYear"><option value="">— Year —</option></select></div>
         </div>
-        <button class="btn-next" onclick="bGoTo(1)">Continue →</button>
+        <button class="btn-next" id="bContinue1" onclick="bGoTo(1)">Continue →</button>
       </div>
     </div>
 
@@ -645,8 +662,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="bpanel" id="bp1">
       <div class="bcard">
         <div class="bcard-corner">Step 2 of 5</div>
-        <h2 class="bcard-title">Tell us everything.</h2>
-        <p class="bcard-sub">Where were you? Who were you with? What did the song make you feel? <em>This is your raw material.</em></p>
+        <h2 class="bcard-title" id="b2Title">Tell us everything.</h2>
+        <p class="bcard-sub" id="b2Sub">Where were you? Who were you with? What did the song make you feel? <em>This is your raw material.</em></p>
         <div class="writing-helper"><p>Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened. Let the details come — smell, weather, what you were wearing.</p></div>
         <div class="bfield">
           <div class="char-row"><label class="blabel" style="margin:0">Your Memory</label><span class="char-count" id="memWordCount">0 words</span></div>
@@ -661,8 +678,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="bpanel" id="bp2">
       <div class="bcard">
         <div class="bcard-corner">Step 3 of 5</div>
-        <h2 class="bcard-title">What line hits you hardest?</h2>
-        <p class="bcard-sub">The lyric that stops time — the one that feels written just for you. <em>Leave blank and we'll find it.</em></p>
+        <h2 class="bcard-title" id="b3Title">What line hits you hardest?</h2>
+        <p class="bcard-sub" id="b3Sub">The lyric that stops time — the one that feels written just for you. <em>Leave blank and we'll find it.</em></p>
         <div class="bfield">
           <div class="char-row">
             <label class="blabel" style="margin:0">That lyric <span style="font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:300">(optional)</span></label>
@@ -683,8 +700,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="bpanel" id="bp3">
       <div class="bcard">
         <div class="bcard-corner">Step 4 of 5</div>
-        <h2 class="bcard-title">What tone should your letter carry?</h2>
-        <p class="bcard-sub">Choose the emotional register that fits your memory best.</p>
+        <h2 class="bcard-title" id="b4Title">What tone should your letter carry?</h2>
+        <p class="bcard-sub" id="b4Sub">Choose the emotional register that fits your memory best.</p>
         <div class="tone-grid">
           <div class="tone-btn" onclick="selTone(this,'Love Letter')"><span class="tone-icon">💌</span><span class="tone-name">Love Letter</span></div>
           <div class="tone-btn" onclick="selTone(this,'Nostalgic')"><span class="tone-icon">🌅</span><span class="tone-name">Nostalgic</span></div>
@@ -696,7 +713,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <div class="tone-btn" onclick="selTone(this,'Friendship')"><span class="tone-icon">🤝</span><span class="tone-name">Friendship</span></div>
         </div>
         <div class="tone-err" id="toneErr">Please choose a tone to continue.</div>
-        <button class="btn-next" onclick="generateLetter()">Write My Letter →</button>
+        <button class="btn-next" id="bWriteLetter" onclick="generateLetter()">Write My Letter →</button>
         <button class="btn-back" onclick="bGoTo(2)">← Back</button>
       </div>
     </div>
@@ -753,7 +770,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 
         <!-- ACTIONS -->
         <div class="result-actions">
-          <div class="result-actions-title">Try a different tone or regenerate</div>
+          <div class="result-actions-title" id="resultActionsTitle">Try a different tone or regenerate</div>
           <div class="result-tone-grid">
             <div class="result-tone-btn" onclick="switchTone(this,'Love Letter')"><span class="result-tone-icon">💌</span><span class="result-tone-name">Love Letter</span></div>
             <div class="result-tone-btn" onclick="switchTone(this,'Nostalgic')"><span class="result-tone-icon">🌅</span><span class="result-tone-name">Nostalgic</span></div>
@@ -765,16 +782,43 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
             <div class="result-tone-btn" onclick="switchTone(this,'Friendship')"><span class="result-tone-icon">🤝</span><span class="result-tone-name">Friendship</span></div>
           </div>
           <div class="credit-info">Free attempts: <span id="freeAttemptsLeft"></span></div>
-          <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ Regenerate with same tone</button>
-          <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ Edit my memory and regenerate</button>
+          <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenBtnText">Regenerate with same tone</span></button>
+          <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
         </div>
 
-        <button class="btn-next" onclick="downloadPDF()">Download My PDF Letter →</button>
-        <button class="btn-back" onclick="showPage('page-dashboard')" style="margin-top:10px">← Back to Dashboard</button>
+        <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
+        <button class="btn-back" id="backDashBtn" onclick="showPage('page-dashboard')" style="margin-top:10px">← Back to Dashboard</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- EDIT MEMORY MODAL -->
+<div class="custom-modal-overlay" id="editMemoryModal">
+  <div class="custom-modal-box">
+    <div class="custom-modal-title" id="editMemTitle">Edit your memory</div>
+    <div class="custom-modal-sub" id="editMemSub">Make your changes below. A new letter will be generated when you save.</div>
+    <textarea class="custom-modal-textarea" id="editMemTextarea" rows="6"></textarea>
+    <div class="custom-modal-actions">
+      <button class="custom-modal-cancel" id="editMemCancel" onclick="closeEditMemoryModal()">Cancel</button>
+      <button class="custom-modal-confirm" id="editMemConfirm" onclick="confirmEditMemory()">Save & Regenerate →</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFY ME MODAL -->
+<div class="custom-modal-overlay" id="notifyModal">
+  <div class="custom-modal-box">
+    <div class="custom-modal-title" id="notifyTitle">Be the first to know</div>
+    <div class="custom-modal-sub" id="notifySub">Enter your email and we'll notify you the moment our print service launches.</div>
+    <input type="email" class="custom-modal-input" id="notifyEmailInput" placeholder="your@email.com"/>
+    <div class="custom-modal-actions">
+      <button class="custom-modal-cancel" id="notifyCancel" onclick="closeNotifyModal()">Cancel</button>
+      <button class="custom-modal-confirm" id="notifyConfirm" onclick="confirmNotify()">Notify Me →</button>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://unpkg.com/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
 <script>
@@ -909,6 +953,82 @@ function applyLangToUI(lang){
   document.querySelectorAll('[onclick="handleSignOut()"]').forEach(el => {
     el.textContent = es?'Cerrar sesión':'Sign Out';
   });
+
+  // Auth left panel
+  const authLeftH = document.getElementById('authLeftHeadline');
+  if(authLeftH) authLeftH.innerHTML = es
+    ? 'Tu primera carta está<br>esperando<br>ser <em>escrita.</em>'
+    : 'Your first letter<br>is waiting<br>to be <em>written.</em>';
+  const authLeftT = document.getElementById('authLeftText');
+  if(authLeftT) authLeftT.textContent = es
+    ? 'Crea una cuenta gratis y te regalamos una carta completa — sin compromisos, sin tarjeta, sin período de prueba. Solo tuya.'
+    : "Create a free account and we'll give you one complete memory letter — no strings, no card, no trial period. Just yours.";
+
+  // Builder step titles and subs
+  const b1t = document.getElementById('b1Title');
+  if(b1t) b1t.textContent = es ? '¿Qué canción guarda tu recuerdo?' : 'Which song carries your memory?';
+  const b1s = document.getElementById('b1Sub');
+  if(b1s) b1s.innerHTML = es ? 'Cuéntanos qué te conmovió — y aproximadamente <em>cuándo</em> sucedió.' : 'Tell us what moved you — and roughly <em>when</em> the memory happened.';
+  const b2t = document.getElementById('b2Title');
+  if(b2t) b2t.textContent = es ? 'Cuéntanos todo.' : 'Tell us everything.';
+  const b2s = document.getElementById('b2Sub');
+  if(b2s) b2s.innerHTML = es ? '¿Dónde estabas? ¿Con quién? ¿Qué te hizo sentir esta canción? <em>Esto es tu materia prima.</em>' : 'Where were you? Who were you with? What did the song make you feel? <em>This is your raw material.</em>';
+  const b3t = document.getElementById('b3Title');
+  if(b3t) b3t.textContent = es ? '¿Qué línea te llega más profundo?' : 'What line hits you hardest?';
+  const b3s = document.getElementById('b3Sub');
+  if(b3s) b3s.innerHTML = es ? 'La letra que detiene el tiempo — la que sientes escrita para ti. <em>Déjala en blanco y la encontramos.</em>' : "The lyric that stops time — the one that feels written just for you. <em>Leave blank and we'll find it.</em>";
+  const b4t = document.getElementById('b4Title');
+  if(b4t) b4t.textContent = es ? '¿Qué tono debe llevar tu carta?' : 'What tone should your letter carry?';
+  const b4s = document.getElementById('b4Sub');
+  if(b4s) b4s.textContent = es ? 'Elige el registro emocional que mejor se adapte a tu recuerdo.' : 'Choose the emotional register that fits your memory best.';
+
+  // Builder buttons
+  const bCont1 = document.getElementById('bContinue1');
+  if(bCont1) bCont1.textContent = es ? 'Continuar →' : 'Continue →';
+  const bWrite = document.getElementById('bWriteLetter');
+  if(bWrite) bWrite.textContent = es ? 'Escribir mi carta →' : 'Write My Letter →';
+
+  // Result page
+  const rat = document.getElementById('resultActionsTitle');
+  if(rat) rat.textContent = es ? 'Prueba un tono diferente o regenera' : 'Try a different tone or regenerate';
+  const regenT = document.getElementById('regenBtnText');
+  if(regenT) regenT.textContent = es ? 'Regenerar con el mismo tono' : 'Regenerate with same tone';
+  const editT = document.getElementById('editMemBtnText');
+  if(editT) editT.textContent = es ? 'Editar mi recuerdo y regenerar' : 'Edit my memory and regenerate';
+  const dlBtn = document.getElementById('downloadBtn');
+  if(dlBtn) dlBtn.textContent = es ? 'Descargar mi carta en PDF →' : 'Download My PDF Letter →';
+  const backBtn = document.getElementById('backDashBtn');
+  if(backBtn) backBtn.textContent = es ? '← Volver al panel' : '← Back to Dashboard';
+
+  // Writing helper
+  const wh = document.querySelector('.writing-helper p');
+  if(wh) wh.innerHTML = es
+    ? 'Intenta empezar con: <strong>dónde estabas físicamente</strong> cuando la escuchaste. Luego quién estaba contigo. Luego qué pasó. Deja que salgan los detalles — el olor, el clima, qué llevabas puesto.'
+    : 'Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened. Let the details come — smell, weather, what you were wearing.';
+
+  // Lyric note
+  const ln = document.querySelector('.lyric-note');
+  if(ln) ln.textContent = es
+    ? 'Límite de 150 caracteres — suficiente para darle alma a tu carta, sin reproducir la canción.'
+    : '150 character limit — enough to give your letter soul, not enough to reproduce the song.';
+
+  // Edit hint on result page
+  const eh = document.querySelector('.edit-hint');
+  if(eh) eh.textContent = es
+    ? '✎ Haz clic en el saludo o la firma para personalizarlos antes de descargar'
+    : '✎ Click the salutation or sign-off to personalize before downloading';
+
+  // Loading screen
+  const loadT = document.getElementById('loadTitle');
+  if(loadT && loadT.textContent.includes('quill')) loadT.textContent = es ? 'La pluma se mueve…' : 'The quill is moving…';
+  const loadS = document.getElementById('loadSub');
+  if(loadS) loadS.textContent = es
+    ? 'Escuchando tu recuerdo y encontrando las palabras que le hacen justicia.'
+    : 'Listening to your memory and finding the words that do it justice.';
+
+  // Dashboard welcome subtitle (already done but ensure it updates)
+  const dashS = document.getElementById('dashSubtitle');
+  if(dashS) dashS.textContent = es ? '¿Listo para preservar otro recuerdo?' : 'Ready to preserve another memory?';
 }
 
 function closeModal(){ document.getElementById('letterModal').classList.remove('open'); }
@@ -1006,7 +1126,8 @@ async function loadDashboard(){
     currentProfile=profile;
     const firstName=profile.name?.split(' ')[0]||'friend';
     const remaining=profile.letters_allowed-profile.letters_used;
-    document.getElementById('dashWelcome').innerHTML=`Welcome back, <em>${firstName}</em>`;
+    const es = currentLang === 'es';
+    document.getElementById('dashWelcome').innerHTML=`${es?'Bienvenido de vuelta':'Welcome back'}, <em>${firstName}</em>`;
     document.getElementById('dashCredits').textContent=remaining;
     document.getElementById('builderUserLabel').textContent=`${firstName} · ${remaining} letter${remaining!==1?'s':''} remaining`;
   }
@@ -1016,7 +1137,8 @@ async function loadDashboard(){
     list.innerHTML='<div class="empty-state"><div class="empty-state-icon">❖</div><div class="empty-state-text">No letters yet — write your first one above.</div></div>';
     return;
   }
-  document.getElementById('dashLettersTitle').textContent=`Your Letters (${letters.length})`;
+  const esLang = currentLang === 'es';
+  document.getElementById('dashLettersTitle').textContent=`${esLang?'Tus cartas':'Your Letters'} (${letters.length})`;
   list.innerHTML=letters.map(l=>{
     const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     return `<div class="letter-row" id="row-${l.id}">
@@ -1303,10 +1425,25 @@ async function regenerateLetter(){
 }
 
 function editMemory(){
-  const newMemory=prompt('Edit your memory below:\n\nCurrent memory:',sessionState.memory);
-  if(!newMemory||newMemory.trim()===sessionState.memory)return;
-  sessionState.memory=newMemory.trim();
-  if(!sessionState.isFirstLetter)sessionState.memEditUsed=true;
+  const es = currentLang === 'es';
+  document.getElementById('editMemTitle').textContent = es ? 'Editar tu recuerdo' : 'Edit your memory';
+  document.getElementById('editMemSub').textContent = es ? 'Haz tus cambios abajo. Se generará una nueva carta al guardar.' : 'Make your changes below. A new letter will be generated when you save.';
+  document.getElementById('editMemCancel').textContent = es ? 'Cancelar' : 'Cancel';
+  document.getElementById('editMemConfirm').textContent = es ? 'Guardar y regenerar →' : 'Save & Regenerate →';
+  document.getElementById('editMemTextarea').value = sessionState.memory;
+  document.getElementById('editMemoryModal').classList.add('open');
+}
+
+function closeEditMemoryModal(){
+  document.getElementById('editMemoryModal').classList.remove('open');
+}
+
+function confirmEditMemory(){
+  const newMemory = document.getElementById('editMemTextarea').value.trim();
+  if(!newMemory || newMemory === sessionState.memory){ closeEditMemoryModal(); return; }
+  sessionState.memory = newMemory;
+  if(!sessionState.isFirstLetter) sessionState.memEditUsed = true;
+  closeEditMemoryModal();
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
   const lang=currentProfile?.language||'en';
   showLoading(sessionState.currentTone);
@@ -1316,8 +1453,29 @@ function editMemory(){
 }
 
 function notifyMe(){
-  const email=prompt("Enter your email and we will notify you when the print service launches:");
-  if(email&&email.includes("@")){alert("Thank you! We will let you know as soon as it is available.");}
+  const es = currentLang === 'es';
+  document.getElementById('notifyTitle').textContent = es ? 'Sé el primero en saberlo' : 'Be the first to know';
+  document.getElementById('notifySub').textContent = es
+    ? 'Ingresa tu correo y te avisamos en cuanto lancemos el servicio de impresión.'
+    : "Enter your email and we'll notify you the moment our print service launches.";
+  document.getElementById('notifyCancel').textContent = es ? 'Cancelar' : 'Cancel';
+  document.getElementById('notifyConfirm').textContent = es ? 'Avísame →' : 'Notify Me →';
+  document.getElementById('notifyEmailInput').value = currentUser?.email || '';
+  document.getElementById('notifyEmailInput').placeholder = es ? 'tu@correo.com' : 'your@email.com';
+  document.getElementById('notifyModal').classList.add('open');
+}
+
+function closeNotifyModal(){
+  document.getElementById('notifyModal').classList.remove('open');
+}
+
+function confirmNotify(){
+  const email = document.getElementById('notifyEmailInput').value.trim();
+  const es = currentLang === 'es';
+  if(email && email.includes('@')){
+    closeNotifyModal();
+    alert(es ? '¡Gracias! Te avisaremos en cuanto esté disponible.' : 'Thank you! We will let you know as soon as it is available.');
+  }
 }
 
 function openPDFWindow(song,artist,salutation,body,signOff,credit,date){
