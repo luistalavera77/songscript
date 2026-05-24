@@ -12,221 +12,216 @@
   --gold:#c9a84c;--gold2:#e8c97a;--gold3:#f5e4b0;
   --muted:#8a7a5a;--border:#dfd0b0;--border2:#cfc0a0;
   --accent:#6b3d2e;--accent2:#9b5a3e;--accent3:#c47a55;
-  --text:#2c2010;--white:#fff;
+  --text:#2c2010;--white:#fff;--error:#c0392b;--success:#27ae60;
 }
 html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--text);font-family:'Lato',sans-serif;overflow-x:hidden}
+body{background:var(--paper);color:var(--text);font-family:"Lato",sans-serif;overflow-x:hidden}
 .noise{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .page{display:none;position:relative;z-index:1;min-height:100vh}
 .page.active{display:block}
-
-/* NAV */
 .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 60px;position:sticky;top:0;z-index:100;background:rgba(253,248,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border .3s}
 .nav.scrolled{border-bottom-color:var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
-.nav-brand{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);letter-spacing:.5px}
+.nav-brand{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:500;color:var(--ink);letter-spacing:.5px}
 .nav-right{display:flex;align-items:center;gap:16px}
-.nav-signin{font-family:'Lato',sans-serif;font-size:13px;color:var(--muted);cursor:pointer;font-weight:300;transition:color .2s}
+.nav-signin{font-family:"Lato",sans-serif;font-size:13px;color:var(--muted);cursor:pointer;font-weight:300;transition:color .2s}
 .nav-signin:hover{color:var(--accent)}
-.nav-cta{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:9px 22px;border-radius:1px;cursor:pointer;transition:all .25s;background:transparent}
+.nav-cta{font-family:"Playfair Display",serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:9px 22px;border-radius:1px;cursor:pointer;transition:all .25s;background:transparent}
 .nav-cta:hover{background:var(--accent);color:white}
 .lang-toggle{display:flex;border:1.5px solid var(--border);border-radius:1px;overflow:hidden}
 .lang-btn{padding:6px 12px;font-size:12px;font-weight:400;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .2s;letter-spacing:1px}
 .lang-btn.active{background:var(--accent);color:white}
-
-/* HERO */
 .hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 70px);align-items:center;overflow:hidden}
 .hero-left{padding:80px 60px;display:flex;flex-direction:column;justify-content:center}
-.hero-eyebrow{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:24px;font-weight:300}
-.hero-headline{font-family:'Playfair Display',serif;font-size:clamp(40px,4.5vw,62px);font-weight:400;line-height:1.12;color:var(--ink);margin-bottom:24px}
+.hero-eyebrow{font-family:"Cormorant Garamond",serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:24px;font-weight:300}
+.hero-headline{font-family:"Playfair Display",serif;font-size:clamp(40px,4.5vw,62px);font-weight:400;line-height:1.12;color:var(--ink);margin-bottom:24px}
 .hero-headline em{font-style:italic;color:var(--accent)}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted);line-height:1.75;font-weight:300;margin-bottom:40px;max-width:420px}
+.hero-sub{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--muted);line-height:1.75;font-weight:300;margin-bottom:40px;max-width:420px}
 .hero-sub strong{color:var(--ink);font-weight:400}
 .hero-cta-wrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-.btn-hero{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:white;background:var(--accent);border:none;padding:18px 40px;border-radius:1px;cursor:pointer;transition:all .25s;letter-spacing:.5px}
+.btn-hero{font-family:"Playfair Display",serif;font-size:18px;font-style:italic;color:white;background:var(--accent);border:none;padding:18px 40px;border-radius:1px;cursor:pointer;transition:all .25s;letter-spacing:.5px}
 .btn-hero:hover{background:var(--ink);transform:translateY(-1px)}
 .hero-note{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:300}
 .hero-right{position:relative;height:100%;background:var(--paper3);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:calc(100vh - 70px)}
-.hero-bg-art{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
 .hero-image-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--paper) 0%,transparent 20%,transparent 80%,var(--paper3) 100%)}
 .hero-letter-preview{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);background:var(--paper);border:1px solid var(--border);padding:24px 28px;max-width:300px;box-shadow:0 8px 40px rgba(107,61,46,.12);animation:float 5s ease-in-out infinite;z-index:2}
 @keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
-.preview-date{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--muted);text-align:right;margin-bottom:10px;font-style:italic}
-.preview-body{font-family:'Cormorant Garamond',serif;font-size:14px;line-height:1.75;color:var(--ink);font-weight:300}
-.preview-sign{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--accent);text-align:right;margin-top:12px}
+.preview-date{font-family:"Cormorant Garamond",serif;font-size:12px;color:var(--muted);text-align:right;margin-bottom:10px;font-style:italic}
+.preview-body{font-family:"Cormorant Garamond",serif;font-size:14px;line-height:1.75;color:var(--ink);font-weight:300}
+.preview-sign{font-family:"Playfair Display",serif;font-size:15px;font-style:italic;color:var(--accent);text-align:right;margin-top:12px}
 .preview-ornament{text-align:center;font-size:14px;color:var(--gold);margin:10px 0;letter-spacing:6px}
 .hero-record{position:absolute;top:48px;right:40px;width:110px;height:110px;animation:spin 18s linear infinite;opacity:.6;z-index:2}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
-/* SECTIONS */
 .section-divider{display:flex;align-items:center;gap:20px;padding:0 60px}
 .divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
 .divider-ornament{font-size:18px;color:var(--gold);letter-spacing:8px}
 .story-section{padding:100px 60px}
 .story-inner{max-width:800px;margin:0 auto;text-align:center}
-.story-label{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
-.story-headline{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;color:var(--ink);line-height:1.3;margin-bottom:32px}
+.story-label{font-family:"Cormorant Garamond",serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.story-headline{font-family:"Playfair Display",serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;color:var(--ink);line-height:1.3;margin-bottom:32px}
 .story-headline em{font-style:italic;color:var(--accent)}
-.story-text{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:20px}
+.story-text{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:20px}
 .story-text strong{color:var(--ink);font-weight:400}
-
-/* SAMPLE LETTERS */
 .samples-section{padding:80px 60px;background:var(--paper2)}
-.samples-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:16px}
-.samples-headline{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);font-weight:400;color:var(--ink);text-align:center;margin-bottom:48px}
+.samples-label{font-family:"Cormorant Garamond",serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:16px}
+.samples-headline{font-family:"Playfair Display",serif;font-size:clamp(24px,3vw,36px);font-weight:400;color:var(--ink);text-align:center;margin-bottom:48px}
 .samples-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto}
 .sample-card{background:var(--paper);border:1px solid var(--border);padding:32px 28px;position:relative;overflow:hidden}
-.sample-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
-.sample-card::after{content:'';position:absolute;top:10px;bottom:10px;left:16px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
-.sample-sal{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px;padding-left:12px}
+.sample-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
+.sample-card::after{content:"";position:absolute;top:10px;bottom:10px;left:16px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
+.sample-sal{font-family:"Playfair Display",serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px;padding-left:12px}
 .sample-orn{text-align:center;font-size:13px;color:var(--gold);margin:8px 0;letter-spacing:6px}
-.sample-body{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.85;color:var(--ink);font-weight:300;font-style:italic;padding-left:12px;margin-bottom:16px}
+.sample-body{font-family:"Cormorant Garamond",serif;font-size:15px;line-height:1.85;color:var(--ink);font-weight:300;font-style:italic;padding-left:12px;margin-bottom:16px}
 .sample-meta{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border)}
-.sample-song{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:var(--accent)}
+.sample-song{font-family:"Playfair Display",serif;font-size:12px;font-style:italic;color:var(--accent)}
 .sample-tone{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-
-/* SONGS + HOW */
-.songs-section{padding:60px 60px 100px;background:var(--paper3)}
-.songs-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:48px}
-.songs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.song-card{background:var(--paper3);padding:36px 32px;transition:background .3s}
-.song-card:hover{background:var(--white)}
-.song-card-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:400;color:var(--border2);line-height:1;margin-bottom:16px;font-style:italic}
-.song-card-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);margin-bottom:4px;font-style:italic}
-.song-card-artist{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
-.song-card-snippet{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text);line-height:1.75;font-weight:300;font-style:italic}
 .how-section{padding:100px 60px}
 .how-inner{max-width:900px;margin:0 auto}
-.how-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:16px}
-.how-headline{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,40px);font-weight:400;color:var(--ink);text-align:center;margin-bottom:64px}
+.how-label{font-family:"Cormorant Garamond",serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:16px}
+.how-headline{font-family:"Playfair Display",serif;font-size:clamp(28px,3vw,40px);font-weight:400;color:var(--ink);text-align:center;margin-bottom:64px}
 .steps-grid{display:grid;grid-template-columns:repeat(5,1fr);position:relative}
-.steps-grid::before{content:'';position:absolute;top:24px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border) 10%,var(--border) 90%,transparent)}
+.steps-grid::before{content:"";position:absolute;top:24px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border) 10%,var(--border) 90%,transparent)}
 .how-step{text-align:center;padding:0 12px}
 .step-num-wrap{width:48px;height:48px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:1;transition:all .3s}
 .how-step:hover .step-num-wrap{border-color:var(--gold);background:var(--gold)}
-.step-num{font-family:'Playfair Display',serif;font-size:16px;color:var(--muted)}
+.step-num{font-family:"Playfair Display",serif;font-size:16px;color:var(--muted)}
 .how-step:hover .step-num{color:white}
-.step-name{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px}
+.step-name{font-family:"Playfair Display",serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px}
 .step-desc{font-size:12px;color:var(--muted);line-height:1.65;font-weight:300}
 .final-cta{padding:100px 60px;background:var(--accent);position:relative;overflow:hidden;text-align:center}
-.final-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.15) 0%,transparent 60%)}
-.final-headline{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--paper);line-height:1.2;margin-bottom:20px}
+.final-cta::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.15) 0%,transparent 60%)}
+.final-headline{font-family:"Playfair Display",serif;font-size:clamp(32px,4vw,52px);font-weight:400;color:var(--paper);line-height:1.2;margin-bottom:20px}
 .final-headline em{font-style:italic;color:var(--gold2)}
-.final-sub{font-family:'Cormorant Garamond',serif;font-size:20px;color:rgba(253,248,240,.7);font-weight:300;margin-bottom:40px}
-.btn-final{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--accent);background:var(--paper);border:none;padding:18px 48px;border-radius:1px;cursor:pointer;transition:all .25s}
+.final-sub{font-family:"Cormorant Garamond",serif;font-size:20px;color:rgba(253,248,240,.7);font-weight:300;margin-bottom:40px}
+.btn-final{font-family:"Playfair Display",serif;font-size:18px;font-style:italic;color:var(--accent);background:var(--paper);border:none;padding:18px 48px;border-radius:1px;cursor:pointer;transition:all .25s;position:relative;z-index:1}
 .btn-final:hover{background:var(--gold2);transform:translateY(-1px)}
 .final-note{font-size:12px;color:rgba(253,248,240,.5);margin-top:16px;letter-spacing:1.5px;text-transform:uppercase}
 footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.footer-brand{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--muted)}
+.footer-brand{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--muted)}
 .footer-copy{font-size:12px;color:var(--muted);font-weight:300}
-
-/* AUTH */
 .auth-page{display:flex;min-height:100vh}
 .auth-left{width:420px;min-height:100vh;background:var(--accent);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;flex-shrink:0}
-.auth-left::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;border:1.5px solid rgba(201,168,76,.2)}
-.auth-left::after{content:'';position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(201,168,76,.15)}
-.auth-left-brand{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--paper);letter-spacing:.5px;position:relative;z-index:1;cursor:pointer}
+.auth-left::before{content:"";position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;border:1.5px solid rgba(201,168,76,.2)}
+.auth-left::after{content:"";position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(201,168,76,.15)}
+.auth-left-brand{font-family:"Cormorant Garamond",serif;font-size:24px;color:var(--paper);letter-spacing:.5px;position:relative;z-index:1;cursor:pointer}
 .auth-left-body{position:relative;z-index:1}
-.auth-left-headline{font-family:'Playfair Display',serif;font-size:34px;font-weight:400;color:var(--paper);line-height:1.25;margin-bottom:20px}
+.auth-left-headline{font-family:"Playfair Display",serif;font-size:34px;font-weight:400;color:var(--paper);line-height:1.25;margin-bottom:20px}
 .auth-left-headline em{font-style:italic;color:var(--gold2)}
-.auth-left-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(253,248,240,.7);line-height:1.8;font-weight:300}
+.auth-left-text{font-family:"Cormorant Garamond",serif;font-size:18px;color:rgba(253,248,240,.7);line-height:1.8;font-weight:300}
 .auth-preview{background:rgba(253,248,240,.06);border:1px solid rgba(201,168,76,.25);padding:20px 22px;margin-top:28px;border-radius:1px}
-.auth-preview-line{font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(253,248,240,.75);line-height:1.7;font-style:italic;font-weight:300}
+.auth-preview-line{font-family:"Cormorant Garamond",serif;font-size:15px;color:rgba(253,248,240,.75);line-height:1.7;font-style:italic;font-weight:300}
 .auth-preview-attr{font-size:11px;color:rgba(201,168,76,.7);letter-spacing:2px;text-transform:uppercase;margin-top:10px}
-.auth-left-quote{font-family:'Playfair Display',serif;font-size:48px;color:var(--gold);opacity:.3;line-height:1;margin-bottom:-8px;position:relative;z-index:1}
+.auth-left-quote{font-family:"Playfair Display",serif;font-size:48px;color:var(--gold);opacity:.3;line-height:1;margin-bottom:-8px;position:relative;z-index:1}
 .auth-right{flex:1;padding:60px 64px;display:flex;flex-direction:column;justify-content:center}
 .auth-form-wrap{max-width:420px}
-.auth-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.auth-title{font-family:"Playfair Display",serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:8px}
 .auth-subtitle{font-size:14px;color:var(--muted);margin-bottom:36px;font-weight:300;line-height:1.6}
 .free-pill{display:inline-block;background:var(--accent);color:white;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;margin-bottom:24px;border-radius:1px}
 .form-field{margin-bottom:20px}
 .form-label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:400}
-.form-input{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border .2s;border-radius:1px}
+.form-input{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:"Lato",sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border .2s;border-radius:1px}
 .form-input:focus{border-color:var(--gold);background:white}
 .form-input::placeholder{color:#cbb98a;font-weight:300}
-.form-input.err{border-color:#c0392b}
-.field-error{font-size:12px;color:#c0392b;margin-top:4px;display:none}
+.form-input.err{border-color:var(--error)}
+.field-error{font-size:12px;color:var(--error);margin-top:4px;display:none}
 .field-error.show{display:block}
+/* Inline auth error banner */
+.auth-error-banner{background:#fdf0ee;border:1px solid #e8b4ad;border-radius:1px;padding:12px 16px;margin-bottom:20px;display:none}
+.auth-error-banner.show{display:block}
+.auth-error-banner p{font-size:13px;color:var(--error);font-weight:400;line-height:1.5}
+/* Inline auth success banner */
+.auth-success-banner{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:1px;padding:16px 20px;margin-bottom:20px;display:none}
+.auth-success-banner.show{display:block}
+.auth-success-banner p{font-size:14px;color:#065f46;font-weight:400;line-height:1.6}
+.auth-success-banner strong{font-weight:600}
 .strength-bar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden}
 .strength-fill{height:100%;width:0;transition:width .3s,background .3s;border-radius:2px}
 .strength-label{font-size:11px;color:var(--muted);margin-top:4px;font-weight:300}
-.btn-register{width:100%;padding:16px;background:var(--accent);color:white;border:none;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;cursor:pointer;transition:all .25s;letter-spacing:.5px;margin-top:8px;border-radius:1px}
+.btn-register{width:100%;padding:16px;background:var(--accent);color:white;border:none;font-family:"Playfair Display",serif;font-size:17px;font-style:italic;cursor:pointer;transition:all .25s;letter-spacing:.5px;margin-top:8px;border-radius:1px}
 .btn-register:hover:not(:disabled){background:var(--ink)}
 .btn-register:disabled{opacity:.6;cursor:not-allowed}
-.divider-or{display:flex;align-items:center;gap:14px;margin:20px 0}
-.divider-or span{font-size:12px;color:var(--muted);letter-spacing:1px;white-space:nowrap}
-.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--border)}
-.btn-google{width:100%;padding:14px;background:white;color:var(--text);border:1.5px solid var(--border);font-family:'Lato',sans-serif;font-size:14px;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:1px}
-.btn-google:hover{border-color:var(--muted);background:var(--paper)}
-.google-icon{width:18px;height:18px}
+.forgot-link{font-size:12px;color:var(--muted);cursor:pointer;text-align:right;display:block;margin-top:6px;font-weight:300;transition:color .2s}
+.forgot-link:hover{color:var(--accent)}
 .terms-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6;font-weight:300}
 .auth-mode-toggle{display:flex;gap:0;margin-bottom:28px;border:1.5px solid var(--border);border-radius:1px;overflow:hidden}
-.auth-mode-btn{flex:1;padding:10px;background:transparent;border:none;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);cursor:pointer;transition:all .2s}
+.auth-mode-btn{flex:1;padding:10px;background:transparent;border:none;font-family:"Playfair Display",serif;font-size:14px;font-style:italic;color:var(--muted);cursor:pointer;transition:all .2s}
 .auth-mode-btn.active{background:var(--accent);color:white}
 .opt-in-row{display:flex;align-items:flex-start;gap:10px;margin-top:16px}
 .opt-in-row input[type=checkbox]{margin-top:2px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0}
 .opt-in-label{font-size:12px;color:var(--muted);line-height:1.5;font-weight:300}
-
-/* DASHBOARD */
 .dashboard-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(253,248,240,.95)}
-.dashboard-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);cursor:pointer}
+.dashboard-brand{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--ink);cursor:pointer}
 .dashboard-inner{max-width:860px;margin:0 auto;padding:48px 24px 80px}
 .dashboard-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px}
-.dashboard-welcome{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:var(--ink)}
+.dashboard-welcome{font-family:"Playfair Display",serif;font-size:32px;font-weight:400;color:var(--ink)}
 .dashboard-welcome em{font-style:italic;color:var(--accent)}
 .credits-card{background:white;border:1px solid var(--border);padding:20px 24px;border-radius:2px;text-align:center;min-width:200px;position:relative;overflow:hidden}
-.credits-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold))}
-.credits-num{font-family:'Playfair Display',serif;font-size:44px;color:var(--accent);line-height:1}
+.credits-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold))}
+.credits-num{font-family:"Playfair Display",serif;font-size:44px;color:var(--accent);line-height:1}
 .credits-label{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
-.btn-buy-more{display:block;margin-top:12px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:7px 16px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s;width:100%}
+.btn-buy-more{display:block;margin-top:12px;font-family:"Playfair Display",serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:7px 16px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s;width:100%}
 .btn-buy-more:hover{background:var(--accent);color:white}
-.btn-new-letter{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:white;background:var(--accent);border:none;padding:16px 36px;border-radius:1px;cursor:pointer;transition:all .25s;margin-bottom:36px;display:block}
+.btn-new-letter{font-family:"Playfair Display",serif;font-size:17px;font-style:italic;color:white;background:var(--accent);border:none;padding:16px 36px;border-radius:1px;cursor:pointer;transition:all .25s;margin-bottom:36px;display:block}
 .btn-new-letter:hover{background:var(--ink);transform:translateY(-1px)}
-.letters-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:20px}
+.letters-title{font-family:"Playfair Display",serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:20px}
 .letter-row{background:white;border:1px solid var(--border);padding:20px 24px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border .2s}
 .letter-row:hover{border-color:var(--gold)}
 .letter-row-info{flex:1}
-.letter-row-song{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:4px}
+.letter-row-song{font-family:"Playfair Display",serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:4px}
 .letter-row-meta{font-size:12px;color:var(--muted);letter-spacing:1px}
 .letter-row-actions{display:flex;gap:8px;flex-shrink:0}
-.btn-view{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--border);padding:7px 14px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s}
+.btn-view{font-family:"Playfair Display",serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--border);padding:7px 14px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s}
 .btn-view:hover{border-color:var(--accent)}
-.btn-dl{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:7px 14px;border-radius:1px;cursor:pointer;transition:all .25s}
+.btn-dl{font-family:"Playfair Display",serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:7px 14px;border-radius:1px;cursor:pointer;transition:all .25s}
 .btn-dl:hover{background:var(--ink)}
 .btn-del{font-size:13px;color:var(--muted);border:none;background:transparent;cursor:pointer;padding:7px 10px;transition:color .2s}
-.btn-del:hover{color:#c0392b}
+.btn-del:hover{color:var(--error)}
 .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty-state-icon{font-size:48px;margin-bottom:16px;opacity:.4}
-.empty-state-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic}
-
-/* LETTER VIEWER MODAL */
+.empty-state-text{font-family:"Cormorant Garamond",serif;font-size:20px;font-style:italic}
+/* PRICING PAGE */
+.pricing-page-inner{max-width:600px;margin:0 auto;padding:60px 24px}
+.pricing-page-title{font-family:"Playfair Display",serif;font-size:32px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.pricing-page-sub{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--muted);margin-bottom:40px;font-weight:300;font-style:italic}
+.pricing-grid{display:flex;gap:16px;margin-bottom:32px}
+.pcard{flex:1;border:1.5px solid var(--border);border-radius:2px;padding:28px 20px;text-align:center;background:var(--paper);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.pcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold))}
+.pcard:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 20px rgba(201,168,76,.12)}
+.pcard.feat{border-color:var(--gold);background:white}
+.pcard-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.pcard-price{font-family:"Playfair Display",serif;font-size:36px;color:var(--ink);margin:8px 0}
+.pcard-letters{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--muted);font-weight:300}
+.pcard-perunit{font-size:12px;color:var(--muted);margin-top:4px;font-weight:300}
+.popular-badge{display:inline-block;background:var(--accent);color:white;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:8px;border-radius:1px}
+.pcard-cta{margin-top:16px;width:100%;padding:14px;background:var(--accent);color:white;border:none;font-family:"Playfair Display",serif;font-size:15px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
+.pcard-cta:hover{background:var(--ink)}
+.pricing-back{font-family:"Playfair Display",serif;font-size:14px;font-style:italic;color:var(--muted);cursor:pointer;background:transparent;border:none;padding:0;transition:color .2s}
+.pricing-back:hover{color:var(--accent)}
 .modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
 .modal-overlay.open{display:flex}
 .modal-box{background:var(--paper);border:1px solid var(--border);max-width:620px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:48px 52px}
 .modal-close{position:absolute;top:16px;right:20px;font-size:20px;cursor:pointer;color:var(--muted);background:none;border:none;line-height:1}
 .modal-close:hover{color:var(--ink)}
-
-/* BUILDER */
 .builder-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border);background:rgba(253,248,240,.95)}
-.builder-brand{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);cursor:pointer}
+.builder-brand{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--ink);cursor:pointer}
 .builder-user{font-size:13px;color:var(--muted);font-weight:300}
 .builder-inner{max-width:720px;margin:0 auto;padding:52px 24px 80px}
 .progress-track{display:flex;align-items:center;justify-content:center;margin-bottom:52px}
 .pdot{display:flex;flex-direction:column;align-items:center;gap:6px}
-.pdot-ring{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:13px;color:var(--muted);transition:all .3s}
+.pdot-ring{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);background:var(--paper);display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:13px;color:var(--muted);transition:all .3s}
 .pdot.active .pdot-ring{border-color:var(--gold);background:var(--gold);color:white}
 .pdot.done .pdot-ring{border-color:var(--accent);background:var(--accent);color:white}
 .pdot-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .pdot.active .pdot-label{color:var(--accent)}
 .pline{width:36px;height:1px;background:var(--border);margin:0 2px 22px}
 .bcard{background:white;border:1px solid var(--border);border-radius:2px;padding:36px 40px;box-shadow:0 2px 24px rgba(180,140,60,.06);position:relative;overflow:hidden}
-.bcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
-.bcard-corner{position:absolute;top:12px;right:16px;font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--border);letter-spacing:2px;text-transform:uppercase}
-.bcard-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.bcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
+.bcard-corner{position:absolute;top:12px;right:16px;font-family:"Cormorant Garamond",serif;font-size:11px;color:var(--border);letter-spacing:2px;text-transform:uppercase}
+.bcard-title{font-family:"Playfair Display",serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:8px}
 .bcard-sub{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:28px;font-weight:300}
 .bcard-sub em{font-style:italic;color:var(--accent2)}
 .blabel{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:400}
-.binput,.btextarea{width:100%;background:var(--paper);border:1px solid var(--border);padding:13px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border .2s;border-radius:1px}
+.binput,.btextarea{width:100%;background:var(--paper);border:1px solid var(--border);padding:13px 16px;font-family:"Lato",sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border .2s;border-radius:1px}
 .binput:focus,.btextarea:focus{border-color:var(--gold);background:white}
 .binput::placeholder,.btextarea::placeholder{color:#cbb98a;font-weight:300;font-style:italic;font-size:14px}
 .btextarea{resize:none;line-height:1.7}
@@ -235,123 +230,104 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .char-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .char-count{font-size:11px;color:var(--muted)}
 .char-count.warn{color:var(--accent2)}
-.char-count.over{color:#c0392b}
-.bselect{width:100%;background:var(--paper);border:1px solid var(--border);padding:13px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;appearance:none;cursor:pointer;border-radius:1px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7a5a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.char-count.over{color:var(--error)}
+.bselect{width:100%;background:var(--paper);border:1px solid var(--border);padding:13px 16px;font-family:"Lato",sans-serif;font-size:15px;color:var(--ink);outline:none;appearance:none;cursor:pointer;border-radius:1px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7a5a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
 .bselect:focus{border-color:var(--gold);background-color:white}
 .lyric-wrap{position:relative}
-.lyric-quote{position:absolute;top:-6px;left:10px;font-family:'Playfair Display',serif;font-size:44px;color:var(--gold3);line-height:1;pointer-events:none;z-index:1}
+.lyric-quote{position:absolute;top:-6px;left:10px;font-family:"Playfair Display",serif;font-size:44px;color:var(--gold3);line-height:1;pointer-events:none;z-index:1}
 .lyric-input{padding-left:34px!important}
 .lyric-note{font-size:11px;color:var(--muted);margin-top:6px;font-style:italic;font-weight:300}
 .writing-helper{background:var(--paper2);border-left:3px solid var(--gold);padding:14px 16px;margin-bottom:16px}
-.writing-helper p{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--muted);line-height:1.7;font-style:italic;font-weight:300}
+.writing-helper p{font-family:"Cormorant Garamond",serif;font-size:15px;color:var(--muted);line-height:1.7;font-style:italic;font-weight:300}
 .writing-helper strong{color:var(--accent2);font-style:normal;font-weight:400}
 .tone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}
-.tone-btn{border:1.5px solid var(--border);background:var(--paper);border-radius:2px;padding:16px 8px;cursor:pointer;text-align:center;transition:all .25s;font-family:'Playfair Display',serif}
+.tone-btn{border:1.5px solid var(--border);background:var(--paper);border-radius:2px;padding:16px 8px;cursor:pointer;text-align:center;transition:all .25s;font-family:"Playfair Display",serif}
 .tone-btn:hover{border-color:var(--gold2);background:white;transform:translateY(-1px)}
 .tone-btn.sel{border-color:var(--accent);background:var(--accent);color:white;transform:translateY(-1px)}
 .tone-icon{font-size:22px;display:block;margin-bottom:6px}
 .tone-name{font-size:12px;font-style:italic;display:block;letter-spacing:.5px}
 .tone-btn.sel .tone-name{color:rgba(255,255,255,.9)}
-.tone-err{font-size:12px;color:#c0392b;margin-top:4px;display:none}
+.tone-err{font-size:12px;color:var(--error);margin-top:4px;display:none}
 .tone-err.show{display:block}
-.btn-next{width:100%;padding:16px;background:var(--accent);color:white;border:none;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;cursor:pointer;transition:all .25s;letter-spacing:.5px;margin-top:24px;border-radius:1px}
+.btn-next{width:100%;padding:16px;background:var(--accent);color:white;border:none;font-family:"Playfair Display",serif;font-size:17px;font-style:italic;cursor:pointer;transition:all .25s;letter-spacing:.5px;margin-top:24px;border-radius:1px}
 .btn-next:hover:not(:disabled){background:var(--ink);transform:translateY(-1px)}
 .btn-next:disabled{opacity:.5;cursor:not-allowed}
-.btn-back{width:100%;padding:13px;background:transparent;color:var(--accent);border:1.5px solid var(--border);font-family:'Playfair Display',serif;font-size:15px;font-style:italic;cursor:pointer;margin-top:10px;transition:all .25s;border-radius:1px}
+.btn-back{width:100%;padding:13px;background:transparent;color:var(--accent);border:1.5px solid var(--border);font-family:"Playfair Display",serif;font-size:15px;font-style:italic;cursor:pointer;margin-top:10px;transition:all .25s;border-radius:1px}
 .btn-back:hover{border-color:var(--accent);background:var(--paper2)}
 .bpanel{display:none}
 .bpanel.active{display:block}
-
-/* LOADING */
 .loading-wrap{text-align:center;padding:52px 20px}
 .quill-anim{width:56px;height:56px;margin:0 auto 28px;animation:quill-bob 1.8s ease-in-out infinite}
 @keyframes quill-bob{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-12px) rotate(10deg)}}
-.loading-title{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--ink);margin-bottom:10px}
+.loading-title{font-family:"Playfair Display",serif;font-size:24px;font-style:italic;color:var(--ink);margin-bottom:10px}
 .loading-sub{font-size:13px;color:var(--muted);font-weight:300;line-height:1.75}
 .ink-dots{display:flex;justify-content:center;gap:8px;margin-top:28px}
 .ink-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:ink-pulse 1.4s ease-in-out infinite}
 .ink-dot:nth-child(2){animation-delay:.2s}
 .ink-dot:nth-child(3){animation-delay:.4s}
 @keyframes ink-pulse{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
-
-/* RESULT */
 .result-cols{display:flex;flex-direction:column;gap:20px;margin-bottom:24px}
-.result-col-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center}
-.letter-outer{background:var(--paper2);border:1px solid var(--border);padding:32px 36px;position:relative;min-height:300px}
-.letter-outer::before,.letter-outer::after{content:'';position:absolute;top:14px;bottom:14px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
+.result-col-label{font-family:"Cormorant Garamond",serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center}
+.letter-outer{background:var(--paper2);border:1px solid var(--border);padding:32px 36px;position:relative;min-height:200px}
+.letter-outer::before,.letter-outer::after{content:"";position:absolute;top:14px;bottom:14px;width:1px;background:linear-gradient(180deg,transparent,var(--border) 20%,var(--border) 80%,transparent)}
 .letter-outer::before{left:18px}
 .letter-outer::after{right:18px}
-.letter-outer.original{opacity:.65}
-.letter-editable{width:100%;background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--ink);outline:none;padding:4px 0;margin-bottom:12px;transition:border .2s}
+.letter-outer.original{opacity:.7;background:var(--paper3)}
+.letter-editable{width:100%;background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:"Playfair Display",serif;font-size:15px;font-style:italic;color:var(--ink);outline:none;padding:4px 0;margin-bottom:12px;transition:border .2s}
 .letter-editable:focus{border-bottom-color:var(--gold)}
-.letter-date{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--muted);text-align:right;margin-bottom:16px;font-style:italic}
+.letter-date{font-family:"Cormorant Garamond",serif;font-size:13px;color:var(--muted);text-align:right;margin-bottom:16px;font-style:italic}
 .letter-ornament{text-align:center;font-size:16px;color:var(--gold);margin:10px 0;letter-spacing:6px}
-.letter-body{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300}
+.letter-body{font-family:"Cormorant Garamond",serif;font-size:15px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300}
 .letter-sign-wrap{margin-top:20px;text-align:right}
-.letter-sign-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.letter-sign-editable{background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--accent);outline:none;text-align:right;width:100%;padding:4px 0;transition:border .2s}
+.letter-sign-editable{background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:"Playfair Display",serif;font-size:17px;font-style:italic;color:var(--accent);outline:none;text-align:right;width:100%;padding:4px 0;transition:border .2s}
 .letter-sign-editable:focus{border-bottom-color:var(--gold)}
-.letter-credit{font-family:'Cormorant Garamond',serif;font-size:11px;color:var(--muted);text-align:right;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.letter-credit{font-family:"Cormorant Garamond",serif;font-size:11px;color:var(--muted);text-align:right;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
 .edit-hint{font-size:11px;color:var(--muted);font-style:italic;text-align:center;margin-bottom:16px}
-
-/* RESULT ACTIONS */
 .result-actions{background:var(--paper2);border:1px solid var(--border);padding:24px 28px;margin-bottom:20px}
-.result-actions-title{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:16px}
+.result-actions-title{font-family:"Playfair Display",serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:16px}
 .result-tone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-.result-tone-btn{border:1.5px solid var(--border);background:var(--paper);border-radius:2px;padding:10px 6px;cursor:pointer;text-align:center;transition:all .25s;font-family:'Playfair Display',serif;position:relative}
+.result-tone-btn{border:1.5px solid var(--border);background:var(--paper);border-radius:2px;padding:10px 6px;cursor:pointer;text-align:center;transition:all .25s;font-family:"Playfair Display",serif;position:relative}
 .result-tone-btn:hover{border-color:var(--gold2);background:white}
 .result-tone-btn.sel{border-color:var(--accent);background:var(--accent);color:white}
-.result-tone-btn.used::after{content:'✓';position:absolute;top:4px;right:6px;font-size:10px;color:var(--gold)}
+.result-tone-btn.used::after{content:"✓";position:absolute;top:4px;right:6px;font-size:10px;color:var(--gold)}
 .result-tone-btn.sel.used::after{color:rgba(255,255,255,.7)}
 .result-tone-icon{font-size:18px;display:block;margin-bottom:4px}
 .result-tone-name{font-size:11px;font-style:italic;display:block}
 .result-tone-btn.sel .result-tone-name{color:rgba(255,255,255,.9)}
 .credit-info{font-size:12px;color:var(--muted);margin-bottom:16px;text-align:center;font-style:italic}
-.credit-info span{color:var(--accent);font-weight:400}
-.btn-regen{width:100%;padding:13px;background:transparent;color:var(--accent);border:1.5px solid var(--accent);font-family:'Playfair Display',serif;font-size:15px;font-style:italic;cursor:pointer;transition:all .25s;border-radius:1px;margin-bottom:8px}
+.btn-regen{width:100%;padding:13px;background:transparent;color:var(--accent);border:1.5px solid var(--accent);font-family:"Playfair Display",serif;font-size:15px;font-style:italic;cursor:pointer;transition:all .25s;border-radius:1px;margin-bottom:8px}
 .btn-regen:hover:not(:disabled){background:var(--accent);color:white}
 .btn-regen:disabled{opacity:.4;cursor:not-allowed}
-.btn-edit-memory{width:100%;padding:11px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;cursor:pointer;transition:all .25s;border-radius:1px;margin-bottom:8px}
+.btn-edit-memory{width:100%;padding:11px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:"Playfair Display",serif;font-size:14px;font-style:italic;cursor:pointer;transition:all .25s;border-radius:1px;margin-bottom:8px}
 .btn-edit-memory:hover:not(:disabled){border-color:var(--muted);color:var(--ink)}
 .btn-edit-memory:disabled{opacity:.4;cursor:not-allowed}
-
-/* COMING SOON TEASER */
 .teaser-box{background:linear-gradient(135deg,var(--ink) 0%,#2c1a0e 100%);border:1px solid var(--border2);padding:28px 32px;margin:20px 0;position:relative;overflow:hidden;text-align:center}
-.teaser-box::before{content:'✦';position:absolute;top:-10px;left:20px;font-size:60px;color:var(--gold);opacity:.08}
+.teaser-box::before{content:"✦";position:absolute;top:-10px;left:20px;font-size:60px;color:var(--gold);opacity:.08}
 .teaser-badge{display:inline-block;background:var(--gold);color:var(--ink);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:1px;margin-bottom:12px;font-weight:700}
-.teaser-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--paper);margin-bottom:8px}
+.teaser-title{font-family:"Playfair Display",serif;font-size:20px;font-weight:400;color:var(--paper);margin-bottom:8px}
 .teaser-title em{font-style:italic;color:var(--gold2)}
-.teaser-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(253,248,240,.7);line-height:1.7;font-weight:300;margin-bottom:16px}
-.teaser-notify{background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;padding:10px 24px;border-radius:1px;cursor:pointer;transition:all .25s}
+.teaser-text{font-family:"Cormorant Garamond",serif;font-size:16px;color:rgba(253,248,240,.7);line-height:1.7;font-weight:300;margin-bottom:16px}
+.teaser-notify{background:transparent;border:1.5px solid var(--gold);color:var(--gold);font-family:"Playfair Display",serif;font-size:14px;font-style:italic;padding:10px 24px;border-radius:1px;cursor:pointer;transition:all .25s}
 .teaser-notify:hover{background:var(--gold);color:var(--ink)}
-
-/* CUSTOM MODAL */
 .custom-modal-overlay{position:fixed;inset:0;background:rgba(26,18,8,.6);z-index:300;display:none;align-items:center;justify-content:center;padding:24px}
 .custom-modal-overlay.open{display:flex}
 .custom-modal-box{background:var(--paper);border:1px solid var(--border);border-radius:2px;width:100%;max-width:560px;padding:36px 40px;position:relative}
-.custom-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
-.custom-modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.custom-modal-box::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2))}
+.custom-modal-title{font-family:"Playfair Display",serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px}
 .custom-modal-sub{font-size:13px;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.6}
-.custom-modal-textarea{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;border-radius:1px;resize:vertical;line-height:1.7;min-height:140px;transition:border .2s}
+.custom-modal-textarea{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:"Lato",sans-serif;font-size:15px;color:var(--ink);outline:none;border-radius:1px;resize:vertical;line-height:1.7;min-height:140px;transition:border .2s}
 .custom-modal-textarea:focus{border-color:var(--gold);background:white}
-.custom-modal-input{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:'Lato',sans-serif;font-size:15px;color:var(--ink);outline:none;border-radius:1px;transition:border .2s}
+.custom-modal-input{width:100%;background:var(--paper);border:1px solid var(--border);padding:14px 16px;font-family:"Lato",sans-serif;font-size:15px;color:var(--ink);outline:none;border-radius:1px;transition:border .2s}
 .custom-modal-input:focus{border-color:var(--gold);background:white}
 .custom-modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
-.custom-modal-cancel{padding:12px 24px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
+.custom-modal-cancel{padding:12px 24px;background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:"Playfair Display",serif;font-size:14px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
 .custom-modal-cancel:hover{border-color:var(--muted);color:var(--ink)}
-.custom-modal-confirm{padding:12px 24px;background:var(--accent);color:white;border:none;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
+.custom-modal-confirm{padding:12px 24px;background:var(--accent);color:white;border:none;font-family:"Playfair Display",serif;font-size:14px;font-style:italic;cursor:pointer;border-radius:1px;transition:all .25s}
 .custom-modal-confirm:hover{background:var(--ink)}
-
-/* PRICING */
-.pricing-row{display:flex;gap:12px;margin:16px 0}
-.pcard{flex:1;border:1.5px solid var(--border);border-radius:2px;padding:22px 18px;text-align:center;background:var(--paper);cursor:pointer;transition:all .25s}
-.pcard:hover{border-color:var(--gold);transform:translateY(-1px)}
-.pcard.feat{border-color:var(--gold);background:white}
-.pcard-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.pcard-price{font-family:'Playfair Display',serif;font-size:28px;color:var(--ink)}
-.pcard-desc{font-size:13px;color:var(--muted);margin-top:6px;font-weight:300}
-.popular-badge{display:inline-block;background:var(--accent);color:white;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:8px;border-radius:1px}
-.pcard-cta{margin-top:10px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent)}
+.modal-success{text-align:center;padding:20px 0}
+.modal-success-icon{font-size:36px;margin-bottom:12px}
+.modal-success-title{font-family:"Playfair Display",serif;font-size:20px;color:var(--ink);margin-bottom:8px}
+.modal-success-text{font-size:14px;color:var(--muted);line-height:1.6;font-weight:300}
 </style>
 </head>
 <body>
@@ -387,7 +363,6 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <button class="nav-cta" onclick="showPage('page-register')" data-i18n="nav_cta">Begin Your First Letter →</button>
     </div>
   </nav>
-
   <section class="hero">
     <div class="hero-left">
       <p class="hero-eyebrow" data-i18n="hero_eyebrow">Memory Letters for the Songs That Made You</p>
@@ -399,35 +374,26 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </div>
     </div>
     <div class="hero-right">
-      <svg class="hero-bg-art" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;position:absolute;inset:0">
         <rect width="700" height="700" fill="#ede3d3"/>
         <g stroke="#cfc0a0" stroke-width=".5" opacity=".5">
-          <line x1="0" y1="120" x2="700" y2="140"/><line x1="0" y1="145" x2="700" y2="165"/>
-          <line x1="0" y1="170" x2="700" y2="190"/><line x1="0" y1="195" x2="700" y2="215"/>
+          <line x1="0" y1="120" x2="700" y2="140"/><line x1="0" y1="170" x2="700" y2="190"/>
           <line x1="0" y1="220" x2="700" y2="240"/><line x1="0" y1="400" x2="700" y2="420"/>
-          <line x1="0" y1="425" x2="700" y2="445"/><line x1="0" y1="450" x2="700" y2="470"/>
-          <line x1="0" y1="475" x2="700" y2="495"/><line x1="0" y1="500" x2="700" y2="520"/>
+          <line x1="0" y1="450" x2="700" y2="470"/><line x1="0" y1="500" x2="700" y2="520"/>
         </g>
         <g fill="#c9a84c" opacity=".3" font-family="serif" font-size="48">
-          <text x="60" y="105">♩</text><text x="180" y="380">♪</text>
-          <text x="520" y="350">♫</text><text x="600" y="90">♩</text>
-          <text x="350" y="600">♩</text><text x="80" y="580">♪</text>
+          <text x="60" y="105">♩</text><text x="180" y="380">♪</text><text x="520" y="350">♫</text><text x="600" y="90">♩</text>
         </g>
         <g transform="translate(350,340)">
           <circle r="220" fill="#2a1f0e" opacity=".85"/>
-          <circle r="200" fill="none" stroke="#3d2e18" stroke-width="4" opacity=".4"/>
           <circle r="170" fill="none" stroke="#3d2e18" stroke-width="2" opacity=".3"/>
-          <circle r="140" fill="none" stroke="#3d2e18" stroke-width="2" opacity=".3"/>
           <circle r="110" fill="none" stroke="#3d2e18" stroke-width="1.5" opacity=".25"/>
-          <circle r="80" fill="none" stroke="#3d2e18" stroke-width="1.5" opacity=".25"/>
           <circle r="52" fill="#c9a84c" opacity=".7"/>
-          <circle r="45" fill="#b8943f" opacity=".5"/>
-          <text x="0" y="-10" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="#1a1208" opacity=".8" letter-spacing="2">SONGSCRIPT</text>
-          <text x="0" y="8" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1208" opacity=".6" font-style="italic">memory letters</text>
+          <text x="0" y="-10" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" fill="#1a1208" opacity=".8" letter-spacing="2">SONGSCRIPT</text>
+          <text x="0" y="8" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9" fill="#1a1208" opacity=".6" font-style="italic">memory letters</text>
           <circle r="5" fill="#1a1208" opacity=".6"/>
         </g>
         <text x="580" y="560" font-family="serif" font-size="120" fill="#c9a84c" opacity=".12">𝄞</text>
-        <text x="20" y="300" font-family="serif" font-size="80" fill="#c9a84c" opacity=".1">𝄞</text>
       </svg>
       <div class="hero-image-overlay"></div>
       <div class="hero-letter-preview">
@@ -436,18 +402,15 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <div class="preview-body">The windows were down on Highway 40. You came through the static and everything — the dust, the heat, the way the sky went gold — suddenly made sense.</div>
         <div class="preview-sign">With all that you carry,</div>
       </div>
-      <svg class="hero-record" viewBox="0 0 110 110">
+      <svg class="hero-record" viewBox="0 0 110 110" style="position:absolute;top:48px;right:40px;width:110px;height:110px;animation:spin 18s linear infinite;opacity:.6;z-index:2">
         <circle cx="55" cy="55" r="52" fill="#2a1f0e" opacity=".7"/>
-        <circle cx="55" cy="55" r="46" fill="none" stroke="#3d2e18" stroke-width="3" opacity=".4"/>
         <circle cx="55" cy="55" r="36" fill="none" stroke="#3d2e18" stroke-width="2" opacity=".3"/>
         <circle cx="55" cy="55" r="22" fill="#c9a84c" opacity=".6"/>
         <circle cx="55" cy="55" r="5" fill="#1a1208"/>
       </svg>
     </div>
   </section>
-
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦ ✦ ✦</div><div class="divider-line"></div></div>
-
   <section class="story-section">
     <div class="story-inner">
       <p class="story-label" data-i18n="story_label">Why SongScript exists</p>
@@ -457,10 +420,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <p class="story-text" data-i18n="story_text3">Your first one is free. No templates. No generic output. Just a letter that sounds like <strong>you</strong> — on your best writing day.</p>
     </div>
   </section>
-
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦</div><div class="divider-line"></div></div>
-
-  <!-- SAMPLE LETTERS -->
   <section class="samples-section">
     <p class="samples-label" data-i18n="samples_label">Real letters, real memories</p>
     <h2 class="samples-headline" data-i18n="samples_headline">This is what your letter could look like</h2>
@@ -474,20 +434,18 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <div class="sample-card">
         <div class="sample-sal">To Landslide, and the night before everything changed,</div>
         <div class="sample-orn">✦ ✦ ✦</div>
-        <div class="sample-body">She played you the night before I left for college. We sat in the kitchen, late, neither of us wanting to say what we both knew. You said it for us. When you ended she held me for a long time and said I was ready. I wasn't sure she was right.</div>
+        <div class="sample-body">She played you the night before I left for college. We sat in the kitchen, late, neither of us wanting to say what we both knew. You said it for us. When you ended she held me for a long time and said I was ready.</div>
         <div class="sample-meta"><span class="sample-song">"Landslide" · Fleetwood Mac</span><span class="sample-tone">Family</span></div>
       </div>
       <div class="sample-card">
         <div class="sample-sal">To September, and every dance floor you ever found me on,</div>
         <div class="sample-orn">✦ ✦ ✦</div>
-        <div class="sample-body">Every wedding, without fail, my father and I would find each other the moment your horns came in. He was a terrible dancer. He never cared. He'd grab my hand and pull me out like we were the only two people there. Three years since he's been gone. Last summer I stood at the edge of the floor for the whole song.</div>
+        <div class="sample-body">Every wedding, without fail, my father and I would find each other the moment your horns came in. He was a terrible dancer. He never cared. Three years since he's been gone. Last summer I stood at the edge of the floor for the whole song.</div>
         <div class="sample-meta"><span class="sample-song">"September" · Earth, Wind &amp; Fire</span><span class="sample-tone">Family</span></div>
       </div>
     </div>
   </section>
-
   <div class="section-divider"><div class="divider-line"></div><div class="divider-ornament">✦</div><div class="divider-line"></div></div>
-
   <section class="how-section">
     <div class="how-inner">
       <p class="how-label" data-i18n="how_label">The process</p>
@@ -501,7 +459,6 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </div>
     </div>
   </section>
-
   <section class="final-cta">
     <h2 class="final-headline" data-i18n="final_headline">Your memory deserves<br>more than <em>a playlist.</em></h2>
     <p class="final-sub" data-i18n="final_sub">Start with one song. One letter. No card needed.</p>
@@ -533,28 +490,31 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <button class="auth-mode-btn active" id="modeRegBtn" onclick="setAuthMode('register')">Create Account</button>
           <button class="auth-mode-btn" id="modeLoginBtn" onclick="setAuthMode('login')">Sign In</button>
         </div>
+        <div class="auth-error-banner" id="authErrorBanner"><p id="authErrorMsg">Invalid login credentials.</p></div>
+        <div class="auth-success-banner" id="authSuccessBanner"><p id="authSuccessMsg"></p></div>
         <span class="free-pill" id="freePill">One Free Letter Included</span>
         <h2 class="auth-title" id="authTitle">Create your account</h2>
         <p class="auth-subtitle" id="authSubtitle">Join thousands preserving their most meaningful song memories.</p>
         <div class="form-field" id="nameField">
-          <label class="form-label">Your Name</label>
+          <label class="form-label" id="nameLbl">Your Name</label>
           <input type="text" class="form-input" id="regName" placeholder="How should we address your letters?" autocomplete="name"/>
           <div class="field-error" id="errName">Please enter your name.</div>
         </div>
         <div class="form-field">
-          <label class="form-label">Email Address</label>
+          <label class="form-label" id="emailLbl">Email Address</label>
           <input type="email" class="form-input" id="regEmail" placeholder="your@email.com" autocomplete="email"/>
           <div class="field-error" id="errEmail">Please enter a valid email address.</div>
         </div>
-        <div class="form-field">
-          <label class="form-label">Password</label>
+        <div class="form-field" id="passFieldWrap">
+          <label class="form-label" id="passLbl">Password</label>
           <input type="password" class="form-input" id="regPass" placeholder="At least 8 characters" oninput="checkStrength(this)" autocomplete="current-password"/>
           <div class="strength-bar" id="strengthBarWrap"><div class="strength-fill" id="strengthFill"></div></div>
           <div class="strength-label" id="strengthLabel"></div>
           <div class="field-error" id="errPass">Password must be at least 8 characters.</div>
+          <span class="forgot-link" id="forgotLink" onclick="handleForgotPassword()" style="display:none">Forgot your password?</span>
         </div>
         <div class="form-field" id="langField">
-          <label class="form-label">Preferred Language</label>
+          <label class="form-label" id="langLbl">Preferred Language</label>
           <select class="form-input" id="regLang" style="appearance:auto">
             <option value="en">English</option>
             <option value="es">Español</option>
@@ -562,15 +522,10 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         </div>
         <div class="opt-in-row" id="optInRow">
           <input type="checkbox" id="emailOptIn"/>
-          <label class="opt-in-label" for="emailOptIn">Send me updates about new SongScript features and products. You can unsubscribe anytime.</label>
+          <label class="opt-in-label" id="optInLabel" for="emailOptIn">Send me updates about new SongScript features and products. You can unsubscribe anytime.</label>
         </div>
         <button class="btn-register" id="authSubmitBtn" onclick="handleAuth()">Create My Account & Start Writing →</button>
-        <div class="divider-or"><span>or</span></div>
-        <button class="btn-google" onclick="alert('Google login coming soon — please use email for now.')">
-          <svg class="google-icon" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
-          Continue with Google
-        </button>
-        <p class="terms-note">By creating an account you agree to our Terms of Service and Privacy Policy. We will never share your memories.</p>
+        <p class="terms-note" id="termsNote">By creating an account you agree to our Terms of Service and Privacy Policy. We will never share your memories.</p>
       </div>
     </div>
   </div>
@@ -580,7 +535,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 <div class="page" id="page-dashboard">
   <nav class="dashboard-nav">
     <div class="dashboard-brand" onclick="showPage('page-landing')">← SongScript</div>
-    <span style="font-size:13px;color:var(--muted);cursor:pointer" onclick="handleSignOut()">Sign Out</span>
+    <span style="font-size:13px;color:var(--muted);cursor:pointer" id="signOutBtn" onclick="handleSignOut()">Sign Out</span>
   </nav>
   <div class="dashboard-inner">
     <div class="dashboard-header">
@@ -590,27 +545,55 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </div>
       <div class="credits-card">
         <div class="credits-num" id="dashCredits">—</div>
-        <div class="credits-label">Letters Remaining</div>
-        <button class="btn-buy-more" onclick="showBuyModal()">Get More Letters →</button>
+        <div class="credits-label" id="creditsLabel">Letters Remaining</div>
+        <button class="btn-buy-more" id="buyMoreBtn" onclick="showPage('page-pricing')">Get More Letters →</button>
       </div>
     </div>
-    <button class="btn-new-letter" onclick="startNewLetter()">✦ Write a New Letter</button>
+    <button class="btn-new-letter" id="newLetterBtn" onclick="startNewLetter()">✦ Write a New Letter</button>
     <div class="letters-title" id="dashLettersTitle">Your Letters</div>
     <div id="dashLettersList">
       <div class="empty-state">
         <div class="empty-state-icon">✦</div>
-        <div class="empty-state-text">No letters yet — write your first one above.</div>
+        <div class="empty-state-text" id="emptyStateText">No letters yet — write your first one above.</div>
       </div>
     </div>
-  </div>
-    <!-- COMING SOON TEASER -->
     <div class="teaser-box" style="margin-top:32px">
       <div class="teaser-badge" id="ts-badge">Coming Soon</div>
       <div class="teaser-title" id="ts-title">Love your letter? <em>Frame it.</em></div>
       <div class="teaser-text" id="ts-text">We're launching a premium print service — your letter beautifully printed on archival paper, framed and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries. Currently available in the United States only.</div>
       <button class="teaser-notify" onclick="notifyMe()" id="ts-btn">Notify Me When Available →</button>
     </div>
+  </div>
+</div>
 
+<!-- PRICING PAGE -->
+<div class="page" id="page-pricing">
+  <nav class="dashboard-nav">
+    <div class="dashboard-brand" onclick="showPage('page-dashboard')">← Dashboard</div>
+    <span style="font-size:13px;color:var(--muted);cursor:pointer" onclick="handleSignOut()" id="signOutBtn2">Sign Out</span>
+  </nav>
+  <div class="pricing-page-inner">
+    <h2 class="pricing-page-title" id="pricingTitle">Get More Letters</h2>
+    <p class="pricing-page-sub" id="pricingSubtitle">Every memory deserves to be preserved. Choose a pack and keep writing.</p>
+    <div class="pricing-grid">
+      <div class="pcard" onclick="startCheckout('price_1TYaViLXzHWT8avwfQ5Ccfn3')">
+        <div class="pcard-badge" id="starterBadge">Starter</div>
+        <div class="pcard-price">$9.99</div>
+        <div class="pcard-letters" id="starterLetters">5 Song Letters</div>
+        <div class="pcard-perunit">$2.00 per letter</div>
+        <button class="pcard-cta" id="starterCta">Buy Now →</button>
+      </div>
+      <div class="pcard feat" onclick="startCheckout('price_1TYaW6LXzHWT8avwLdV6dNfA')">
+        <div class="pcard-badge" id="valueBadge">Best Value</div>
+        <div class="popular-badge" id="popularBadge">Most Popular</div>
+        <div class="pcard-price">$14.99</div>
+        <div class="pcard-letters" id="valueLetters">10 Song Letters</div>
+        <div class="pcard-perunit">$1.50 per letter</div>
+        <button class="pcard-cta" id="valueCta">Buy Now →</button>
+      </div>
+    </div>
+    <button class="pricing-back" onclick="showPage('page-dashboard')" id="pricingBack">← Back to Dashboard</button>
+  </div>
 </div>
 
 <!-- BUILDER PAGE -->
@@ -631,7 +614,6 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <div class="pline"></div>
       <div class="pdot" id="pd4"><div class="pdot-ring">5</div><div class="pdot-label">Your Letter</div></div>
     </div>
-
     <!-- Step 1 -->
     <div class="bpanel active" id="bp0">
       <div class="bcard">
@@ -639,41 +621,39 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <h2 class="bcard-title" id="b1Title">Which song carries your memory?</h2>
         <p class="bcard-sub" id="b1Sub">Tell us what moved you — and roughly <em>when</em> the memory happened.</p>
         <div class="brow">
-          <div class="bfield"><label class="blabel">Song Title</label><input type="text" class="binput" id="bSongTitle" placeholder="e.g. Fast Car"/></div>
-          <div class="bfield"><label class="blabel">Artist / Band</label><input type="text" class="binput" id="bSongArtist" placeholder="e.g. Tracy Chapman"/></div>
+          <div class="bfield"><label class="blabel" id="songTitleLbl">Song Title</label><input type="text" class="binput" id="bSongTitle" placeholder="e.g. Fast Car"/></div>
+          <div class="bfield"><label class="blabel" id="artistLbl">Artist / Band</label><input type="text" class="binput" id="bSongArtist" placeholder="e.g. Tracy Chapman"/></div>
         </div>
         <div class="brow">
           <div class="bfield">
-            <label class="blabel">Month of Memory</label>
+            <label class="blabel" id="monthLbl">Month of Memory</label>
             <select class="bselect" id="bMemMonth">
-              <option value="">— Month —</option>
+              <option value="" id="monthPlaceholder">— Month —</option>
               <option>January</option><option>February</option><option>March</option><option>April</option>
               <option>May</option><option>June</option><option>July</option><option>August</option>
               <option>September</option><option>October</option><option>November</option><option>December</option>
             </select>
           </div>
-          <div class="bfield"><label class="blabel">Year of Memory</label><select class="bselect" id="bMemYear"><option value="">— Year —</option></select></div>
+          <div class="bfield"><label class="blabel" id="yearLbl">Year of Memory</label><select class="bselect" id="bMemYear"><option value="">— Year —</option></select></div>
         </div>
         <button class="btn-next" id="bContinue1" onclick="bGoTo(1)">Continue →</button>
       </div>
     </div>
-
     <!-- Step 2 -->
     <div class="bpanel" id="bp1">
       <div class="bcard">
         <div class="bcard-corner">Step 2 of 5</div>
         <h2 class="bcard-title" id="b2Title">Tell us everything.</h2>
         <p class="bcard-sub" id="b2Sub">Where were you? Who were you with? What did the song make you feel? <em>This is your raw material.</em></p>
-        <div class="writing-helper"><p>Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened. Let the details come — smell, weather, what you were wearing.</p></div>
+        <div class="writing-helper"><p id="writingHelperText">Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened. Let the details come — smell, weather, what you were wearing.</p></div>
         <div class="bfield">
-          <div class="char-row"><label class="blabel" style="margin:0">Your Memory</label><span class="char-count" id="memWordCount">0 words</span></div>
-          <textarea class="btextarea" id="bMemory" rows="9" placeholder="I remember the first time I heard this song. It was summer, 1998. We were driving through New Mexico at dusk, windows down, and the road ahead looked like it went on forever..." oninput="countWordsB()"></textarea>
+          <div class="char-row"><label class="blabel" id="memoryLbl" style="margin:0">Your Memory</label><span class="char-count" id="memWordCount">0 words</span></div>
+          <textarea class="btextarea" id="bMemory" rows="9" placeholder="I remember the first time I heard this song..." oninput="countWordsB()"></textarea>
         </div>
-        <button class="btn-next" onclick="bGoTo(2)">Continue →</button>
-        <button class="btn-back" onclick="bGoTo(0)">← Back</button>
+        <button class="btn-next" id="bContinue2" onclick="bGoTo(2)">Continue →</button>
+        <button class="btn-back" id="bBack1" onclick="bGoTo(0)">← Back</button>
       </div>
     </div>
-
     <!-- Step 3 -->
     <div class="bpanel" id="bp2">
       <div class="bcard">
@@ -682,20 +662,19 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <p class="bcard-sub" id="b3Sub">The lyric that stops time — the one that feels written just for you. <em>Leave blank and we'll find it.</em></p>
         <div class="bfield">
           <div class="char-row">
-            <label class="blabel" style="margin:0">That lyric <span style="font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:300">(optional)</span></label>
+            <label class="blabel" id="lyricLbl" style="margin:0">That lyric <span style="font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:300">(optional)</span></label>
             <span class="char-count" id="lyricCount">0 / 150</span>
           </div>
           <div class="lyric-wrap">
             <span class="lyric-quote">"</span>
             <input type="text" class="binput lyric-input" id="bLyric" maxlength="150" placeholder="Leave blank and the AI will find the right line..." oninput="countLyric()"/>
           </div>
-          <p class="lyric-note">150 character limit — enough to give your letter soul, not enough to reproduce the song.</p>
+          <p class="lyric-note" id="lyricNote">150 character limit — enough to give your letter soul, not enough to reproduce the song.</p>
         </div>
-        <button class="btn-next" onclick="bGoTo(3)">Continue →</button>
-        <button class="btn-back" onclick="bGoTo(1)">← Back</button>
+        <button class="btn-next" id="bContinue3" onclick="bGoTo(3)">Continue →</button>
+        <button class="btn-back" id="bBack2" onclick="bGoTo(1)">← Back</button>
       </div>
     </div>
-
     <!-- Step 4 -->
     <div class="bpanel" id="bp3">
       <div class="bcard">
@@ -703,21 +682,20 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <h2 class="bcard-title" id="b4Title">What tone should your letter carry?</h2>
         <p class="bcard-sub" id="b4Sub">Choose the emotional register that fits your memory best.</p>
         <div class="tone-grid">
-          <div class="tone-btn" onclick="selTone(this,'Love Letter')"><span class="tone-icon">💌</span><span class="tone-name">Love Letter</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Nostalgic')"><span class="tone-icon">🌅</span><span class="tone-name">Nostalgic</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Adventure')"><span class="tone-icon">🌍</span><span class="tone-name">Adventure</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Family')"><span class="tone-icon">🏡</span><span class="tone-name">Family</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Heartbreak')"><span class="tone-icon">💔</span><span class="tone-name">Heartbreak</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Inspirational')"><span class="tone-icon">✨</span><span class="tone-name">Inspirational</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Funny')"><span class="tone-icon">😄</span><span class="tone-name">Funny</span></div>
-          <div class="tone-btn" onclick="selTone(this,'Friendship')"><span class="tone-icon">🤝</span><span class="tone-name">Friendship</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Love Letter')"><span class="tone-icon">💌</span><span class="tone-name" data-en="Love Letter" data-es="Carta de amor">Love Letter</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Nostalgic')"><span class="tone-icon">🌅</span><span class="tone-name" data-en="Nostalgic" data-es="Nostálgico">Nostalgic</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Adventure')"><span class="tone-icon">🌍</span><span class="tone-name" data-en="Adventure" data-es="Aventura">Adventure</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Family')"><span class="tone-icon">🏡</span><span class="tone-name" data-en="Family" data-es="Familia">Family</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Heartbreak')"><span class="tone-icon">💔</span><span class="tone-name" data-en="Heartbreak" data-es="Desamor">Heartbreak</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Inspirational')"><span class="tone-icon">✨</span><span class="tone-name" data-en="Inspirational" data-es="Inspirador">Inspirational</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Funny')"><span class="tone-icon">😄</span><span class="tone-name" data-en="Funny" data-es="Divertido">Funny</span></div>
+          <div class="tone-btn" onclick="selTone(this,'Friendship')"><span class="tone-icon">🤝</span><span class="tone-name" data-en="Friendship" data-es="Amistad">Friendship</span></div>
         </div>
         <div class="tone-err" id="toneErr">Please choose a tone to continue.</div>
         <button class="btn-next" id="bWriteLetter" onclick="generateLetter()">Write My Letter →</button>
-        <button class="btn-back" onclick="bGoTo(2)">← Back</button>
+        <button class="btn-back" id="bBack3" onclick="bGoTo(2)">← Back</button>
       </div>
     </div>
-
     <!-- Loading -->
     <div class="bpanel" id="bp5-loading">
       <div class="bcard">
@@ -733,28 +711,23 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         </div>
       </div>
     </div>
-
     <!-- Result -->
     <div class="bpanel" id="bp5-result">
       <div class="bcard">
-        <div class="bcard-title" style="margin-bottom:4px">Your Memory Letter</div>
+        <div class="bcard-title" id="resultTitle" style="margin-bottom:4px">Your Memory Letter</div>
         <p class="bcard-sub" style="margin-bottom:8px"><em id="resultSong"></em></p>
-        <p class="edit-hint">✎ Click the salutation or sign-off to personalize before downloading</p>
-
+        <p class="edit-hint" id="editHint">✎ Click the salutation or sign-off to personalize before downloading</p>
         <div class="result-cols">
           <div>
-            <div class="result-col-label">First version</div>
+            <div class="result-col-label" id="colLabelOrig">Your Memory</div>
             <div class="letter-outer original">
-              <div class="letter-date" id="lDateOrig"></div>
-              <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:8px;padding-left:12px" id="lSalOrig"></div>
-              <div class="letter-ornament">✦ ✦ ✦</div>
-              <div class="letter-body" id="lBodyOrig"></div>
-              <div style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--accent);margin-top:20px;text-align:right" id="lSignOrig"></div>
-              <div class="letter-credit" id="lCreditOrig"></div>
+              <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:400" id="origMemLabel">What you wrote</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.85;color:var(--ink);white-space:pre-wrap;font-weight:300" id="lBodyOrig"></div>
+              <div style="font-size:11px;color:var(--muted);margin-top:16px;font-style:italic" id="origSongLabel"></div>
             </div>
           </div>
           <div>
-            <div class="result-col-label" id="currentColLabel">Current version</div>
+            <div class="result-col-label" id="currentColLabel">AI Letter</div>
             <div class="letter-outer">
               <div class="letter-date" id="lDateCurr"></div>
               <input class="letter-editable" id="lSalCurr" placeholder="Salutation…"/>
@@ -767,25 +740,23 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
             </div>
           </div>
         </div>
-
         <!-- ACTIONS -->
         <div class="result-actions">
           <div class="result-actions-title" id="resultActionsTitle">Try a different tone or regenerate</div>
           <div class="result-tone-grid">
-            <div class="result-tone-btn" onclick="switchTone(this,'Love Letter')"><span class="result-tone-icon">💌</span><span class="result-tone-name">Love Letter</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Nostalgic')"><span class="result-tone-icon">🌅</span><span class="result-tone-name">Nostalgic</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Adventure')"><span class="result-tone-icon">🌍</span><span class="result-tone-name">Adventure</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Family')"><span class="result-tone-icon">🏡</span><span class="result-tone-name">Family</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Heartbreak')"><span class="result-tone-icon">💔</span><span class="result-tone-name">Heartbreak</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Inspirational')"><span class="result-tone-icon">✨</span><span class="result-tone-name">Inspirational</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Funny')"><span class="result-tone-icon">😄</span><span class="result-tone-name">Funny</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Friendship')"><span class="result-tone-icon">🤝</span><span class="result-tone-name">Friendship</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Love Letter')"><span class="result-tone-icon">💌</span><span class="result-tone-name" data-en="Love Letter" data-es="Carta de amor">Love Letter</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Nostalgic')"><span class="result-tone-icon">🌅</span><span class="result-tone-name" data-en="Nostalgic" data-es="Nostálgico">Nostalgic</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Adventure')"><span class="result-tone-icon">🌍</span><span class="result-tone-name" data-en="Adventure" data-es="Aventura">Adventure</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Family')"><span class="result-tone-icon">🏡</span><span class="result-tone-name" data-en="Family" data-es="Familia">Family</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Heartbreak')"><span class="result-tone-icon">💔</span><span class="result-tone-name" data-en="Heartbreak" data-es="Desamor">Heartbreak</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Inspirational')"><span class="result-tone-icon">✨</span><span class="result-tone-name" data-en="Inspirational" data-es="Inspirador">Inspirational</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Funny')"><span class="result-tone-icon">😄</span><span class="result-tone-name" data-en="Funny" data-es="Divertido">Funny</span></div>
+            <div class="result-tone-btn" onclick="switchTone(this,'Friendship')"><span class="result-tone-icon">🤝</span><span class="result-tone-name" data-en="Friendship" data-es="Amistad">Friendship</span></div>
           </div>
           <div class="credit-info">Free attempts: <span id="freeAttemptsLeft"></span></div>
           <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenBtnText">Regenerate with same tone</span></button>
           <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
         </div>
-
         <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
         <button class="btn-back" id="backDashBtn" onclick="showPage('page-dashboard')" style="margin-top:10px">← Back to Dashboard</button>
       </div>
@@ -809,45 +780,73 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 <!-- NOTIFY ME MODAL -->
 <div class="custom-modal-overlay" id="notifyModal">
   <div class="custom-modal-box">
-    <div class="custom-modal-title" id="notifyTitle">Be the first to know</div>
-    <div class="custom-modal-sub" id="notifySub">Enter your email and we'll notify you the moment our print service launches.</div>
-    <input type="email" class="custom-modal-input" id="notifyEmailInput" placeholder="your@email.com"/>
-    <div class="custom-modal-actions">
-      <button class="custom-modal-cancel" id="notifyCancel" onclick="closeNotifyModal()">Cancel</button>
-      <button class="custom-modal-confirm" id="notifyConfirm" onclick="confirmNotify()">Notify Me →</button>
+    <div id="notifyFormView">
+      <div class="custom-modal-title" id="notifyTitle">Be the first to know</div>
+      <div class="custom-modal-sub" id="notifySub">Enter your email and we'll notify you the moment our print service launches.</div>
+      <input type="email" class="custom-modal-input" id="notifyEmailInput" placeholder="your@email.com"/>
+      <div class="custom-modal-actions">
+        <button class="custom-modal-cancel" id="notifyCancel" onclick="closeNotifyModal()">Cancel</button>
+        <button class="custom-modal-confirm" id="notifyConfirm" onclick="confirmNotify()">Notify Me →</button>
+      </div>
+    </div>
+    <div id="notifySuccessView" style="display:none">
+      <div class="modal-success">
+        <div class="modal-success-icon">✦</div>
+        <div class="modal-success-title" id="notifySuccessTitle">You're on the list!</div>
+        <div class="modal-success-text" id="notifySuccessText">We'll reach out the moment our premium print service is ready. Thank you for your interest.</div>
+        <div class="custom-modal-actions" style="justify-content:center;margin-top:24px">
+          <button class="custom-modal-confirm" onclick="closeNotifyModal()">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
 
 <script src="https://unpkg.com/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
 <script>
 const SUPABASE_URL = 'https://qyzjnyoxcuteanidsxav.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF5empueW94Y3V0ZWFuaWRzeGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MTI3ODYsImV4cCI6MjA5NDI4ODc4Nn0.5DKaKA2JM130QD601eMsyNEkeFwNAkxB2bcOakPt_-U';
-sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+var currentUser = null, currentProfile = null, authMode = 'register', currentLang = 'en';
+var selectedTone = '', sessionState = {};
 
-// Restore saved language
-const _savedLang = localStorage.getItem('ss_lang');
-if(_savedLang && _savedLang !== 'en'){ currentLang = _savedLang; }
+// Restore saved language or detect from IP
+(async function initLang(){
+  const saved = localStorage.getItem('ss_lang');
+  if(saved){ currentLang = saved; applyLangOnLoad(saved); return; }
+  try{
+    const r = await fetch('https://ipapi.co/json/');
+    const d = await r.json();
+    const es = ['MX','CO','AR','ES','CL','PE','VE','EC','GT','CU','BO','DO','HN','PY','SV','NI','CR','PA','UY','GQ','PR'];
+    if(es.includes(d.country_code)){ currentLang='es'; applyLangOnLoad('es'); }
+  }catch(e){}
+})();
 
-/* ── I18N ── */
+function applyLangOnLoad(lang){
+  document.getElementById('langEN').classList.toggle('active', lang==='en');
+  document.getElementById('langES').classList.toggle('active', lang==='es');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(i18n[lang]?.[key]) el.innerHTML = i18n[lang][key];
+  });
+  applyLangToUI(lang);
+}
+
 const i18n = {
-  en: {
+  en:{
     nav_signin:'Sign In', nav_cta:'Begin Your First Letter →',
     hero_eyebrow:'Memory Letters for the Songs That Made You',
     hero_headline:"There's a song that takes<br>you back <em>every time.</em>",
-    hero_sub:"The first note plays and you’re there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong>",
-    hero_cta:"Write Your First Letter — It’s Free",
+    hero_sub:"The first note plays and you're there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong>",
+    hero_cta:"Write Your First Letter — It's Free",
     hero_note:'❖ &nbsp; No card required &nbsp; ❖ &nbsp; One free letter on signup',
     story_label:'Why SongScript exists',
-    story_headline:"Some songs don’t just play.<br>They <em>transport.</em>",
-    story_text1:"There’s a song — you know the one. The first two seconds and you’re back. Not just remembering, but <strong>actually there</strong>: the smell of the room, the feeling in your chest, the person sitting next to you.",
+    story_headline:"Some songs don't just play.<br>They <em>transport.</em>",
+    story_text1:"There's a song — you know the one. The first two seconds and you're back. Not just remembering, but <strong>actually there</strong>: the smell of the room, the feeling in your chest, the person sitting next to you.",
     story_text2:"Those memories deserve more than a playlist. They deserve words. <strong>SongScript uses AI to take everything you felt about that song and shape it into a polished, personal letter</strong> — written in your voice, beautiful enough to keep forever.",
     story_text3:"Your first one is free. No templates. No generic output. Just a letter that sounds like <strong>you</strong> — on your best writing day.",
-    samples_label:'Real letters, real memories',
-    samples_headline:'This is what your letter could look like',
-    how_label:'The process',
-    how_headline:'Five steps. One letter. Yours forever.',
+    samples_label:'Real letters, real memories', samples_headline:'This is what your letter could look like',
+    how_label:'The process', how_headline:'Five steps. One letter. Yours forever.',
     step1_name:'The Song', step1_desc:'Title, artist, and the date the memory lives in.',
     step2_name:'Your Story', step2_desc:'Write freely — where, who, and what it felt like.',
     step3_name:'The Line', step3_desc:"The lyric that stops time. Leave blank and we'll find it.",
@@ -858,30 +857,28 @@ const i18n = {
     final_cta:'Write My First Letter — Free →',
     final_note:'❖ &nbsp; Every account starts with one free letter &nbsp; ❖'
   },
-  es: {
-    nav_signin:'Iniciar Sesión', nav_cta:'Comienza Tu Primera Carta →',
+  es:{
+    nav_signin:'Iniciar sesión', nav_cta:'Empieza tu primera carta →',
     hero_eyebrow:'Una carta para recordar las canciones que te marcaron',
     hero_headline:"Hay una canción que siempre te regresa en el tiempo.",
-    hero_sub:"Suena la primera nota y ya estás ahí — en el carro, en ese cuarto, con esa gente. <strong>SongScript convierte ese sentimiento en una carta que puedes guardar para siempre.</strong>",
-    hero_cta:"Escribe Tu Primera Carta — Es Gratis",
+    hero_sub:"Suena la primera nota y ya estás ahí — en el carro, en ese cuarto, con esa gente. <strong>SongScript convierte ese sentimiento en una carta que guardarás para siempre.</strong>",
+    hero_cta:"Escribe tu primera carta — es gratis",
     hero_note:'Una carta gratis al registrarte',
     story_label:'Por qué existe SongScript',
-    story_headline:"Algunas canciones no solo suenan.<br>Te <em>transportan.</em>",
-    story_text1:"Hay una canción — tú sabes cuál. Los primeros dos segundos y ya estás de vuelta. No solo recordando, sino <strong>realmente ahí</strong>: el olor del cuarto, la sensación en el pecho, la persona sentada a tu lado.",
-    story_text2:"Esos recuerdos merecen más que una lista de canciones. Merecen palabras. <strong>SongScript usa inteligencia artificial para tomar todo lo que sentiste con esa canción y convertirlo en una carta personal y pulida</strong> — escrita con tu voz, hermosa para guardar para siempre.",
-    story_text3:"Tu primera carta es gratis. Sin plantillas. Sin resultados genéricos. Solo una carta que suena como <strong>tú</strong> — en tu mejor día de escritura.",
-    samples_label:'Cartas reales, recuerdos reales',
-    samples_headline:'Así podría lucir tu carta',
-    how_label:'El proceso',
-    how_headline:'Cinco pasos. Una carta. Tuya para siempre.',
-    step1_name:'La Canción', step1_desc:'Título, artista y la fecha en que vive el recuerdo.',
-    step2_name:'Tu Historia', step2_desc:'Escribe libremente — dónde, con quién y cómo se sintió.',
-    step3_name:'La Línea', step3_desc:'La letra que detiene el tiempo. Déjala en blanco y la encontramos.',
-    step4_name:'El Tono', step4_desc:'Carta de amor, nostálgico, desamor, familia…',
-    step5_name:'Tu Carta', step5_desc:'Un PDF pulido. Caligráfico, personal, tuyo para siempre.',
+    story_headline:"Hay canciones que no solo suenan.<br>Te <em>transportan.</em>",
+    story_text1:"Hay una canción — tú sabes cuál. Los primeros dos segundos y ya estás de vuelta. No solo recordando, sino <strong>realmente ahí</strong>: el olor del cuarto, esa sensación en el pecho, la persona que tenías al lado.",
+    story_text2:"Esos recuerdos merecen más que estar en una lista de canciones. Merecen palabras. <strong>SongScript usa inteligencia artificial para tomar todo lo que sentiste con esa canción y convertirlo en una carta personal y pulida</strong> — escrita con tu voz, tan hermosa que querrás guardarla para siempre.",
+    story_text3:"La primera es gratis. Sin plantillas. Sin respuestas genéricas. Solo una carta que suena como <strong>tú</strong> — en tu mejor día.",
+    samples_label:'Cartas reales, recuerdos reales', samples_headline:'Así podría quedar tu carta',
+    how_label:'Cómo funciona', how_headline:'Cinco pasos. Una carta. Tuya para siempre.',
+    step1_name:'La canción', step1_desc:'El título, el artista y la fecha en que vive ese recuerdo.',
+    step2_name:'Tu historia', step2_desc:'Escribe libremente — dónde estabas, con quién y qué sentiste.',
+    step3_name:'La línea', step3_desc:'La letra que detiene el tiempo. Déjala en blanco y la encontramos.',
+    step4_name:'El tono', step4_desc:'Carta de amor, nostálgico, desamor, familia…',
+    step5_name:'Tu carta', step5_desc:'Un PDF pulido. Caligráfico, personal, tuyo para siempre.',
     final_headline:"Tu recuerdo merece<br>más que <em>una lista de canciones.</em>",
     final_sub:'Empieza con una canción. Una carta. Sin tarjeta.',
-    final_cta:'Escribe Mi Primera Carta — Gratis →',
+    final_cta:'Escribe mi primera carta — gratis →',
     final_note:'❖ &nbsp; Cada cuenta comienza con una carta gratis &nbsp; ❖'
   }
 };
@@ -889,106 +886,144 @@ const i18n = {
 function setLang(lang){
   currentLang = lang;
   localStorage.setItem('ss_lang', lang);
-  document.getElementById('langEN').classList.toggle('active', lang==='en');
-  document.getElementById('langES').classList.toggle('active', lang==='es');
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if(i18n[lang][key]) el.innerHTML = i18n[lang][key];
-  });
-  // Apply to hardcoded elements that aren't in data-i18n
-  applyLangToUI(lang);
+  applyLangOnLoad(lang);
 }
 
 function applyLangToUI(lang){
   const es = lang === 'es';
-  // Auth page
+  // Auth mode toggle
   const modeReg = document.getElementById('modeRegBtn');
-  const modeLogin = document.getElementById('modeLoginBtn');
   if(modeReg) modeReg.textContent = es ? 'Crear cuenta' : 'Create Account';
+  const modeLogin = document.getElementById('modeLoginBtn');
   if(modeLogin) modeLogin.textContent = es ? 'Iniciar sesión' : 'Sign In';
+  // Auth form
   const freePill = document.getElementById('freePill');
   if(freePill) freePill.textContent = es ? 'Una carta gratis incluida' : 'One Free Letter Included';
   const authTitle = document.getElementById('authTitle');
   if(authTitle) authTitle.textContent = authMode==='register' ? (es?'Crea tu cuenta':'Create your account') : (es?'Bienvenido de vuelta':'Welcome back');
   const authSub = document.getElementById('authSubtitle');
   if(authSub) authSub.textContent = authMode==='register'
-    ? (es?'Únete a quienes ya están preservando sus recuerdos más valiosos.':'Join thousands preserving their most meaningful song memories.')
+    ? (es?'Uníte a quienes ya están preservando sus recuerdos más valiosos.':'Join thousands preserving their most meaningful song memories.')
     : (es?'Inicia sesión para ver tus cartas y escribir nuevas.':'Sign in to access your letters and write new ones.');
   const authBtn = document.getElementById('authSubmitBtn');
   if(authBtn) authBtn.textContent = authMode==='register'
     ? (es?'Crear mi cuenta y empezar a escribir →':'Create My Account & Start Writing →')
     : (es?'Iniciar sesión y continuar →':'Sign In & Continue →');
-  const nameField = document.querySelector('#regName');
-  if(nameField) nameField.placeholder = es?'¿Cómo firmamos tus cartas?':'How should we address your letters?';
-  // Dashboard
-  const dashSub = document.getElementById('dashSubtitle');
-  if(dashSub) dashSub.textContent = es?'¿Listo para preservar otro recuerdo?':'Ready to preserve another memory?';
-  const credLabel = document.querySelector('.credits-label');
-  if(credLabel) credLabel.textContent = es?'Cartas disponibles':'Letters Remaining';
-  const buyBtn = document.querySelector('.btn-buy-more');
-  if(buyBtn) buyBtn.textContent = es?'Conseguir más cartas →':'Get More Letters →';
-  const newLetterBtn = document.querySelector('.btn-new-letter');
-  if(newLetterBtn) newLetterBtn.textContent = es?'✦ Escribir una nueva carta':'✦ Write a New Letter';
-  const lettersTitle = document.getElementById('dashLettersTitle');
-  if(lettersTitle) lettersTitle.textContent = es?'Tus cartas':'Your Letters';
-  // Coming soon teaser
-  const tsBadge = document.getElementById('ts-badge');
-  if(tsBadge) tsBadge.textContent = es?'Próximamente':'Coming Soon';
-  const tsTitle = document.getElementById('ts-title');
-  if(tsTitle) tsTitle.innerHTML = es?'¿Te encantó tu carta? <em>Enmárcala.</em>':'Love your letter? <em>Frame it.</em>';
-  const tsText = document.getElementById('ts-text');
-  if(tsText) tsText.textContent = es
-    ?'Pronto lanzaremos un servicio de impresión premium — tu carta impresa en papel de archivo, enmarcada y enviada a ti o a alguien que amas. Perfecta para el Día de la Madre, el Día del Padre, bodas y aniversarios. Por ahora disponible solo en Estados Unidos.'
-    :"We're launching a premium print service — your letter beautifully printed on archival paper, framed and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries.";
-  const tsBtn = document.getElementById('ts-btn');
-  if(tsBtn) tsBtn.textContent = es?'Avísame cuando esté disponible →':'Notify Me When Available →';
-  // Builder steps
-  const stepLabels = [
-    ['La canción','The Song'],['Tu historia','Your Story'],['La línea','The Line'],['El tono','The Tone'],['Tu carta','Your Letter']
-  ];
-  document.querySelectorAll('.pdot-label').forEach((el,i) => {
-    if(stepLabels[i]) el.textContent = es ? stepLabels[i][0] : stepLabels[i][1];
-  });
-  // Sign out button
-  document.querySelectorAll('[onclick="handleSignOut()"]').forEach(el => {
-    el.textContent = es?'Cerrar sesión':'Sign Out';
-  });
-
+  const forgotLink = document.getElementById('forgotLink');
+  if(forgotLink) forgotLink.textContent = es ? '¿Olvidaste tu contraseña?' : 'Forgot your password?';
+  const nameLbl = document.getElementById('nameLbl');
+  if(nameLbl) nameLbl.textContent = es ? 'Tu nombre' : 'Your Name';
+  const regName = document.getElementById('regName');
+  if(regName) regName.placeholder = es ? '¿Cómo firmamos tus cartas?' : 'How should we address your letters?';
+  const emailLbl = document.getElementById('emailLbl');
+  if(emailLbl) emailLbl.textContent = es ? 'Correo electrónico' : 'Email Address';
+  const passLbl = document.getElementById('passLbl');
+  if(passLbl) passLbl.textContent = es ? 'Contraseña' : 'Password';
+  const langLbl = document.getElementById('langLbl');
+  if(langLbl) langLbl.textContent = es ? 'Idioma preferido' : 'Preferred Language';
+  const optInLabel = document.getElementById('optInLabel');
+  if(optInLabel) optInLabel.textContent = es ? 'Quiero recibir novedades sobre nuevas funciones y productos de SongScript. Puedo cancelar cuando quiera.' : 'Send me updates about new SongScript features and products. You can unsubscribe anytime.';
+  const termsNote = document.getElementById('termsNote');
+  if(termsNote) termsNote.textContent = es ? 'Al crear una cuenta aceptas nuestros Términos de servicio y Política de privacidad. Nunca compartiremos tus recuerdos.' : 'By creating an account you agree to our Terms of Service and Privacy Policy. We will never share your memories.';
   // Auth left panel
   const authLeftH = document.getElementById('authLeftHeadline');
-  if(authLeftH) authLeftH.innerHTML = es
-    ? 'Tu primera carta está<br>esperando<br>ser <em>escrita.</em>'
-    : 'Your first letter<br>is waiting<br>to be <em>written.</em>';
+  if(authLeftH) authLeftH.innerHTML = es ? 'Tu primera carta está<br>esperando<br>ser <em>escrita.</em>' : 'Your first letter<br>is waiting<br>to be <em>written.</em>';
   const authLeftT = document.getElementById('authLeftText');
-  if(authLeftT) authLeftT.textContent = es
-    ? 'Crea una cuenta gratis y te regalamos una carta completa — sin compromisos, sin tarjeta, sin período de prueba. Solo tuya.'
-    : "Create a free account and we'll give you one complete memory letter — no strings, no card, no trial period. Just yours.";
-
-  // Builder step titles and subs
+  if(authLeftT) authLeftT.textContent = es ? 'Crea una cuenta gratis y te regalamos una carta completa — sin compromisos, sin tarjeta, sin período de prueba. Solo tuya.' : "Create a free account and we'll give you one complete memory letter — no strings, no card, no trial period. Just yours.";
+  // Dashboard
+  const dashSub = document.getElementById('dashSubtitle');
+  if(dashSub) dashSub.textContent = es ? '¿Listo para preservar otro recuerdo?' : 'Ready to preserve another memory?';
+  const credLabel = document.getElementById('creditsLabel');
+  if(credLabel) credLabel.textContent = es ? 'Cartas disponibles' : 'Letters Remaining';
+  const buyBtn = document.getElementById('buyMoreBtn');
+  if(buyBtn) buyBtn.textContent = es ? 'Conseguir más cartas →' : 'Get More Letters →';
+  const newLetterBtn = document.getElementById('newLetterBtn');
+  if(newLetterBtn) newLetterBtn.textContent = es ? '❖ Escribir una nueva carta' : '❖ Write a New Letter';
+  const signOutBtn = document.getElementById('signOutBtn');
+  if(signOutBtn) signOutBtn.textContent = es ? 'Cerrar sesión' : 'Sign Out';
+  const signOutBtn2 = document.getElementById('signOutBtn2');
+  if(signOutBtn2) signOutBtn2.textContent = es ? 'Cerrar sesión' : 'Sign Out';
+  const emptyText = document.getElementById('emptyStateText');
+  if(emptyText) emptyText.textContent = es ? 'Aún no tienes cartas — escribe tu primera arriba.' : 'No letters yet — write your first one above.';
+  // Coming soon teaser
+  const tsBadge = document.getElementById('ts-badge');
+  if(tsBadge) tsBadge.textContent = es ? 'Próximamente' : 'Coming Soon';
+  const tsTitle = document.getElementById('ts-title');
+  if(tsTitle) tsTitle.innerHTML = es ? '¿Te encantó tu carta? <em>Enmárcala.</em>' : 'Love your letter? <em>Frame it.</em>';
+  const tsText = document.getElementById('ts-text');
+  if(tsText) tsText.textContent = es ? 'Pronto lanzaremos un servicio de impresión premium — tu carta impresa en papel de archivo, enmarcada y enviada a ti o a alguien que amas. Perfecta para el Día de la Madre, el Día del Padre, bodas y aniversarios. Por ahora disponible solo en Estados Unidos.' : "We're launching a premium print service — your letter beautifully printed on archival paper, framed and shipped to you or someone you love. Perfect for Mother's Day, Father's Day, weddings, and anniversaries. Currently available in the United States only.";
+  const tsBtn = document.getElementById('ts-btn');
+  if(tsBtn) tsBtn.textContent = es ? 'Avísame cuando esté disponible →' : 'Notify Me When Available →';
+  // Pricing page
+  const pricingTitle = document.getElementById('pricingTitle');
+  if(pricingTitle) pricingTitle.textContent = es ? 'Conseguir más cartas' : 'Get More Letters';
+  const pricingSubtitle = document.getElementById('pricingSubtitle');
+  if(pricingSubtitle) pricingSubtitle.textContent = es ? 'Cada recuerdo merece ser preservado. Elige un paquete y sigue escribiendo.' : 'Every memory deserves to be preserved. Choose a pack and keep writing.';
+  const pricingBack = document.getElementById('pricingBack');
+  if(pricingBack) pricingBack.textContent = es ? '← Volver al panel' : '← Back to Dashboard';
+  // Builder step labels
+  const stepLabels = [['La canción','The Song'],['Tu historia','Your Story'],['La línea','The Line'],['El tono','The Tone'],['Tu carta','Your Letter']];
+  document.querySelectorAll('.pdot-label').forEach((el,i)=>{ if(stepLabels[i]) el.textContent = es ? stepLabels[i][0] : stepLabels[i][1]; });
+  // Builder step content
   const b1t = document.getElementById('b1Title');
   if(b1t) b1t.textContent = es ? '¿Qué canción guarda tu recuerdo?' : 'Which song carries your memory?';
   const b1s = document.getElementById('b1Sub');
   if(b1s) b1s.innerHTML = es ? 'Cuéntanos qué te conmovió — y aproximadamente <em>cuándo</em> sucedió.' : 'Tell us what moved you — and roughly <em>when</em> the memory happened.';
+  const songTitleLbl = document.getElementById('songTitleLbl');
+  if(songTitleLbl) songTitleLbl.textContent = es ? 'Título de la canción' : 'Song Title';
+  const artistLbl = document.getElementById('artistLbl');
+  if(artistLbl) artistLbl.textContent = es ? 'Artista / Grupo' : 'Artist / Band';
+  const monthLbl = document.getElementById('monthLbl');
+  if(monthLbl) monthLbl.textContent = es ? 'Mes del recuerdo' : 'Month of Memory';
+  const yearLbl = document.getElementById('yearLbl');
+  if(yearLbl) yearLbl.textContent = es ? 'Año del recuerdo' : 'Year of Memory';
+  const bContinue1 = document.getElementById('bContinue1');
+  if(bContinue1) bContinue1.textContent = es ? 'Continuar →' : 'Continue →';
   const b2t = document.getElementById('b2Title');
   if(b2t) b2t.textContent = es ? 'Cuéntanos todo.' : 'Tell us everything.';
   const b2s = document.getElementById('b2Sub');
   if(b2s) b2s.innerHTML = es ? '¿Dónde estabas? ¿Con quién? ¿Qué te hizo sentir esta canción? <em>Esto es tu materia prima.</em>' : 'Where were you? Who were you with? What did the song make you feel? <em>This is your raw material.</em>';
+  const wh = document.getElementById('writingHelperText');
+  if(wh) wh.innerHTML = es ? 'Intenta empezar con: <strong>dónde estabas físicamente</strong> cuando la escuchaste. Luego quién estaba contigo. Luego qué pasó.' : 'Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened.';
+  const memoryLbl = document.getElementById('memoryLbl');
+  if(memoryLbl) memoryLbl.textContent = es ? 'Tu recuerdo' : 'Your Memory';
+  const bContinue2 = document.getElementById('bContinue2');
+  if(bContinue2) bContinue2.textContent = es ? 'Continuar →' : 'Continue →';
+  const bBack1 = document.getElementById('bBack1');
+  if(bBack1) bBack1.textContent = es ? '← Atrás' : '← Back';
   const b3t = document.getElementById('b3Title');
   if(b3t) b3t.textContent = es ? '¿Qué línea te llega más profundo?' : 'What line hits you hardest?';
   const b3s = document.getElementById('b3Sub');
   if(b3s) b3s.innerHTML = es ? 'La letra que detiene el tiempo — la que sientes escrita para ti. <em>Déjala en blanco y la encontramos.</em>' : "The lyric that stops time — the one that feels written just for you. <em>Leave blank and we'll find it.</em>";
+  const lyricLbl = document.getElementById('lyricLbl');
+  if(lyricLbl) lyricLbl.innerHTML = es ? 'Esa letra <span style="font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:300">(opcional)</span>' : 'That lyric <span style="font-size:10px;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:300">(optional)</span>';
+  const lyricNote = document.getElementById('lyricNote');
+  if(lyricNote) lyricNote.textContent = es ? 'Límite de 150 caracteres — suficiente para darle alma a tu carta, sin reproducir la canción.' : '150 character limit — enough to give your letter soul, not enough to reproduce the song.';
+  const bContinue3 = document.getElementById('bContinue3');
+  if(bContinue3) bContinue3.textContent = es ? 'Continuar →' : 'Continue →';
+  const bBack2 = document.getElementById('bBack2');
+  if(bBack2) bBack2.textContent = es ? '← Atrás' : '← Back';
   const b4t = document.getElementById('b4Title');
   if(b4t) b4t.textContent = es ? '¿Qué tono debe llevar tu carta?' : 'What tone should your letter carry?';
   const b4s = document.getElementById('b4Sub');
   if(b4s) b4s.textContent = es ? 'Elige el registro emocional que mejor se adapte a tu recuerdo.' : 'Choose the emotional register that fits your memory best.';
-
-  // Builder buttons
-  const bCont1 = document.getElementById('bContinue1');
-  if(bCont1) bCont1.textContent = es ? 'Continuar →' : 'Continue →';
-  const bWrite = document.getElementById('bWriteLetter');
-  if(bWrite) bWrite.textContent = es ? 'Escribir mi carta →' : 'Write My Letter →';
-
+  // Translate tone button labels
+  document.querySelectorAll('.tone-name[data-en], .result-tone-name[data-en]').forEach(el=>{
+    el.textContent = es ? el.getAttribute('data-es') : el.getAttribute('data-en');
+  });
+  const bWriteLetter = document.getElementById('bWriteLetter');
+  if(bWriteLetter) bWriteLetter.textContent = es ? 'Escribir mi carta →' : 'Write My Letter →';
+  const bBack3 = document.getElementById('bBack3');
+  if(bBack3) bBack3.textContent = es ? '← Atrás' : '← Back';
   // Result page
+  const resultTitle = document.getElementById('resultTitle');
+  if(resultTitle) resultTitle.textContent = es ? 'Tu Carta de Memoria' : 'Your Memory Letter';
+  const editHint = document.getElementById('editHint');
+  if(editHint) editHint.textContent = es ? '✎ Haz clic en el saludo o la firma para personalizarlos antes de descargar' : '✎ Click the salutation or sign-off to personalize before downloading';
+  const colLabelOrig = document.getElementById('colLabelOrig');
+  if(colLabelOrig) colLabelOrig.textContent = es ? 'Tu recuerdo' : 'Your Memory';
+  const origMemLabel = document.getElementById('origMemLabel');
+  if(origMemLabel) origMemLabel.textContent = es ? 'Lo que escribiste' : 'What you wrote';
   const rat = document.getElementById('resultActionsTitle');
   if(rat) rat.textContent = es ? 'Prueba un tono diferente o regenera' : 'Try a different tone or regenerate';
   const regenT = document.getElementById('regenBtnText');
@@ -999,75 +1034,52 @@ function applyLangToUI(lang){
   if(dlBtn) dlBtn.textContent = es ? 'Descargar mi carta en PDF →' : 'Download My PDF Letter →';
   const backBtn = document.getElementById('backDashBtn');
   if(backBtn) backBtn.textContent = es ? '← Volver al panel' : '← Back to Dashboard';
-
-  // Writing helper
-  const wh = document.querySelector('.writing-helper p');
-  if(wh) wh.innerHTML = es
-    ? 'Intenta empezar con: <strong>dónde estabas físicamente</strong> cuando la escuchaste. Luego quién estaba contigo. Luego qué pasó. Deja que salgan los detalles — el olor, el clima, qué llevabas puesto.'
-    : 'Try starting with: <strong>where you were physically</strong> when you heard it. Then who was there. Then what happened. Let the details come — smell, weather, what you were wearing.';
-
-  // Lyric note
-  const ln = document.querySelector('.lyric-note');
-  if(ln) ln.textContent = es
-    ? 'Límite de 150 caracteres — suficiente para darle alma a tu carta, sin reproducir la canción.'
-    : '150 character limit — enough to give your letter soul, not enough to reproduce the song.';
-
-  // Edit hint on result page
-  const eh = document.querySelector('.edit-hint');
-  if(eh) eh.textContent = es
-    ? '✎ Haz clic en el saludo o la firma para personalizarlos antes de descargar'
-    : '✎ Click the salutation or sign-off to personalize before downloading';
-
-  // Loading screen
-  const loadT = document.getElementById('loadTitle');
-  if(loadT && loadT.textContent.includes('quill')) loadT.textContent = es ? 'La pluma se mueve…' : 'The quill is moving…';
+  // Loading
   const loadS = document.getElementById('loadSub');
-  if(loadS) loadS.textContent = es
-    ? 'Escuchando tu recuerdo y encontrando las palabras que le hacen justicia.'
-    : 'Listening to your memory and finding the words that do it justice.';
+  if(loadS) loadS.textContent = es ? 'Escuchando tu recuerdo y encontrando las palabras que le hacen justicia.' : 'Listening to your memory and finding the words that do it justice.';
+}
 
-  // Dashboard welcome subtitle (already done but ensure it updates)
-  const dashS = document.getElementById('dashSubtitle');
-  if(dashS) dashS.textContent = es ? '¿Listo para preservar otro recuerdo?' : 'Ready to preserve another memory?';
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='page-dashboard') loadDashboard();
+  if(currentLang!=='en'){ applyLangOnLoad(currentLang); }
 }
 
 function closeModal(){ document.getElementById('letterModal').classList.remove('open'); }
-
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-  if(id === 'page-dashboard') loadDashboard();
-  // Re-apply language on every page change
-  if(currentLang !== 'en'){
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if(i18n[currentLang]?.[key]) el.innerHTML = i18n[currentLang][key];
-    });
-    applyLangToUI(currentLang);
-  }
-}
-
 function goToSignIn(){ setAuthMode('login'); showPage('page-register'); }
-
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav')?.classList.toggle('scrolled', window.scrollY > 40);
-});
+window.addEventListener('scroll',()=>{ document.getElementById('mainNav')?.classList.toggle('scrolled',window.scrollY>40); });
 
 function setAuthMode(mode){
   authMode = mode;
-  const isReg = mode === 'register';
-  document.getElementById('modeRegBtn').classList.toggle('active', isReg);
-  document.getElementById('modeLoginBtn').classList.toggle('active', !isReg);
-  document.getElementById('nameField').style.display = isReg ? 'block' : 'none';
-  document.getElementById('freePill').style.display = isReg ? 'inline-block' : 'none';
-  document.getElementById('langField').style.display = isReg ? 'block' : 'none';
-  document.getElementById('optInRow').style.display = isReg ? 'flex' : 'none';
-  document.getElementById('authTitle').textContent = isReg ? 'Create your account' : 'Welcome back';
-  document.getElementById('authSubtitle').textContent = isReg ? 'Join thousands preserving their most meaningful song memories.' : 'Sign in to access your letters and write new ones.';
-  document.getElementById('authSubmitBtn').textContent = isReg ? 'Create My Account & Start Writing →' : 'Sign In & Continue →';
-  document.getElementById('strengthBarWrap').style.display = isReg ? 'block' : 'none';
-  document.getElementById('strengthLabel').style.display = isReg ? 'block' : 'none';
+  const isReg = mode==='register';
+  document.getElementById('modeRegBtn').classList.toggle('active',isReg);
+  document.getElementById('modeLoginBtn').classList.toggle('active',!isReg);
+  document.getElementById('nameField').style.display = isReg?'block':'none';
+  document.getElementById('freePill').style.display = isReg?'inline-block':'none';
+  document.getElementById('langField').style.display = isReg?'block':'none';
+  document.getElementById('optInRow').style.display = isReg?'flex':'none';
+  document.getElementById('strengthBarWrap').style.display = isReg?'block':'none';
+  document.getElementById('strengthLabel').style.display = isReg?'block':'none';
+  document.getElementById('forgotLink').style.display = isReg?'none':'block';
+  hideAuthMessages();
+  if(currentLang!=='en') applyLangToUI(currentLang);
+}
+
+function showAuthError(msg){
+  document.getElementById('authErrorMsg').textContent = msg;
+  document.getElementById('authErrorBanner').classList.add('show');
+  document.getElementById('authSuccessBanner').classList.remove('show');
+}
+function showAuthSuccess(msg){
+  document.getElementById('authSuccessMsg').innerHTML = msg;
+  document.getElementById('authSuccessBanner').classList.add('show');
+  document.getElementById('authErrorBanner').classList.remove('show');
+}
+function hideAuthMessages(){
+  document.getElementById('authErrorBanner').classList.remove('show');
+  document.getElementById('authSuccessBanner').classList.remove('show');
 }
 
 function checkStrength(inp){
@@ -1079,11 +1091,13 @@ function checkStrength(inp){
 }
 
 async function handleAuth(){
+  hideAuthMessages();
   const email=document.getElementById('regEmail').value.trim();
   const pass=document.getElementById('regPass').value;
   const name=document.getElementById('regName').value.trim();
   const lang=document.getElementById('regLang')?.value||'en';
   const emailOptIn=document.getElementById('emailOptIn')?.checked||false;
+  const es=currentLang==='es';
   const showErr=(eid,iid,show)=>{ document.getElementById(eid).classList.toggle('show',show); document.getElementById(iid).classList.toggle('err',show); };
   let ok=true;
   if(authMode==='register'){ showErr('errName','regName',!name); if(!name)ok=false; }
@@ -1092,31 +1106,57 @@ async function handleAuth(){
   if(!ok)return;
   const btn=document.getElementById('authSubmitBtn');
   btn.disabled=true;
-  btn.textContent=authMode==='register'?'Creating your account…':'Signing in…';
+  btn.textContent=authMode==='register'?(es?'Creando tu cuenta…':'Creating your account…'):(es?'Iniciando sesión…':'Signing in…');
   const freshSb=getAuthSb();
   if(authMode==='register'){
     const {data,error}=await freshSb.auth.signUp({email,password:pass});
-    if(error){ btn.disabled=false; btn.textContent='Create My Account & Start Writing →'; alert(error.message); return; }
+    if(error){ btn.disabled=false; btn.textContent=es?'Crear mi cuenta y empezar a escribir →':'Create My Account & Start Writing →'; showAuthError(error.message); return; }
     await freshSb.from('profiles').insert({id:data.user.id,name,email,letters_used:0,letters_allowed:1,language:lang,email_marketing:emailOptIn});
     currentUser=data.user; currentProfile={name,email,letters_used:0,letters_allowed:1,language:lang};
-    if(lang!=='en')setLang(lang);
+    if(lang!=='en'){ currentLang=lang; localStorage.setItem('ss_lang',lang); }
   } else {
     const {data,error}=await freshSb.auth.signInWithPassword({email,password:pass});
-    if(error){ btn.disabled=false; btn.textContent='Sign In & Continue →'; alert(error.message); return; }
+    if(error){
+      btn.disabled=false; btn.textContent=es?'Iniciar sesión y continuar →':'Sign In & Continue →';
+      showAuthError(es?'Correo o contraseña incorrectos. Verifica tus datos.':'Incorrect email or password. Please check your details.');
+      return;
+    }
     currentUser=data.user;
-    await freshSb.auth.setSession({access_token:data.session.access_token,refresh_token:data.session.refresh_token});
-    // Store session tokens globally for all future API calls
-    window._accessToken = data.session.access_token;
-    window._refreshToken = data.session.refresh_token;
+    window._accessToken=data.session.access_token;
+    window._refreshToken=data.session.refresh_token;
     const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
-    if(profile){ currentProfile=profile; if(profile.language&&profile.language!=='en')setLang(profile.language); }
+    if(profile){ currentProfile=profile; if(profile.language&&profile.language!=='en'){ currentLang=profile.language; localStorage.setItem('ss_lang',profile.language); } }
   }
   btn.disabled=false;
-  btn.textContent=authMode==='register'?'Create My Account & Start Writing →':'Sign In & Continue →';
+  btn.textContent=authMode==='register'?(es?'Crear mi cuenta y empezar a escribir →':'Create My Account & Start Writing →'):(es?'Iniciar sesión y continuar →':'Sign In & Continue →');
   showPage('page-dashboard');
 }
 
+async function handleForgotPassword(){
+  const es=currentLang==='es';
+  const email=document.getElementById('regEmail').value.trim();
+  if(!email||!email.includes('@')){
+    showAuthError(es?'Ingresa tu correo electrónico primero.':'Please enter your email address first.');
+    return;
+  }
+  const btn=document.getElementById('authSubmitBtn');
+  btn.disabled=true;
+  const freshSb=getAuthSb();
+  const {error}=await freshSb.auth.resetPasswordForEmail(email,{redirectTo:'https://songscript-two.vercel.app'});
+  btn.disabled=false;
+  if(error){ showAuthError(error.message); return; }
+  showAuthSuccess(es
+    ? '<strong>¡Revisa tu correo!</strong> Te enviamos un enlace para restablecer tu contraseña. Si no lo ves, revisa tu carpeta de spam.'
+    : "<strong>Check your email!</strong> We sent you a password reset link. If you don't see it, check your spam folder.");
+}
+
 async function handleSignOut(){ await sb.auth.signOut(); currentUser=null; currentProfile=null; showPage('page-landing'); }
+
+function getAuthSb(){
+  const client=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  if(window._accessToken&&window._refreshToken) client.auth.setSession({access_token:window._accessToken,refresh_token:window._refreshToken});
+  return client;
+}
 
 async function loadDashboard(){
   if(!currentUser)return;
@@ -1126,19 +1166,19 @@ async function loadDashboard(){
     currentProfile=profile;
     const firstName=profile.name?.split(' ')[0]||'friend';
     const remaining=profile.letters_allowed-profile.letters_used;
-    const es = currentLang === 'es';
+    const es=currentLang==='es';
     document.getElementById('dashWelcome').innerHTML=`${es?'Bienvenido de vuelta':'Welcome back'}, <em>${firstName}</em>`;
     document.getElementById('dashCredits').textContent=remaining;
-    document.getElementById('builderUserLabel').textContent=`${firstName} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+    document.getElementById('builderUserLabel').textContent=`${firstName} · ${remaining} ${es?'carta':'letter'}${remaining!==1?'s':''} ${es?'disponible':'remaining'}`;
   }
   const {data:letters}=await freshSb.from('letters').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
   const list=document.getElementById('dashLettersList');
+  const es=currentLang==='es';
   if(!letters||letters.length===0){
-    list.innerHTML='<div class="empty-state"><div class="empty-state-icon">❖</div><div class="empty-state-text">No letters yet — write your first one above.</div></div>';
+    list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">❖</div><div class="empty-state-text">${es?'Aún no tienes cartas — escribe tu primera arriba.':'No letters yet — write your first one above.'}</div></div>`;
     return;
   }
-  const esLang = currentLang === 'es';
-  document.getElementById('dashLettersTitle').textContent=`${esLang?'Tus cartas':'Your Letters'} (${letters.length})`;
+  document.getElementById('dashLettersTitle').textContent=`${es?'Tus cartas':'Your Letters'} (${letters.length})`;
   list.innerHTML=letters.map(l=>{
     const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     return `<div class="letter-row" id="row-${l.id}">
@@ -1147,9 +1187,9 @@ async function loadDashboard(){
         <div class="letter-row-meta">${l.tone} · ${date}</div>
       </div>
       <div class="letter-row-actions">
-        <button class="btn-view" onclick="viewLetter('${l.id}')">View</button>
+        <button class="btn-view" onclick="viewLetter('${l.id}')">${es?'Ver':'View'}</button>
         <button class="btn-dl" onclick="downloadLetterPDF('${l.id}')">PDF</button>
-        <button class="btn-del" onclick="deleteLetter('${l.id}')" title="Delete">✕</button>
+        <button class="btn-del" onclick="deleteLetter('${l.id}')" title="${es?'Eliminar':'Delete'}">✕</button>
       </div>
     </div>`;
   }).join('');
@@ -1167,70 +1207,32 @@ function viewLetter(id){
     <div style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300">${l.letter_body}</div>
     <div style="font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:var(--accent);margin-top:28px;text-align:right">${l.sign_off||'With all that you carry,'}</div>
     <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase">&#8220;${l.song}&#8221; · ${l.artist} · ${l.tone}</div>
-    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download PDF →</button>
-  `;
+    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download PDF →</button>`;
   document.getElementById('letterModal').classList.add('open');
 }
 
 function downloadLetterPDF(id){
   const l=window._letters[id]; if(!l)return;
   const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  openPDFWindow(l.song,l.artist,l.salutation||`To ${l.song},`,l.letter_body,l.sign_off||'With all that you carry,',`&#8220;${l.song}&#8221; · ${l.artist} · ${l.tone}`,date);
+  openPDFWindow(l.song,l.artist,l.salutation||`To ${l.song},`,l.letter_body,l.sign_off||'With all that you carry,',`"${l.song}" · ${l.artist} · ${l.tone}`,date);
 }
 
 async function deleteLetter(id){
-  if(!confirm('Delete this letter? This cannot be undone.'))return;
+  const es=currentLang==='es';
+  if(!confirm(es?'Eliminar esta carta? Esta acción no se puede deshacer.':'Delete this letter? This cannot be undone.'))return;
   const freshSb=getAuthSb();
   await freshSb.from('letters').delete().eq('id',id).eq('user_id',currentUser.id);
   delete window._letters[id];
   document.getElementById('row-'+id)?.remove();
 }
 
-function showNoCreditsBuyPage(){
-  // Show the result page with just the pricing section visible
-  hideBPanels();
-  document.getElementById('bp5-result').classList.add('active');
-  showPage('page-builder');
-  // Hide the letter content, show only pricing
-  document.querySelector('.result-cols').style.display = 'none';
-  document.querySelector('.result-actions').style.display = 'none';
-  document.querySelector('.edit-hint').style.display = 'none';
-  document.getElementById('bp5-result').querySelector('.btn-next').style.display = 'none';
-  document.getElementById('bp5-result').querySelector('.btn-back').textContent = '← Back to Dashboard';
-  document.getElementById('bp5-result').querySelector('.btn-back').onclick = function(){ 
-    // Restore visibility when going back
-    document.querySelector('.result-cols').style.display = '';
-    document.querySelector('.result-actions').style.display = '';
-    document.querySelector('.edit-hint').style.display = '';
-    document.getElementById('bp5-result').querySelector('.btn-next').style.display = '';
-    showPage('page-dashboard');
-  };
-  // Update the title
-  document.getElementById('bp5-result').querySelector('.bcard-title').textContent = 'Get More Letters';
-  document.querySelector('.bcard-sub em').textContent = 'Purchase a pack to keep writing your memories.';
-  // Scroll to pricing
-  setTimeout(()=>{ document.querySelector('.pricing-row')?.scrollIntoView({behavior:'smooth'}); }, 200);
-}
-
-function getAuthSb(){
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  if(window._accessToken && window._refreshToken){
-    client.auth.setSession({access_token:window._accessToken, refresh_token:window._refreshToken});
-  }
-  return client;
-}
-
 async function startNewLetter(){
-  const freshSb = getAuthSb();
-  const {data:profile} = await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
-  if(profile && profile.letters_used >= profile.letters_allowed){
-    showNoCreditsBuyPage();
-    return;
-  }
+  const freshSb=getAuthSb();
+  const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
+  if(profile&&profile.letters_used>=profile.letters_allowed){ showPage('page-pricing'); return; }
   resetBuilder();
   showPage('page-builder');
 }
-function showBuyModal(){ hideBPanels(); document.getElementById('bp5-result').classList.add('active'); showPage('page-builder'); }
 
 (function(){
   const sel=document.getElementById('bMemYear'); const yr=new Date().getFullYear();
@@ -1241,11 +1243,11 @@ selectedTone='';
 sessionState={song:'',artist:'',month:'',year:'',memory:'',lyric:'',salutation:'',signOff:'',originalTone:'',currentTone:'',originalText:'',currentText:'',tonesUsed:[],regenUsed:false,memEditUsed:false,isFirstLetter:false};
 
 function bGoTo(step){
-  if(step===1){ const t=document.getElementById('bSongTitle').value.trim(); const a=document.getElementById('bSongArtist').value.trim(); if(!t||!a){alert('Please enter both the song title and the artist.');return;} }
-  if(step===2){ const m=document.getElementById('bMemory').value.trim(); if(m.length<20){alert('Please share a bit more about your memory.');return;} }
+  const es=currentLang==='es';
+  if(step===1){ const t=document.getElementById('bSongTitle').value.trim(); const a=document.getElementById('bSongArtist').value.trim(); if(!t||!a){alert(es?'Por favor ingresa el título de la canción y el artista.':'Please enter both the song title and the artist.');return;} }
+  if(step===2){ const m=document.getElementById('bMemory').value.trim(); if(m.length<20){alert(es?'Comparte un poco más sobre tu recuerdo.':'Please share a bit more about your memory.');return;} }
   hideBPanels(); document.getElementById('bp'+step).classList.add('active'); updateProgress(step);
 }
-
 function hideBPanels(){ ['bp0','bp1','bp2','bp3','bp5-loading','bp5-result'].forEach(id=>document.getElementById(id).classList.remove('active')); }
 function updateProgress(active){ for(let i=0;i<5;i++){ const d=document.getElementById('pd'+i); d.classList.remove('active','done'); if(i<active)d.classList.add('done'); if(i===active)d.classList.add('active'); } }
 function selTone(el,tone){ document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); selectedTone=tone; document.getElementById('toneErr').classList.remove('show'); }
@@ -1270,12 +1272,12 @@ ${sentenceList}
 RULES:
 1. Return exactly ${sentences.length} polished sentences as flowing prose.
 2. Same meaning, same subject - better words. Do NOT add new sentences.
-3. Do NOT add details not in the original. Do NOT use the song own story or lyrics.
+3. Do NOT add details not in the original.
 4. If a lyric was provided, weave it into one sentence naturally.
 5. Preserve their voice. No AI filler. No invented endings.
 
 Then on a new line write:
-SALUTATION: [a personalized poetic salutation for this letter, e.g. "To Fast Car, and the road you opened up,"] Keep it under 12 words. Make it specific to this song and memory.`;
+SALUTATION: [a personalized poetic salutation, e.g. "To Fast Car, and the road you opened up,"] Keep it under 12 words. Specific to this song and memory.`;
 }
 
 async function callAPI(prompt){
@@ -1292,21 +1294,20 @@ function parseResponse(raw){
 }
 
 function showLoading(tone){
+  const es=currentLang==='es';
   hideBPanels(); document.getElementById('bp5-loading').classList.add('active'); updateProgress(4);
-  document.getElementById('loadTitle').textContent='The quill is moving…';
-  document.getElementById('loadSub').textContent=`Crafting the ${tone.toLowerCase()} tone for your memory.`;
+  document.getElementById('loadTitle').textContent=es?'La pluma se mueve…':'The quill is moving…';
+  document.getElementById('loadSub').textContent=es?`Dando forma al tono ${tone.toLowerCase()} para tu recuerdo.`:`Crafting the ${tone.toLowerCase()} tone for your memory.`;
 }
 
 function renderResult(body,salutation,tone,isNew){
   const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   const credit=`"${sessionState.song}" · ${sessionState.artist} · ${tone}`;
   const signOff=currentProfile?.name||'With all that you carry,';
+  const es=currentLang==='es';
   if(isNew){
-    document.getElementById('lDateOrig').textContent=now;
-    document.getElementById('lSalOrig').textContent=salutation;
-    document.getElementById('lBodyOrig').textContent=body;
-    document.getElementById('lSignOrig').textContent=signOff;
-    document.getElementById('lCreditOrig').textContent=credit;
+    document.getElementById('lBodyOrig').textContent=sessionState.memory;
+    document.getElementById('origSongLabel').textContent=`"${sessionState.song}" · ${sessionState.artist}`;
     sessionState.originalText=body; sessionState.originalTone=tone; sessionState.salutation=salutation; sessionState.signOff=signOff;
   }
   document.getElementById('lDateCurr').textContent=now;
@@ -1314,11 +1315,12 @@ function renderResult(body,salutation,tone,isNew){
   document.getElementById('lBodyCurr').textContent=body;
   document.getElementById('lSignCurr').value=signOff;
   document.getElementById('lCreditCurr').textContent=credit;
-  document.getElementById('currentColLabel').textContent=isNew?'Current version':`Current · ${tone}`;
+  document.getElementById('currentColLabel').textContent=isNew?(es?'Carta de IA':'AI Letter'):`${es?'Actual':'Current'} · ${tone}`;
   sessionState.currentText=body; sessionState.currentTone=tone;
   document.querySelectorAll('.result-tone-btn').forEach(b=>{
     b.classList.remove('sel');
-    const btnTone=b.querySelector('.result-tone-name').textContent;
+    const btnToneEl=b.querySelector('.result-tone-name');
+    const btnTone=btnToneEl?.getAttribute('data-en')||btnToneEl?.textContent;
     if(sessionState.tonesUsed.includes(btnTone))b.classList.add('used');
     if(btnTone===tone){b.classList.add('sel');b.classList.add('used');}
   });
@@ -1327,36 +1329,32 @@ function renderResult(body,salutation,tone,isNew){
 }
 
 function updateCreditInfo(){
+  const es=currentLang==='es';
   if(sessionState.isFirstLetter){
-    document.getElementById('freeAttemptsLeft').textContent='Unlimited — enjoy your first letter!';
+    document.getElementById('freeAttemptsLeft').textContent=es?'Ilimitado — disfruta tu primera carta!':'Unlimited — enjoy your first letter!';
     document.getElementById('regenBtn').disabled=false;
     document.getElementById('editMemoryBtn').disabled=false;
   } else {
     const toneLeft=Math.max(0,3-sessionState.tonesUsed.length);
     const regenLeft=sessionState.regenUsed?0:1;
     const editLeft=sessionState.memEditUsed?0:1;
-    document.getElementById('freeAttemptsLeft').textContent=`${toneLeft} tone change${toneLeft!==1?'s':''} · ${regenLeft} regen · ${editLeft} memory edit`;
+    document.getElementById('freeAttemptsLeft').textContent=`${toneLeft} ${es?'cambio':'tone change'}${toneLeft!==1?'s':''} · ${regenLeft} ${es?'regeneración':'regen'} · ${editLeft} ${es?'edición':'memory edit'}`;
     document.getElementById('regenBtn').disabled=regenLeft===0;
     document.getElementById('editMemoryBtn').disabled=editLeft===0;
   }
 }
 
 async function saveLetter(song,artist,tone,salutation,signOff,body,memory){
-  try{
-    const freshSb=getAuthSb();
-    await freshSb.from('letters').insert({user_id:currentUser.id,song,artist,tone,salutation,sign_off:signOff,letter_body:body,memory});
-  }catch(e){console.log('Save error:',e);}
+  try{ const freshSb=getAuthSb(); await freshSb.from('letters').insert({user_id:currentUser.id,song,artist,tone,salutation,sign_off:signOff,letter_body:body,memory}); }catch(e){console.log('Save error:',e);}
 }
 
 async function generateLetter(){
+  const es=currentLang==='es';
   if(!selectedTone){document.getElementById('toneErr').classList.add('show');return;}
-  if(!currentUser){alert('Please sign in to generate your letter.');return;}
+  if(!currentUser){alert(es?'Inicia sesión para generar tu carta.':'Please sign in to generate your letter.');return;}
   const freshSb=getAuthSb();
   const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
-  if(!profile||profile.letters_used>=profile.letters_allowed){
-    showNoCreditsBuyPage();
-    return;
-  }
+  if(!profile||profile.letters_used>=profile.letters_allowed){ showPage('page-pricing'); return; }
   const song=document.getElementById('bSongTitle').value.trim();
   const artist=document.getElementById('bSongArtist').value.trim();
   const month=document.getElementById('bMemMonth').value;
@@ -1374,13 +1372,13 @@ async function generateLetter(){
     const signOff=currentProfile?.name||'With all that you carry,';
     await freshSb.from('profiles').update({letters_used:profile.letters_used+1}).eq('id',currentUser.id);
     const remaining=profile.letters_allowed-profile.letters_used-1;
-    document.getElementById('builderUserLabel').textContent=`${currentProfile?.name?.split(' ')[0]||''} · ${remaining} letter${remaining!==1?'s':''} remaining`;
+    document.getElementById('builderUserLabel').textContent=`${currentProfile?.name?.split(' ')[0]||''} · ${remaining} ${es?'carta':'letter'}${remaining!==1?'s':''} ${es?'disponible':'remaining'}`;
     document.getElementById('dashCredits').textContent=remaining;
     await saveLetter(song,artist,selectedTone,salutation,signOff,body,memory);
     renderResult(body,salutation,selectedTone,true);
   }catch(e){
     hideBPanels(); document.getElementById('bp5-result').classList.add('active');
-    document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";
+    document.getElementById('lBodyCurr').textContent=es?'Algo salió mal. Por favor intenta de nuevo.':'Something went wrong. Please try again.';
   }
 }
 
@@ -1390,7 +1388,7 @@ async function switchTone(el,tone){
   if(!sessionState.isFirstLetter&&tonesUsedNew.length>3&&!sessionState.tonesUsed.includes(tone)){
     const freshSb=getAuthSb();
     const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
-    if(!profile||profile.letters_used>=profile.letters_allowed){alert('Purchase more letters to try more tones.');return;}
+    if(!profile||profile.letters_used>=profile.letters_allowed){ showPage('page-pricing'); return; }
     await freshSb.from('profiles').update({letters_used:profile.letters_used+1}).eq('id',currentUser.id);
     document.getElementById('dashCredits').textContent=profile.letters_allowed-profile.letters_used-1;
   }
@@ -1402,14 +1400,14 @@ async function switchTone(el,tone){
     const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,tone,sessionState.memory,sessionState.lyric,dateContext,lang));
     const {body,salutation}=parseResponse(raw);
     renderResult(body,salutation,tone,false);
-  }catch(e){hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";}
+  }catch(e){hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent='Something went wrong. Please try again.';}
 }
 
 async function regenerateLetter(){
   if(sessionState.regenUsed&&!sessionState.isFirstLetter){
     const freshSb=getAuthSb();
     const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
-    if(!profile||profile.letters_used>=profile.letters_allowed){alert('Purchase more letters to regenerate.');return;}
+    if(!profile||profile.letters_used>=profile.letters_allowed){ showPage('page-pricing'); return; }
     await freshSb.from('profiles').update({letters_used:profile.letters_used+1}).eq('id',currentUser.id);
     document.getElementById('dashCredits').textContent=profile.letters_allowed-profile.letters_used-1;
   }
@@ -1421,76 +1419,64 @@ async function regenerateLetter(){
     const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang));
     const {body,salutation}=parseResponse(raw);
     renderResult(body,salutation,sessionState.currentTone,false);
-  }catch(e){hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";}
+  }catch(e){hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent='Something went wrong. Please try again.';}
 }
 
 function editMemory(){
-  const es = currentLang === 'es';
-  document.getElementById('editMemTitle').textContent = es ? 'Editar tu recuerdo' : 'Edit your memory';
-  document.getElementById('editMemSub').textContent = es ? 'Haz tus cambios abajo. Se generará una nueva carta al guardar.' : 'Make your changes below. A new letter will be generated when you save.';
-  document.getElementById('editMemCancel').textContent = es ? 'Cancelar' : 'Cancel';
-  document.getElementById('editMemConfirm').textContent = es ? 'Guardar y regenerar →' : 'Save & Regenerate →';
-  document.getElementById('editMemTextarea').value = sessionState.memory;
+  const es=currentLang==='es';
+  document.getElementById('editMemTitle').textContent=es?'Editar tu recuerdo':'Edit your memory';
+  document.getElementById('editMemSub').textContent=es?'Haz tus cambios abajo. Se generará una nueva carta al guardar.':'Make your changes below. A new letter will be generated when you save.';
+  document.getElementById('editMemCancel').textContent=es?'Cancelar':'Cancel';
+  document.getElementById('editMemConfirm').textContent=es?'Guardar y regenerar →':'Save & Regenerate →';
+  document.getElementById('editMemTextarea').value=sessionState.memory;
   document.getElementById('editMemoryModal').classList.add('open');
 }
-
-function closeEditMemoryModal(){
-  document.getElementById('editMemoryModal').classList.remove('open');
-}
-
+function closeEditMemoryModal(){ document.getElementById('editMemoryModal').classList.remove('open'); }
 function confirmEditMemory(){
-  const newMemory = document.getElementById('editMemTextarea').value.trim();
-  if(!newMemory || newMemory === sessionState.memory){ closeEditMemoryModal(); return; }
-  sessionState.memory = newMemory;
-  if(!sessionState.isFirstLetter) sessionState.memEditUsed = true;
+  const newMemory=document.getElementById('editMemTextarea').value.trim();
+  if(!newMemory||newMemory===sessionState.memory){ closeEditMemoryModal(); return; }
+  sessionState.memory=newMemory;
+  if(!sessionState.isFirstLetter)sessionState.memEditUsed=true;
   closeEditMemoryModal();
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
   const lang=currentProfile?.language||'en';
   showLoading(sessionState.currentTone);
   callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang))
     .then(raw=>{const {body,salutation}=parseResponse(raw);renderResult(body,salutation,sessionState.currentTone,false);})
-    .catch(()=>{hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent="Something went wrong. Please try again.";});
+    .catch(()=>{hideBPanels();document.getElementById('bp5-result').classList.add('active');document.getElementById('lBodyCurr').textContent='Something went wrong. Please try again.';});
 }
 
 function notifyMe(){
-  const es = currentLang === 'es';
-  document.getElementById('notifyTitle').textContent = es ? 'Sé el primero en saberlo' : 'Be the first to know';
-  document.getElementById('notifySub').textContent = es
-    ? 'Ingresa tu correo y te avisamos en cuanto lancemos el servicio de impresión.'
-    : "Enter your email and we'll notify you the moment our print service launches.";
-  document.getElementById('notifyCancel').textContent = es ? 'Cancelar' : 'Cancel';
-  document.getElementById('notifyConfirm').textContent = es ? 'Avísame →' : 'Notify Me →';
-  document.getElementById('notifyEmailInput').value = currentUser?.email || '';
-  document.getElementById('notifyEmailInput').placeholder = es ? 'tu@correo.com' : 'your@email.com';
+  const es=currentLang==='es';
+  document.getElementById('notifyTitle').textContent=es?'Sé el primero en saberlo':'Be the first to know';
+  document.getElementById('notifySub').textContent=es?'Ingresa tu correo y te avisamos en cuanto lancemos el servicio de impresión.':"Enter your email and we'll notify you the moment our print service launches.";
+  document.getElementById('notifyCancel').textContent=es?'Cancelar':'Cancel';
+  document.getElementById('notifyConfirm').textContent=es?'Avísame →':'Notify Me →';
+  document.getElementById('notifyEmailInput').value=currentUser?.email||'';
+  document.getElementById('notifyEmailInput').placeholder=es?'tu@correo.com':'your@email.com';
+  document.getElementById('notifyFormView').style.display='block';
+  document.getElementById('notifySuccessView').style.display='none';
   document.getElementById('notifyModal').classList.add('open');
 }
-
-function closeNotifyModal(){
-  document.getElementById('notifyModal').classList.remove('open');
-}
-
+function closeNotifyModal(){ document.getElementById('notifyModal').classList.remove('open'); }
 function confirmNotify(){
-  const email = document.getElementById('notifyEmailInput').value.trim();
-  const es = currentLang === 'es';
-  if(email && email.includes('@')){
-    closeNotifyModal();
-    alert(es ? '¡Gracias! Te avisaremos en cuanto esté disponible.' : 'Thank you! We will let you know as soon as it is available.');
-  }
+  const email=document.getElementById('notifyEmailInput').value.trim();
+  const es=currentLang==='es';
+  if(!email||!email.includes('@'))return;
+  document.getElementById('notifyFormView').style.display='none';
+  document.getElementById('notifySuccessView').style.display='block';
+  document.getElementById('notifySuccessTitle').textContent=es?'\u00a1Est\u00e1s en la lista!':'You are on the list!';
+  document.getElementById('notifySuccessText').textContent=es?'Te avisaremos en cuanto est\u00e9 listo.':'We will notify you as soon as it is ready. Thank you!';
 }
 
 function openPDFWindow(song,artist,salutation,body,signOff,credit,date){
   const win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SongScript — ${song} by ${artist}</title>
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SongScript — ${song}</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}
-@media print{
-  body{padding:40px;background:white;max-width:100%}
-  .print-btn{display:none}
-  .letter-box{border:none;background:white;padding:20px 0}
-  .side-line{display:none}
-}
+@media print{body{padding:40px;background:white;max-width:100%}.print-btn{display:none}.letter-box{border:none;background:white;padding:20px 0}.side-line{display:none}}
 .header{text-align:center;margin-bottom:48px}
 .brand{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}
 .song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}
@@ -1535,8 +1521,8 @@ async function startCheckout(priceId){
   try{
     const res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({priceId,userId:currentUser.id,userEmail:currentUser.email})});
     const data=await res.json();
-    if(data.url){window.location.href=data.url;}
-    else{alert('Something went wrong. Please try again.');}
+    if(data.url)window.location.href=data.url;
+    else alert('Something went wrong. Please try again.');
   }catch(e){alert('Something went wrong. Please try again.');}
 }
 
@@ -1553,7 +1539,6 @@ function resetBuilder(){
   document.querySelectorAll('.result-tone-btn').forEach(b=>b.classList.remove('sel','used'));
   hideBPanels(); document.getElementById('bp0').classList.add('active'); updateProgress(0);
 }
-
 </script>
 </body>
 </html>
