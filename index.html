@@ -832,34 +832,6 @@ function applyLangOnLoad(lang){
   applyLangToUI(lang);
 }
 
-// Handle return from Stripe payment
-(async function handlePaymentReturn(){
-  const params = new URLSearchParams(window.location.search);
-  if(params.get('payment') === 'success'){
-    window.history.replaceState({}, '', '/');
-    try {
-      const { data: { session } } = await sb.auth.getSession();
-      if(session){
-        currentUser = session.user;
-        window._accessToken = session.access_token;
-        window._refreshToken = session.refresh_token;
-        await sb.auth.setSession({access_token:session.access_token, refresh_token:session.refresh_token});
-        const freshSb = getAuthSb();
-        const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
-        if(profile){
-          currentProfile = profile;
-          if(profile.language && profile.language !== 'en'){ currentLang = profile.language; localStorage.setItem('ss_lang', profile.language); }
-        }
-        showPage('page-dashboard');
-      } else {
-        setAuthMode('login');
-        showPage('page-register');
-        showAuthSuccess('Payment successful! Please sign in to see your updated letter credits.');
-      }
-    } catch(e){ console.log('Payment return:', e); }
-  }
-})();
-
 const i18n = {
   en:{
     nav_signin:'Sign In', nav_cta:'Begin Your First Letter →',
@@ -1570,6 +1542,32 @@ function resetBuilder(){
   document.querySelectorAll('.result-tone-btn').forEach(b=>b.classList.remove('sel','used'));
   hideBPanels(); document.getElementById('bp0').classList.add('active'); updateProgress(0);
 }
+// Handle return from Stripe payment - runs after all functions defined
+(async function(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('payment') !== 'success') return;
+  window.history.replaceState({}, '', '/');
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if(session){
+      currentUser = session.user;
+      window._accessToken = session.access_token;
+      window._refreshToken = session.refresh_token;
+      await sb.auth.setSession({access_token:session.access_token, refresh_token:session.refresh_token});
+      const freshSb = getAuthSb();
+      const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
+      if(profile){
+        currentProfile = profile;
+        if(profile.language && profile.language !== 'en'){ currentLang = profile.language; localStorage.setItem('ss_lang', profile.language); }
+      }
+      showPage('page-dashboard');
+    } else {
+      setAuthMode('login');
+      showPage('page-register');
+      showAuthSuccess('Payment successful! Please sign in to see your updated letter credits.');
+    }
+  } catch(e){ console.log('Payment return:', e); }
+})();
 </script>
 </body>
 </html>
