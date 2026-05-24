@@ -18,8 +18,8 @@ export default async function handler(req, res) {
       'line_items[0][price]': priceId,
       'line_items[0][quantity]': '1',
       'mode': 'payment',
-      'success_url': `${process.env.NEXT_PUBLIC_SITE_URL}/success.html?session_id={CHECKOUT_SESSION_ID}&user_id=${userId}`,
-      'cancel_url': `${process.env.NEXT_PUBLIC_SITE_URL}`,
+'success_url': `${process.env.NEXT_PUBLIC_SITE_URL}?payment=success&user_id=${userId}`,
+'cancel_url': `${process.env.NEXT_PUBLIC_SITE_URL}?payment=cancelled`,
       'customer_email': userEmail
     })
   });
