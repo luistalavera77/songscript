@@ -832,6 +832,34 @@ function applyLangOnLoad(lang){
   applyLangToUI(lang);
 }
 
+// Handle return from Stripe payment
+(async function handlePaymentReturn(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('payment') === 'success'){
+    window.history.replaceState({}, '', '/');
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if(session){
+        currentUser = session.user;
+        window._accessToken = session.access_token;
+        window._refreshToken = session.refresh_token;
+        await sb.auth.setSession({access_token:session.access_token, refresh_token:session.refresh_token});
+        const freshSb = getAuthSb();
+        const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
+        if(profile){
+          currentProfile = profile;
+          if(profile.language && profile.language !== 'en'){ currentLang = profile.language; localStorage.setItem('ss_lang', profile.language); }
+        }
+        showPage('page-dashboard');
+      } else {
+        setAuthMode('login');
+        showPage('page-register');
+        showAuthSuccess('Payment successful! Please sign in to see your updated letter credits.');
+      }
+    } catch(e){ console.log('Payment return:', e); }
+  }
+})();
+
 const i18n = {
   en:{
     nav_signin:'Sign In', nav_cta:'Begin Your First Letter →',
@@ -1124,6 +1152,7 @@ async function handleAuth(){
     currentUser=data.user;
     window._accessToken=data.session.access_token;
     window._refreshToken=data.session.refresh_token;
+    await sb.auth.setSession({access_token:data.session.access_token, refresh_token:data.session.refresh_token});
     const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
     if(profile){ currentProfile=profile; if(profile.language&&profile.language!=='en'){ currentLang=profile.language; localStorage.setItem('ss_lang',profile.language); } }
   }
@@ -1362,7 +1391,7 @@ async function generateLetter(){
   const memory=document.getElementById('bMemory').value.trim();
   const lyric=document.getElementById('bLyric').value.trim();
   const dateContext=month&&year?`The memory took place in ${month} ${year}.`:year?`The memory is from ${year}.`:'';
-  const lang=currentProfile?.language||'en';
+  const lang=currentProfile?.language||currentLang||'en';
   sessionState={song,artist,month,year,memory,lyric,salutation:'',signOff:'',originalTone:selectedTone,currentTone:selectedTone,originalText:'',currentText:'',tonesUsed:[selectedTone],regenUsed:false,memEditUsed:false,isFirstLetter:profile.letters_used===0};
   document.getElementById('resultSong').textContent=`"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
   showLoading(selectedTone);
@@ -1394,7 +1423,7 @@ async function switchTone(el,tone){
   }
   sessionState.tonesUsed=tonesUsedNew; sessionState.currentTone=tone;
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
-  const lang=currentProfile?.language||'en';
+  const lang=currentProfile?.language||currentLang||'en';
   showLoading(tone);
   try{
     const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,tone,sessionState.memory,sessionState.lyric,dateContext,lang));
@@ -1413,7 +1442,7 @@ async function regenerateLetter(){
   }
   sessionState.regenUsed=true;
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
-  const lang=currentProfile?.language||'en';
+  const lang=currentProfile?.language||currentLang||'en';
   showLoading(sessionState.currentTone);
   try{
     const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang));
@@ -1437,9 +1466,11 @@ function confirmEditMemory(){
   if(!newMemory||newMemory===sessionState.memory){ closeEditMemoryModal(); return; }
   sessionState.memory=newMemory;
   if(!sessionState.isFirstLetter)sessionState.memEditUsed=true;
+  // Update left column to show edited memory
+  document.getElementById('lBodyOrig').textContent=newMemory;
   closeEditMemoryModal();
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
-  const lang=currentProfile?.language||'en';
+  const lang=currentProfile?.language||currentLang||'en';
   showLoading(sessionState.currentTone);
   callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang))
     .then(raw=>{const {body,salutation}=parseResponse(raw);renderResult(body,salutation,sessionState.currentTone,false);})
