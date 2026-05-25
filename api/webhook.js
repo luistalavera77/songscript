@@ -1,4 +1,4 @@
-export const config = { api: { bodyParser: false } };
+export const config = { api: { bodyParser: false } }; // v2
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
