@@ -810,17 +810,9 @@ var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 var currentUser = null, currentProfile = null, authMode = 'register', currentLang = 'en';
 var selectedTone = '', sessionState = {};
 
-// Restore saved language or detect from IP
-(async function initLang(){
-  const saved = localStorage.getItem('ss_lang');
-  if(saved){ currentLang = saved; applyLangOnLoad(saved); return; }
-  try{
-    const r = await fetch('https://ipapi.co/json/');
-    const d = await r.json();
-    const es = ['MX','CO','AR','ES','CL','PE','VE','EC','GT','CU','BO','DO','HN','PY','SV','NI','CR','PA','UY','GQ','PR'];
-    if(es.includes(d.country_code)){ currentLang='es'; applyLangOnLoad('es'); }
-  }catch(e){}
-})();
+// Restore saved language or detect from IP — runs after page ready
+var _savedLang = localStorage.getItem('ss_lang');
+if(_savedLang){ currentLang = _savedLang; }
 
 function applyLangOnLoad(lang){
   document.getElementById('langEN').classList.toggle('active', lang==='en');
@@ -882,6 +874,21 @@ const i18n = {
     final_note:'❖ &nbsp; Cada cuenta comienza con una carta gratis &nbsp; ❖'
   }
 };
+
+// Now apply saved language and detect IP (i18n is now defined)
+(async function(){
+  if(currentLang !== 'en'){ applyLangOnLoad(currentLang); }
+  else {
+    try{
+      const r = await fetch('https://ipapi.co/json/');
+      const d = await r.json();
+      const esCountries = ['MX','CO','AR','ES','CL','PE','VE','EC','GT','CU','BO','DO','HN','PY','SV','NI','CR','PA','UY','GQ','PR'];
+      if(esCountries.includes(d.country_code) && !localStorage.getItem('ss_lang')){
+        currentLang='es'; localStorage.setItem('ss_lang','es'); applyLangOnLoad('es');
+      }
+    }catch(e){}
+  }
+})();
 
 function setLang(lang){
   currentLang = lang;
