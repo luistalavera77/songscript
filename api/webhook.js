@@ -1,24 +1,29 @@
-const crypto = require('crypto');
-const { createClient } = require('@supabase/supabase-js');
+export const config = { api: { bodyParser: false } };
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
+  // Read raw body
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
   const body = Buffer.concat(chunks).toString('utf8');
 
+  // Verify Stripe signature
   const sig = req.headers['stripe-signature'];
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
   try {
     const parts = sig.split(',').reduce((acc, part) => {
-      const [k, v] = part.split('='); acc[k] = v; return acc;
+      const [k, v] = part.split('=');
+      acc[k] = v;
+      return acc;
     }, {});
-    const expected = crypto
-      .createHmac('sha256', secret)
+
+    const { createHmac } = await import('crypto');
+    const expected = createHmac('sha256', secret)
       .update(`${parts.t}.${body}`)
       .digest('hex');
+
     if (expected !== parts.v1) {
       console.log('Invalid signature');
       return res.status(400).json({ error: 'Invalid signature' });
@@ -29,7 +34,7 @@ module.exports = async function handler(req, res) {
   }
 
   const event = JSON.parse(body);
-  console.log('Event type:', event.type);
+  console.log('Event received:', event.type);
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
@@ -42,10 +47,11 @@ module.exports = async function handler(req, res) {
     console.log('lettersToAdd:', lettersToAdd);
 
     if (!userId) {
-      console.log('No userId found');
+      console.log('No userId in metadata — skipping');
       return res.status(200).json({ received: true });
     }
 
+    const { createClient } = await import('@supabase/supabase-js');
     const sb = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_KEY
@@ -57,16 +63,16 @@ module.exports = async function handler(req, res) {
       .eq('id', userId)
       .single();
 
-    console.log('Profile:', JSON.stringify(profile));
+    console.log('Profile found:', JSON.stringify(profile));
     console.log('Fetch error:', JSON.stringify(fetchError));
 
     if (!profile) {
-      console.log('No profile found');
+      console.log('No profile found for userId:', userId);
       return res.status(200).json({ received: true });
     }
 
     const newTotal = profile.letters_allowed + lettersToAdd;
-    console.log('Setting letters_allowed to:', newTotal);
+    console.log('Updating letters_allowed from', profile.letters_allowed, 'to', newTotal);
 
     const { error: updateError } = await sb
       .from('profiles')
@@ -74,10 +80,8 @@ module.exports = async function handler(req, res) {
       .eq('id', userId);
 
     console.log('Update error:', JSON.stringify(updateError));
-    console.log('Done');
+    console.log('Credits updated successfully');
   }
 
   return res.status(200).json({ received: true });
-};
-
-module.exports.config = { api: { bodyParser: false } };
+}
