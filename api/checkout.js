@@ -14,14 +14,15 @@ export default async function handler(req, res) {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: new URLSearchParams({
-      'payment_method_types[]': 'card',
-      'line_items[0][price]': priceId,
-      'line_items[0][quantity]': '1',
-      'mode': 'payment',
-'success_url': `${process.env.NEXT_PUBLIC_SITE_URL}?payment=success&user_id=${userId}`,
-'cancel_url': `${process.env.NEXT_PUBLIC_SITE_URL}?payment=cancelled`,
-      'customer_email': userEmail
-    })
+  'payment_method_types[]': 'card',
+  'line_items[0][price]': priceId,
+  'line_items[0][quantity]': '1',
+  'mode': 'payment',
+  'success_url': `${process.env.NEXT_PUBLIC_SITE_URL}?payment=success`,
+  'cancel_url': `${process.env.NEXT_PUBLIC_SITE_URL}`,
+  'customer_email': userEmail,
+  'metadata[user_id]': userId
+})
   });
 
   const session = await stripeRes.json();
