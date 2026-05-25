@@ -1546,8 +1546,21 @@ function resetBuilder(){
 (async function(){
   const params = new URLSearchParams(window.location.search);
   if(params.get('payment') !== 'success') return;
+  const sessionId = params.get('session_id');
+  const userId = params.get('user_id');
   window.history.replaceState({}, '', '/');
   try {
+    // Update credits via API
+    if(sessionId && userId){
+      const creditRes = await fetch('/api/credits', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ sessionId, userId })
+      });
+      const creditData = await creditRes.json();
+      console.log('Credits updated:', creditData);
+    }
+    // Restore session and go to dashboard
     const { data: { session } } = await sb.auth.getSession();
     if(session){
       currentUser = session.user;
@@ -1566,7 +1579,7 @@ function resetBuilder(){
       showPage('page-register');
       showAuthSuccess('Payment successful! Please sign in to see your updated letter credits.');
     }
-  } catch(e){ console.log('Payment return:', e); }
+  } catch(e){ console.log('Payment return error:', e); }
 })();
 </script>
 </body>
