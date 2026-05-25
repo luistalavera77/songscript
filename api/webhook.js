@@ -1,8 +1,7 @@
-export const config = { api: { bodyParser: false } };
-import crypto from 'crypto';
-import { createClient } from '@supabase/supabase-js';
+const crypto = require('crypto');
+const { createClient } = require('@supabase/supabase-js');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const chunks = [];
@@ -43,7 +42,7 @@ export default async function handler(req, res) {
     console.log('lettersToAdd:', lettersToAdd);
 
     if (!userId) {
-      console.log('No userId found in metadata');
+      console.log('No userId found');
       return res.status(200).json({ received: true });
     }
 
@@ -54,20 +53,20 @@ export default async function handler(req, res) {
 
     const { data: profile, error: fetchError } = await sb
       .from('profiles')
-      .select('id, letters_allowed, letters_used')
+      .select('id, letters_allowed')
       .eq('id', userId)
       .single();
 
-    console.log('Profile fetch result:', JSON.stringify(profile));
+    console.log('Profile:', JSON.stringify(profile));
     console.log('Fetch error:', JSON.stringify(fetchError));
 
     if (!profile) {
-      console.log('Profile not found for userId:', userId);
+      console.log('No profile found');
       return res.status(200).json({ received: true });
     }
 
     const newTotal = profile.letters_allowed + lettersToAdd;
-    console.log('Updating letters_allowed to:', newTotal);
+    console.log('Setting letters_allowed to:', newTotal);
 
     const { error: updateError } = await sb
       .from('profiles')
@@ -75,9 +74,10 @@ export default async function handler(req, res) {
       .eq('id', userId);
 
     console.log('Update error:', JSON.stringify(updateError));
-    console.log('Update complete');
+    console.log('Done');
   }
 
   return res.status(200).json({ received: true });
 };
-}
+
+module.exports.config = { api: { bodyParser: false } };
