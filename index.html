@@ -531,6 +531,40 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
   </div>
 </div>
 
+<!-- PASSWORD RESET PAGE -->
+<div class="page" id="page-reset">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-left-brand" onclick="showPage('page-landing')">← SongScript</div>
+      <div class="auth-left-body">
+        <h2 class="auth-left-headline">Set your<br>new <em>password.</em></h2>
+        <p class="auth-left-text">Choose a strong password to protect your memories and your letters.</p>
+      </div>
+      <div></div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-wrap">
+        <div class="auth-error-banner" id="resetErrorBanner"><p id="resetErrorMsg"></p></div>
+        <div class="auth-success-banner" id="resetSuccessBanner"><p id="resetSuccessMsg"></p></div>
+        <h2 class="auth-title" id="resetTitle">Create new password</h2>
+        <p class="auth-subtitle" id="resetSubtitle">Enter your new password below.</p>
+        <div class="form-field">
+          <label class="form-label" id="newPassLbl">New Password</label>
+          <input type="password" class="form-input" id="newPassword" placeholder="At least 8 characters" oninput="checkResetStrength(this)"/>
+          <div class="strength-bar"><div class="strength-fill" id="resetStrengthFill"></div></div>
+          <div class="strength-label" id="resetStrengthLabel"></div>
+        </div>
+        <div class="form-field">
+          <label class="form-label" id="confirmPassLbl">Confirm Password</label>
+          <input type="password" class="form-input" id="confirmPassword" placeholder="Repeat your new password"/>
+          <div class="field-error" id="errConfirmPass">Passwords do not match.</div>
+        </div>
+        <button class="btn-register" id="resetSubmitBtn" onclick="handlePasswordReset()">Save New Password →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- DASHBOARD PAGE -->
 <div class="page" id="page-dashboard">
   <nav class="dashboard-nav">
@@ -757,8 +791,18 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenBtnText">Regenerate with same tone</span></button>
           <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
         </div>
-        <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
-        <button class="btn-back" id="backDashBtn" onclick="showPage('page-dashboard')" style="margin-top:10px">← Back to Dashboard</button>
+        <button class="btn-next" id="downloadBtn" onclick="downloadPDF(); showPostDownload()">Download My PDF Letter →</button>
+
+        <!-- POST DOWNLOAD FEEDBACK -->
+        <div id="postDownloadBox" style="display:none;background:var(--paper2);border:1px solid var(--border);padding:24px 28px;margin-top:20px;text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--ink);margin-bottom:8px" id="postDlTitle">Your letter is ready ✦</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6" id="postDlText">Did it capture your memory the way you hoped? We'd love to hear from you.</div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button onclick="sendFeedback()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s" id="feedbackBtn">Share your feedback →</button>
+            <button onclick="startNewLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer;transition:all .25s" id="writeAnotherBtn">Write another letter →</button>
+            <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s" id="backDashBtn">← Back to Dashboard</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1044,6 +1088,27 @@ function applyLangToUI(lang){
   // Loading
   const loadS = document.getElementById('loadSub');
   if(loadS) loadS.textContent = es ? 'Escuchando tu recuerdo y encontrando las palabras que le hacen justicia.' : 'Listening to your memory and finding the words that do it justice.';
+
+  // Post download box
+  const postDlTitle = document.getElementById('postDlTitle');
+  if(postDlTitle) postDlTitle.textContent = es ? 'Tu carta est\u00e1 lista \u2756' : 'Your letter is ready \u2756';
+  const postDlText = document.getElementById('postDlText');
+  if(postDlText) postDlText.textContent = es ? '\u00bfCaptur\u00f3 tu recuerdo como esperabas? Nos encantar\u00eda saber tu opini\u00f3n.' : "Did it capture your memory the way you hoped? We'd love to hear from you.";
+  const feedbackBtn = document.getElementById('feedbackBtn');
+  if(feedbackBtn) feedbackBtn.textContent = es ? 'Comparte tu opini\u00f3n \u2192' : 'Share your feedback \u2192';
+  const writeAnotherBtn = document.getElementById('writeAnotherBtn');
+  if(writeAnotherBtn) writeAnotherBtn.textContent = es ? 'Escribir otra carta \u2192' : 'Write another letter \u2192';
+  // Password reset page
+  const resetTitle = document.getElementById('resetTitle');
+  if(resetTitle) resetTitle.textContent = es ? 'Crear nueva contrase\u00f1a' : 'Create new password';
+  const resetSubtitle = document.getElementById('resetSubtitle');
+  if(resetSubtitle) resetSubtitle.textContent = es ? 'Ingresa tu nueva contrase\u00f1a abajo.' : 'Enter your new password below.';
+  const newPassLbl = document.getElementById('newPassLbl');
+  if(newPassLbl) newPassLbl.textContent = es ? 'Nueva contrase\u00f1a' : 'New Password';
+  const confirmPassLbl = document.getElementById('confirmPassLbl');
+  if(confirmPassLbl) confirmPassLbl.textContent = es ? 'Confirmar contrase\u00f1a' : 'Confirm Password';
+  const resetBtn = document.getElementById('resetSubmitBtn');
+  if(resetBtn) resetBtn.textContent = es ? 'Guardar nueva contrase\u00f1a \u2192' : 'Save New Password \u2192';
 }
 
 function showPage(id){
@@ -1121,6 +1186,8 @@ async function handleAuth(){
     await freshSb.from('profiles').insert({id:data.user.id,name,email,letters_used:0,letters_allowed:1,language:lang,email_marketing:emailOptIn});
     currentUser=data.user; currentProfile={name,email,letters_used:0,letters_allowed:1,language:lang};
     if(lang!=='en'){ currentLang=lang; localStorage.setItem('ss_lang',lang); }
+    // Notify on new signup
+    fetch('/api/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'signup',name,email})}).catch(()=>{});
   } else {
     const {data,error}=await freshSb.auth.signInWithPassword({email,password:pass});
     if(error){
@@ -1278,14 +1345,15 @@ THE ${sentences.length} SENTENCES TO POLISH:
 ${sentenceList}
 
 RULES:
-1. Return exactly ${sentences.length} polished sentences as flowing prose.
-2. Same meaning, same subject - better words. Do NOT add new sentences.
-3. Do NOT add details not in the original.
+1. Return ONLY the polished prose — no meta-commentary, no counting notes, no explanations.
+2. Return exactly ${sentences.length} sentences. Do NOT add, split, or merge sentences.
+3. Same meaning, same events, same people — better words only. Do NOT invent new details.
 4. If a lyric was provided, weave it into one sentence naturally.
-5. Preserve their voice. No AI filler. No invented endings.
+5. Preserve their voice. No AI filler phrases. No invented endings.
+6. NEVER include phrases like "let me recount", "as exactly X sentences", or any self-referential commentary.
 
-Then on a new line write:
-SALUTATION: [a personalized poetic salutation, e.g. "To Fast Car, and the road you opened up,"] Keep it under 12 words. Specific to this song and memory.`;
+After the prose, on a new line write:
+SALUTATION: [a personalized poetic salutation, e.g. "To Fast Car, and the road you opened up,"] Under 12 words. Specific to this song and memory. No meta-commentary.`;
 }
 
 async function callAPI(prompt){
@@ -1383,6 +1451,8 @@ async function generateLetter(){
     document.getElementById('builderUserLabel').textContent=`${currentProfile?.name?.split(' ')[0]||''} · ${remaining} ${es?'carta':'letter'}${remaining!==1?'s':''} ${es?'disponible':'remaining'}`;
     document.getElementById('dashCredits').textContent=remaining;
     await saveLetter(song,artist,selectedTone,salutation,signOff,body,memory);
+    // Notify on new letter
+    fetch('/api/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'letter',name:currentProfile?.name||'',email:currentProfile?.email||'',song,artist,tone:selectedTone})}).catch(()=>{});
     renderResult(body,salutation,selectedTone,true);
   }catch(e){
     hideBPanels(); document.getElementById('bp5-result').classList.add('active');
@@ -1536,6 +1606,61 @@ async function startCheckout(priceId){
   }catch(e){alert('Something went wrong. Please try again.');}
 }
 
+async function getLettersFromStripe(sessionId){
+  try{
+    const r = await fetch('/api/credits', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ sessionId, checkOnly: true })
+    });
+    const d = await r.json();
+    return d.lettersToAdd || 0;
+  }catch(e){ return 0; }
+}
+
+function showPostDownload(){
+  document.getElementById('postDownloadBox').style.display = 'block';
+  document.getElementById('postDownloadBox').scrollIntoView({behavior:'smooth'});
+}
+
+function sendFeedback(){
+  const song = sessionState.song || 'my song';
+  const subject = encodeURIComponent(`SongScript Feedback — "${song}"`);
+  const body = encodeURIComponent(`Hi,
+
+I just generated a letter for "${song}" and wanted to share my feedback:
+
+`);
+  window.open(`mailto:feedback@songscript.com?subject=${subject}&body=${body}`);
+}
+
+function checkResetStrength(inp){
+  const v=inp.value; const fill=document.getElementById('resetStrengthFill'); const lbl=document.getElementById('resetStrengthLabel');
+  let score=0;
+  if(v.length>=8)score++; if(/[A-Z]/.test(v))score++; if(/[0-9]/.test(v))score++; if(/[^A-Za-z0-9]/.test(v))score++;
+  const map=[['0%','',''],['25%','#c0392b','Weak'],['50%','#e67e22','Fair'],['75%','#c9a84c','Good'],['100%','#27ae60','Strong']];
+  fill.style.width=map[score][0]; fill.style.background=map[score][1]; lbl.textContent=map[score][2];
+}
+
+async function handlePasswordReset(){
+  const es=currentLang==='es';
+  const newPass=document.getElementById('newPassword').value;
+  const confirmPass=document.getElementById('confirmPassword').value;
+  const showResetErr=(msg)=>{ document.getElementById('resetErrorMsg').textContent=msg; document.getElementById('resetErrorBanner').classList.add('show'); document.getElementById('resetSuccessBanner').classList.remove('show'); };
+  if(newPass.length<8){ showResetErr(es?'La contraseña debe tener al menos 8 caracteres.':'Password must be at least 8 characters.'); return; }
+  if(newPass!==confirmPass){ document.getElementById('errConfirmPass').classList.add('show'); return; }
+  document.getElementById('errConfirmPass').classList.remove('show');
+  const btn=document.getElementById('resetSubmitBtn');
+  btn.disabled=true; btn.textContent=es?'Guardando...':'Saving...';
+  const {error}=await sb.auth.updateUser({password:newPass});
+  btn.disabled=false; btn.textContent=es?'Guardar nueva contraseña →':'Save New Password →';
+  if(error){ showResetErr(error.message); return; }
+  document.getElementById('resetSuccessMsg').textContent=es?'¡Contraseña actualizada! Iniciando sesión...':'Password updated! Signing you in...';
+  document.getElementById('resetSuccessBanner').classList.add('show');
+  document.getElementById('resetErrorBanner').classList.remove('show');
+  setTimeout(()=>showPage('page-dashboard'), 2000);
+}
+
 function resetBuilder(){
   selectedTone='';
   sessionState={song:'',artist:'',month:'',year:'',memory:'',lyric:'',salutation:'',signOff:'',originalTone:'',currentTone:'',originalText:'',currentText:'',tonesUsed:[],regenUsed:false,memEditUsed:false,isFirstLetter:false};
@@ -1552,6 +1677,20 @@ function resetBuilder(){
 // Handle return from Stripe payment - runs after all functions defined
 (async function(){
   const params = new URLSearchParams(window.location.search);
+  // Check for password reset token
+  const hashParams = new URLSearchParams(window.location.hash.replace('#',''));
+  if(hashParams.get('type') === 'recovery'){
+    const access_token = hashParams.get('access_token');
+    if(access_token){
+      window.history.replaceState({}, '', '/');
+      await sb.auth.setSession({access_token, refresh_token: hashParams.get('refresh_token')||''});
+      // Apply language
+      if(currentLang!=='en') applyLangToUI(currentLang);
+      showPage('page-reset');
+      return;
+    }
+  }
+
   if(params.get('payment') !== 'success') return;
   const sessionId = params.get('session_id');
   const userId = params.get('user_id');
@@ -1575,6 +1714,21 @@ function resetBuilder(){
       window._refreshToken = session.refresh_token;
       await sb.auth.setSession({access_token:session.access_token, refresh_token:session.refresh_token});
       const freshSb = getAuthSb();
+
+      // Update credits using user's own session (no service key needed)
+      if(sessionId && userId){
+        try{
+          const { data: prof } = await freshSb.from('profiles').select('letters_allowed').eq('id', userId).single();
+          if(prof){
+            const lettersToAdd = await getLettersFromStripe(sessionId);
+            if(lettersToAdd > 0){
+              await freshSb.from('profiles').update({ letters_allowed: prof.letters_allowed + lettersToAdd }).eq('id', userId);
+              console.log('Credits updated to:', prof.letters_allowed + lettersToAdd);
+            }
+          }
+        }catch(ce){ console.log('Credit update error:', ce); }
+      }
+
       const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
       if(profile){
         currentProfile = profile;
