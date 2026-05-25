@@ -1,14 +1,12 @@
-export const config = { api: { bodyParser: false } }; // v2
+export const config = { api: { bodyParser: false } };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  // Read raw body
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
   const body = Buffer.concat(chunks).toString('utf8');
 
-  // Verify Stripe signature
   const sig = req.headers['stripe-signature'];
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -18,69 +16,73 @@ export default async function handler(req, res) {
       acc[k] = v;
       return acc;
     }, {});
-
     const { createHmac } = await import('crypto');
     const expected = createHmac('sha256', secret)
       .update(`${parts.t}.${body}`)
       .digest('hex');
-
-    if (expected !== parts.v1) {
-      console.log('Invalid signature');
-      return res.status(400).json({ error: 'Invalid signature' });
-    }
+    if (expected !== parts.v1) return res.status(400).json({ error: 'Invalid signature' });
   } catch(err) {
-    console.log('Signature error:', err.message);
     return res.status(400).json({ error: err.message });
   }
 
   const event = JSON.parse(body);
-  console.log('Event received:', event.type);
+  console.log('Event:', event.type);
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const userId = session.metadata?.user_id;
-    const amountTotal = session.amount_total;
-    const lettersToAdd = amountTotal >= 1499 ? 10 : 5;
+    const lettersToAdd = session.amount_total >= 1499 ? 10 : 5;
 
-    console.log('userId:', userId);
-    console.log('amountTotal:', amountTotal);
-    console.log('lettersToAdd:', lettersToAdd);
+    console.log('userId:', userId, 'lettersToAdd:', lettersToAdd);
+    if (!userId) return res.status(200).json({ received: true });
 
-    if (!userId) {
-      console.log('No userId in metadata — skipping');
-      return res.status(200).json({ received: true });
-    }
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-    const { createClient } = await import('@supabase/supabase-js');
-    const sb = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_KEY
+    console.log('SUPABASE_URL:', SUPABASE_URL);
+    console.log('SERVICE_KEY exists:', !!SERVICE_KEY);
+    console.log('SERVICE_KEY length:', SERVICE_KEY?.length);
+
+    // Get current profile
+    const getRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}&select=id,letters_allowed`,
+      {
+        headers: {
+          'apikey': SERVICE_KEY,
+          'Authorization': `Bearer ${SERVICE_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
     );
 
-    const { data: profile, error: fetchError } = await sb
-      .from('profiles')
-      .select('id, letters_allowed')
-      .eq('id', userId)
-      .single();
+    console.log('GET status:', getRes.status);
+    const profiles = await getRes.json();
+    console.log('Profiles:', JSON.stringify(profiles));
 
-    console.log('Profile found:', JSON.stringify(profile));
-    console.log('Fetch error:', JSON.stringify(fetchError));
-
-    if (!profile) {
-      console.log('No profile found for userId:', userId);
+    if (!profiles || profiles.length === 0) {
+      console.log('No profile found');
       return res.status(200).json({ received: true });
     }
 
-    const newTotal = profile.letters_allowed + lettersToAdd;
-    console.log('Updating letters_allowed from', profile.letters_allowed, 'to', newTotal);
+    const newTotal = profiles[0].letters_allowed + lettersToAdd;
+    console.log('New total:', newTotal);
 
-    const { error: updateError } = await sb
-      .from('profiles')
-      .update({ letters_allowed: newTotal })
-      .eq('id', userId);
+    const patchRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'apikey': SERVICE_KEY,
+          'Authorization': `Bearer ${SERVICE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ letters_allowed: newTotal })
+      }
+    );
 
-    console.log('Update error:', JSON.stringify(updateError));
-    console.log('Credits updated successfully');
+    console.log('PATCH status:', patchRes.status);
+    console.log('Done');
   }
 
   return res.status(200).json({ received: true });
