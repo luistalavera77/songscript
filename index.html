@@ -39,8 +39,8 @@ body{background:var(--paper);color:var(--text);font-family:"Lato",sans-serif;ove
 .hero-sub{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--muted);line-height:1.75;font-weight:300;margin-bottom:40px;max-width:420px}
 .hero-sub strong{color:var(--ink);font-weight:400}
 .hero-cta-wrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-.btn-hero{font-family:"Playfair Display",serif;font-size:18px;font-style:italic;color:white;background:var(--accent);border:none;padding:18px 40px;border-radius:1px;cursor:pointer;transition:all .25s;letter-spacing:.5px}
-.btn-hero:hover{background:var(--ink);transform:translateY(-1px)}
+.btn-hero{font-family:"Playfair Display",serif;font-size:20px;font-style:italic;color:white;background:var(--ink);border:none;padding:20px 48px;border-radius:1px;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.15);letter-spacing:.5px}
+.btn-hero:hover{background:var(--accent);transform:translateY(-1px)}
 .hero-note{font-size:12px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:300}
 .hero-right{position:relative;height:100%;background:var(--paper3);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:calc(100vh - 70px)}
 .hero-image-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--paper) 0%,transparent 20%,transparent 80%,var(--paper3) 100%)}
@@ -738,21 +738,52 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <div class="pricing-grid">
       <div class="pcard" onclick="startCheckout('price_1TbE3rLQHnpI1RkHWZRFAFa2')">
         <div class="pcard-badge" id="starterBadge">Starter</div>
-        <div class="pcard-price">$9.99</div>
-        <div class="pcard-letters" id="starterLetters">5 Song Letters</div>
-        <div class="pcard-perunit">$2.00 per letter</div>
+        <div class="pcard-price">$5.99</div>
+        <div class="pcard-letters" id="starterLetters">5 memories preserved forever</div>
+        <div class="pcard-perunit">$1.20 per memory</div>
         <button class="pcard-cta" id="starterCta">Buy Now →</button>
       </div>
       <div class="pcard feat" onclick="startCheckout('price_1TbE5kLQHnpI1RkHobUQ8r24')">
         <div class="pcard-badge" id="valueBadge">Best Value</div>
         <div class="popular-badge" id="popularBadge">Most Popular</div>
-        <div class="pcard-price">$14.99</div>
-        <div class="pcard-letters" id="valueLetters">10 Song Letters</div>
-        <div class="pcard-perunit">$1.50 per letter</div>
+        <div class="pcard-price">$9.99</div>
+        <div class="pcard-letters" id="valueLetters">10 memories preserved forever</div>
+        <div class="pcard-perunit">$1.00 per memory</div>
         <button class="pcard-cta" id="valueCta">Buy Now →</button>
       </div>
     </div>
     <button class="pricing-back" onclick="showPage('page-dashboard')" id="pricingBack">← Back to Dashboard</button>
+
+    <!-- COMING SOON -->
+    <div style="margin-top:48px;border-top:1px solid var(--border);padding-top:40px">
+      <p style="text-align:center;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:32px">✦ Coming Soon</p>
+
+      <div style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:32px 36px;margin-bottom:20px">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--ink);margin-bottom:16px" id="csAlbumTitle">Your Life Album</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.85;color:var(--text);margin-bottom:12px" id="csAlbumP1">There are 10 songs that made you who you are. The one playing when you fell in love. The one that got you through the hardest year. The one your mother used to hum. The one you'll never hear without crying.</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.85;color:var(--text);margin-bottom:12px" id="csAlbumP2">Imagine them all in one place — each with its own letter, its own memory, its own page. A book that tells the story of your life through the music that lived it with you.</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted)" id="csAlbumTag">Shareable. Printable. Yours forever.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:24px">
+          <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--ink);margin-bottom:10px" id="csGiftTitle">Gift a Memory</div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.8;color:var(--text);margin-bottom:10px" id="csGiftBody">Send someone a letter about the song you shared — with their name, their salutation, delivered to their inbox. The most personal gift you've ever given.</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--muted)" id="csGiftTag">Perfect for Mother's Day, Father's Day, birthdays.</p>
+        </div>
+        <div style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:24px">
+          <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--ink);margin-bottom:10px" id="csCoupleTitle">Couple Edition</div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.8;color:var(--text);margin-bottom:10px" id="csCoupleBody">Two voices. One song. One letter that holds both of you. SongScript weaves your memories into a single keepsake that belongs to both of you.</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--muted)" id="csCoupleTag">Also the most unforgettable wedding gift.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:24px;border:1px solid var(--border);border-radius:2px">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--muted);margin-bottom:16px" id="csNotifyText">Join now and be the first to know when these launch →</p>
+        <button onclick="notifyMe()" style="font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:white;background:var(--accent);border:none;padding:13px 32px;border-radius:1px;cursor:pointer" id="csNotifyBtn">Notify me when available</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -787,12 +818,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <div class="brow">
           <div class="bfield">
             <label class="blabel" id="monthLbl">Month of Memory</label>
-            <select class="bselect" id="bMemMonth">
-              <option value="" id="monthPlaceholder">— Month —</option>
-              <option>January</option><option>February</option><option>March</option><option>April</option>
-              <option>May</option><option>June</option><option>July</option><option>August</option>
-              <option>September</option><option>October</option><option>November</option><option>December</option>
-            </select>
+            <select class="bselect" id="bMemMonth"><option value="" id="monthPlaceholder">— Month —</option></select>
           </div>
           <div class="bfield"><label class="blabel" id="yearLbl">Year of Memory</label><select class="bselect" id="bMemYear"><option value="">— Year —</option></select></div>
         </div>
@@ -841,6 +867,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <div class="bcard-corner">Step 4 of 5</div>
         <h2 class="bcard-title" id="b4Title">What tone should your letter carry?</h2>
         <p class="bcard-sub" id="b4Sub">Choose the emotional register that fits your memory best.</p>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px;font-style:italic;text-align:center" id="toneTip">The tone shapes how your letter sounds — romantic, nostalgic, joyful, or aching.</p>
         <div class="tone-grid">
           <div class="tone-btn" onclick="selTone(this,'Love Letter')"><span class="tone-icon">💌</span><span class="tone-name" data-en="Love Letter" data-es="Carta de amor">Love Letter</span></div>
           <div class="tone-btn" onclick="selTone(this,'Nostalgic')"><span class="tone-icon">🌅</span><span class="tone-name" data-en="Nostalgic" data-es="Nostálgico">Nostalgic</span></div>
@@ -890,11 +917,16 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
             <div class="result-col-label" id="currentColLabel">AI Letter</div>
             <div class="letter-outer">
               <div class="letter-date" id="lDateCurr"></div>
-              <input class="letter-editable" id="lSalCurr" placeholder="Salutation…"/>
+              <div id="editHint" style="font-size:11px;color:var(--gold);text-align:center;margin-bottom:8px;font-style:italic;letter-spacing:.5px" id="editHintText">✎ Click the title or signature to personalize</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="font-size:14px;color:var(--gold);flex-shrink:0;cursor:text">✎</span>
+                <input class="letter-editable" id="lSalCurr" placeholder="Salutation…" style="flex:1" onfocus="hideEditHint()"/>
+              </div>
               <div class="letter-ornament">✦ ✦ ✦</div>
               <div class="letter-body" id="lBodyCurr"></div>
-              <div class="letter-sign-wrap">
-                <input class="letter-sign-editable" id="lSignCurr" placeholder="Your name…"/>
+              <div class="letter-sign-wrap" style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
+                <input class="letter-sign-editable" id="lSignCurr" placeholder="Your name…" style="flex:1" onfocus="hideEditHint()"/>
+                <span style="font-size:14px;color:var(--gold);flex-shrink:0;cursor:text">✎</span>
               </div>
               <div class="letter-credit" id="lCreditCurr"></div>
             </div>
@@ -1048,6 +1080,8 @@ const i18n = {
   }
 };
 
+// Populate months on load
+populateMonths(currentLang === 'es');
 // Now apply saved language and detect IP (i18n is now defined)
 (async function(){
   if(currentLang !== 'en'){ applyLangOnLoad(currentLang); }
@@ -1217,6 +1251,18 @@ function applyLangToUI(lang){
   // Loading
   const loadS = document.getElementById('loadSub');
   if(loadS) loadS.textContent = es ? 'Escuchando tu recuerdo y encontrando las palabras que le hacen justicia.' : 'Listening to your memory and finding the words that do it justice.';
+  // Tone tip
+  const toneTip = document.getElementById('toneTip');
+  if(toneTip) toneTip.textContent = es ? 'El tono define cómo suena tu carta — romántica, nostálgica, alegre o profunda.' : 'The tone shapes how your letter sounds — romantic, nostalgic, joyful, or aching.';
+  // Lyric placeholder
+  const bLyric = document.getElementById('bLyric');
+  if(bLyric) bLyric.placeholder = es ? 'Déjalo en blanco y la IA encontrará la línea perfecta...' : 'Leave blank and the AI will find the right line...';
+  // Edit hint
+  const editHintEl = document.getElementById('editHint');
+  if(editHintEl) editHintEl.textContent = es ? '✎ Haz clic en el título o firma para personalizar' : '✎ Click the title or signature to personalize';
+  // Month label
+  const monthLabel = document.getElementById('b1MonthLabel');
+  if(monthLabel) monthLabel.textContent = es ? 'Mes del recuerdo' : 'Month of Memory';
 
   // Post download box
   const postDlTitle = document.getElementById('postDlTitle');
@@ -1236,6 +1282,37 @@ function applyLangToUI(lang){
   if(newPassLbl) newPassLbl.textContent = es ? 'Nueva contrase\u00f1a' : 'New Password';
   const confirmPassLbl = document.getElementById('confirmPassLbl');
   if(confirmPassLbl) confirmPassLbl.textContent = es ? 'Confirmar contrase\u00f1a' : 'Confirm Password';
+  // Coming soon section
+  const csAlbumTitle = document.getElementById('csAlbumTitle');
+  if(csAlbumTitle) csAlbumTitle.textContent = es ? 'Tu Álbum de Vida' : 'Your Life Album';
+  const csAlbumP1 = document.getElementById('csAlbumP1');
+  if(csAlbumP1) csAlbumP1.textContent = es ? 'Hay 10 canciones que te hicieron quien eres. La que sonaba cuando te enamoraste. La que te acompañó en el año más difícil. La que tu madre tarareaba sin darse cuenta. La que nunca podrás escuchar sin que se te cierre la garganta.' : "There are 10 songs that made you who you are. The one playing when you fell in love. The one that got you through the hardest year. The one your mother used to hum. The one you'll never hear without crying.";
+  const csAlbumP2 = document.getElementById('csAlbumP2');
+  if(csAlbumP2) csAlbumP2.textContent = es ? 'Imagínalas todas en un mismo lugar — cada una con su carta, su recuerdo, su página. Un libro que cuenta la historia de tu vida a través de la música que la vivió contigo.' : 'Imagine them all in one place — each with its own letter, its own memory, its own page. A book that tells the story of your life through the music that lived it with you.';
+  const csAlbumTag = document.getElementById('csAlbumTag');
+  if(csAlbumTag) csAlbumTag.textContent = es ? 'Para compartir. Para imprimir. Tuyo para siempre.' : 'Shareable. Printable. Yours forever.';
+  const csGiftTitle = document.getElementById('csGiftTitle');
+  if(csGiftTitle) csGiftTitle.textContent = es ? 'Regala un Recuerdo' : 'Gift a Memory';
+  const csGiftBody = document.getElementById('csGiftBody');
+  if(csGiftBody) csGiftBody.textContent = es ? 'Envíale a alguien una carta sobre la canción que compartieron — con su nombre, su dedicatoria, entregada en su correo. El regalo más personal que jamás hayas dado.' : "Send someone a letter about the song you shared — with their name, their salutation, delivered to their inbox. The most personal gift you've ever given.";
+  const csGiftTag = document.getElementById('csGiftTag');
+  if(csGiftTag) csGiftTag.textContent = es ? 'Perfecto para el Día de la Madre, el Día del Padre, cumpleaños.' : "Perfect for Mother's Day, Father's Day, birthdays.";
+  const csCoupleTitle = document.getElementById('csCoupleTitle');
+  if(csCoupleTitle) csCoupleTitle.textContent = es ? 'Edición Pareja' : 'Couple Edition';
+  const csCoupleBody = document.getElementById('csCoupleBody');
+  if(csCoupleBody) csCoupleBody.textContent = es ? 'Dos voces. Una canción. Una carta que los contiene a los dos. SongScript entrelaza sus recuerdos en una sola carta que les pertenece a ambos.' : 'Two voices. One song. One letter that holds both of you. SongScript weaves your memories into a single keepsake that belongs to both of you.';
+  const csCoupleTag = document.getElementById('csCoupleTag');
+  if(csCoupleTag) csCoupleTag.textContent = es ? 'También el regalo de bodas más inolvidable.' : 'Also the most unforgettable wedding gift.';
+  const csNotifyText = document.getElementById('csNotifyText');
+  if(csNotifyText) csNotifyText.textContent = es ? 'Únete ahora y sé el primero en saber cuándo lanzan →' : 'Join now and be the first to know when these launch →';
+  const csNotifyBtn = document.getElementById('csNotifyBtn');
+  if(csNotifyBtn) csNotifyBtn.textContent = es ? 'Avísame cuando esté disponible' : 'Notify me when available';
+  // Pricing copy
+  const starterL = document.getElementById('starterLetters');
+  if(starterL) starterL.textContent = es ? '5 recuerdos preservados para siempre' : '5 memories preserved forever';
+  const valueL = document.getElementById('valueLetters');
+  if(valueL) valueL.textContent = es ? '10 recuerdos preservados para siempre' : '10 memories preserved forever';
+
   const resetBtn = document.getElementById('resetSubmitBtn');
   if(resetBtn) resetBtn.textContent = es ? 'Guardar nueva contrase\u00f1a \u2192' : 'Save New Password \u2192';
   // Hero letter translation
@@ -1250,6 +1327,8 @@ function applyLangToUI(lang){
       heroBody.innerHTML = '...He packed everything into one car. Eighteen years reduced to boxes, a mattress, and a coffee maker he’d never used. Fix You came on the radio — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him, I knew that. But that version was gone...';
     }
   }
+  // Populate month dropdown
+  populateMonths(es);
   // Switch sample cards
   document.querySelectorAll('[data-en][data-es]').forEach(el => {
     el.textContent = es ? el.getAttribute('data-es') : el.getAttribute('data-en');
@@ -1526,7 +1605,7 @@ RULES:
 7. Detect the language the person wrote their memory in and write the letter in that SAME language.
 
 After the prose, on a new line write:
-SALUTATION: [a personalized poetic salutation, e.g. "To Fast Car, and the road you opened up,"] Under 12 words. Specific to this song and memory.`;
+SALUTATION: [poetic opening WITHOUT "To" or "A" prefix, e.g. "Fast Car, and the road you opened up," or "Yellow, and the night the crowd disappeared,"] Under 12 words. Specific to this song and memory. NEVER start with "To" or "A".`;
 }
 async function callAPI(prompt){
   const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{role:'user',content:prompt}]})});
@@ -1550,7 +1629,7 @@ function showLoading(tone){
 
 function renderResult(body,salutation,tone,isNew){
   const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  const credit=`"${sessionState.song}" · ${sessionState.artist} · ${tone}`;
+  const credit=`"${sessionState.song}" · ${sessionState.artist}`;
   const signOff=currentProfile?.name||'With all that you carry,';
   const es=currentLang==='es';
   if(isNew){
@@ -1724,28 +1803,36 @@ function confirmNotify(){
 function openPDFWindow(song,artist,salutation,body,signOff,credit,date){
   const win=window.open('','_blank');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SongScript — ${song}</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-width:680px;margin:0 auto}
-@media print{body{padding:40px;background:white;max-width:100%}.print-btn{display:none}.letter-box{border:none;background:white;padding:20px 0}.side-line{display:none}}
-.header{text-align:center;margin-bottom:48px}
-.brand{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px}
-.song-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#6b3d2e}
-.letter-box{background:#f5ede0;border:1px solid #dfd0b0;padding:52px 56px;position:relative}
+body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px 70px;max-width:700px;margin:0 auto;color:#2c2010}
+@media print{
+  body{padding:40px 52px;background:white;max-width:100%}
+  .print-btn{display:none!important}
+  .letter-box{border:none;background:white;padding:0}
+  .side-line{display:none}
+  @page{margin:20mm 18mm;orphans:3;widows:3}
+}
+.header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid #dfd0b0}
+.brand{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:6px}
+.song-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#6b3d2e;font-weight:400}
+.letter-box{background:#f9f4ea;border:1px solid #dfd0b0;padding:48px 52px;position:relative;page-break-inside:auto}
 .side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}
-.date{font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:28px;font-style:italic}
-.salutation{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:16px}
-.ornament{text-align:center;font-size:18px;color:#c9a84c;margin:14px 0;letter-spacing:8px}
-.letter-body{font-family:'Great Vibes',cursive;font-size:20px;line-height:2;color:#2c2010;white-space:pre-wrap;font-weight:400}
-.sign{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#6b3d2e;margin-top:32px;text-align:right}
-.credit{font-size:11px;color:#8a7a5a;text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
-.print-btn{display:block;margin:36px auto 0;padding:14px 40px;background:#6b3d2e;color:white;border:none;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer}
+.date{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:24px;font-style:italic;font-weight:300}
+.salutation{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:14px;font-weight:400}
+.ornament{text-align:center;font-size:16px;color:#c9a84c;margin:12px 0;letter-spacing:8px}
+.letter-body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.95;color:#2c2010;white-space:pre-wrap;font-weight:300;page-break-inside:auto;text-align:justify}
+.letter-body p{margin-bottom:1em;page-break-inside:avoid;orphans:3;widows:3}
+.sign{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:#6b3d2e;margin-top:28px;text-align:right;font-weight:400;page-break-before:avoid}
+.credit{font-family:'Cormorant Garamond',serif;font-size:12px;color:#8a7a5a;text-align:right;margin-top:8px;font-style:italic;font-weight:300;page-break-before:avoid}
+.page-continuation{padding-top:40px}
+.print-btn{display:block;margin:32px auto 0;padding:13px 36px;background:#6b3d2e;color:white;border:none;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;cursor:pointer;letter-spacing:.5px}
 </style></head>
 <body>
-<div class="header"><div class="brand">SongScript · Memory Letter</div><div class="song-title">"${song}" by ${artist}</div></div>
+<div class="header"><div class="brand">SongScript · Memory Letter</div><div class="song-title">"${song}" · ${artist}</div></div>
 <div class="letter-box">
-  <div class="side-line" style="left:28px"></div><div class="side-line" style="right:28px"></div>
+  <div class="side-line" style="left:26px"></div><div class="side-line" style="right:26px"></div>
   <div class="date">${date}</div>
   <div class="salutation">${salutation}</div>
   <div class="ornament">❖ ❖ ❖</div>
@@ -1760,7 +1847,7 @@ body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px;max-
 
 function downloadPDF(){
   const song=sessionState.song; const artist=sessionState.artist;
-  const salutation=document.getElementById('lSalCurr').value||`To ${song},`;
+  const salutation=document.getElementById('lSalCurr').value||`${song},`;
   const body=document.getElementById('lBodyCurr').textContent;
   const signOff=document.getElementById('lSignCurr').value||'With all that you carry,';
   const credit=document.getElementById('lCreditCurr').textContent;
@@ -1793,6 +1880,28 @@ async function getLettersFromStripe(sessionId){
 function showPostDownload(){
   document.getElementById('postDownloadBox').style.display = 'block';
   document.getElementById('postDownloadBox').scrollIntoView({behavior:'smooth'});
+}
+
+function hideEditHint(){
+  const hint = document.getElementById('editHint');
+  if(hint) hint.style.display = 'none';
+}
+
+function populateMonths(es){
+  const sel = document.getElementById('bMemMonth');
+  if(!sel) return;
+  const en = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const sp = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const months = es ? sp : en;
+  const cur = sel.value;
+  sel.innerHTML = `<option value="">${es ? '— Mes —' : '— Month —'}</option>`;
+  months.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = m;
+    if(m === cur) opt.selected = true;
+    sel.appendChild(opt);
+  });
 }
 
 function toggleFeedbackForm(){
