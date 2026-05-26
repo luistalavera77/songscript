@@ -795,9 +795,18 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         </div>
         <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
-          <button onclick="sendFeedback()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="feedbackBtn">Share your feedback →</button>
+          <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="feedbackBtn">Share your feedback →</button>
           <button onclick="startNewLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer" id="writeAnotherBtn">Write another letter →</button>
           <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="backDashBtn">← Back to Dashboard</button>
+        </div>
+        <div id="feedbackForm" style="display:none;margin-top:16px;background:var(--paper2);border:1px solid var(--border);padding:20px;border-radius:1px">
+          <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:12px" id="feedbackFormTitle">Did your letter capture your memory?</div>
+          <textarea id="feedbackText" rows="3" style="width:100%;background:white;border:1px solid var(--border);padding:10px;font-family:'Lato',sans-serif;font-size:14px;color:var(--ink);outline:none;resize:none;border-radius:1px" placeholder="Tell us what you loved or what could be better..."></textarea>
+          <div style="display:flex;gap:10px;margin-top:10px;justify-content:flex-end">
+            <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);background:transparent;border:none;cursor:pointer;padding:8px 16px" id="feedbackCancelBtn">Cancel</button>
+            <button onclick="submitFeedback()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:8px 20px;border-radius:1px;cursor:pointer" id="feedbackSendBtn">Send →</button>
+          </div>
+          <div id="feedbackThanks" style="display:none;text-align:center;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);margin-top:10px">Thank you — your feedback means everything. ✦</div>
         </div>
       </div>
     </div>
@@ -1278,7 +1287,11 @@ function viewLetter(id){
     <div style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300">${l.letter_body}</div>
     <div style="font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:var(--accent);margin-top:28px;text-align:right">${l.sign_off||'With all that you carry,'}</div>
     <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase">&#8220;${l.song}&#8221; · ${l.artist} · ${l.tone}</div>
-    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download PDF →</button>`;
+    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download PDF →</button>
+    <div style="display:flex;gap:10px;margin-top:10px;justify-content:center">
+      <button onclick="closeModal();startNewLetter();" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer">Write another →</button>
+      <button onclick="closeModal()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent">← Dashboard</button>
+    </div>`;
   document.getElementById('letterModal').classList.add('open');
 }
 
@@ -1619,6 +1632,42 @@ function showPostDownload(){
   document.getElementById('postDownloadBox').scrollIntoView({behavior:'smooth'});
 }
 
+function toggleFeedbackForm(){
+  const form = document.getElementById('feedbackForm');
+  if(!form) return;
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  if(form.style.display === 'block'){
+    document.getElementById('feedbackText').focus();
+  }
+}
+
+async function submitFeedback(){
+  const text = document.getElementById('feedbackText')?.value?.trim();
+  if(!text) return;
+  const song = sessionState.song || 'a song';
+  const btn = document.getElementById('feedbackSendBtn');
+  const es = currentLang === 'es';
+  btn.disabled = true;
+  btn.textContent = es ? 'Enviando...' : 'Sending...';
+  try {
+    await fetch('/api/notify', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        type: 'feedback',
+        name: currentProfile?.name || '',
+        email: currentProfile?.email || '',
+        song,
+        message: text
+      })
+    });
+  } catch(e) {}
+  document.getElementById('feedbackText').style.display = 'none';
+  btn.style.display = 'none';
+  document.getElementById('feedbackCancelBtn').style.display = 'none';
+  document.getElementById('feedbackThanks').style.display = 'block';
+}
+
 function sendFeedback(){
   const song = sessionState.song || 'my song';
   const subject = encodeURIComponent(`SongScript Feedback — "${song}"`);
@@ -1692,51 +1741,21 @@ function resetBuilder(){
   const userId = params.get('user_id');
   window.history.replaceState({}, '', '/');
   try {
-    // Update credits via API
+    // Update credits via API - verified against Stripe, no session needed
     if(sessionId && userId){
-      const creditRes = await fetch('/api/credits', {
+      await fetch('/api/credits', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ sessionId, userId })
       });
-      const creditData = await creditRes.json();
-      console.log('Credits updated:', creditData);
     }
-    // Restore session and go to dashboard
-    const { data: { session } } = await sb.auth.getSession();
-    if(session){
-      currentUser = session.user;
-      window._accessToken = session.access_token;
-      window._refreshToken = session.refresh_token;
-      await sb.auth.setSession({access_token:session.access_token, refresh_token:session.refresh_token});
-      const freshSb = getAuthSb();
-
-      // Update credits using user's own session (no service key needed)
-      if(sessionId && userId){
-        try{
-          const { data: prof } = await freshSb.from('profiles').select('letters_allowed').eq('id', userId).single();
-          if(prof){
-            const lettersToAdd = await getLettersFromStripe(sessionId);
-            if(lettersToAdd > 0){
-              await freshSb.from('profiles').update({ letters_allowed: prof.letters_allowed + lettersToAdd }).eq('id', userId);
-              console.log('Credits updated to:', prof.letters_allowed + lettersToAdd);
-            }
-          }
-        }catch(ce){ console.log('Credit update error:', ce); }
-      }
-
-      const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
-      if(profile){
-        currentProfile = profile;
-        if(profile.language && profile.language !== 'en'){ currentLang = profile.language; localStorage.setItem('ss_lang', profile.language); }
-      }
-      showPage('page-dashboard');
-    } else {
-      setAuthMode('login');
-      showPage('page-register');
-      showAuthSuccess('Payment successful! Please sign in to see your updated letter credits.');
-    }
-  } catch(e){ console.log('Payment return error:', e); }
+  } catch(e){ console.log('Credits error:', e); }
+  // Always show sign-in page with success message - user must sign in themselves
+  // This prevents credits going to wrong account due to stale sessions
+  setAuthMode('login');
+  showPage('page-register');
+  const es = currentLang === 'es';
+  showAuthSuccess(es ? '¡Pago exitoso! Inicia sesión para ver tus nuevas cartas.' : 'Payment successful! Sign in to see your new letter credits.');
 })();
 </script>
 </body>
