@@ -1341,15 +1341,16 @@ THE ${sentences.length} SENTENCES TO POLISH:
 ${sentenceList}
 
 RULES:
-1. Output ONLY the finished letter prose. Zero meta-commentary, zero counting notes, zero self-reference.
-2. Return exactly ${sentences.length} sentences - no more, no less. Do NOT split or merge sentences.
-3. Keep the same events, people, meaning. Better words only. Do NOT invent any new details.
-4. If a lyric is provided, weave it into one sentence naturally.
-5. Write in the person's voice. No AI filler. No invented endings.
-6. FORBIDDEN: "let me recount", "as exactly", "here are", "I will now", "sentences:", or any phrase revealing you are counting or processing.
+1. Return ONLY the polished prose — no meta-commentary, no counting notes, no explanations.
+2. Return exactly ${sentences.length} sentences. Do NOT add, split, or merge sentences.
+3. Same meaning, same events, same people — better words only. Do NOT invent new details. NEVER change who the people are (grandson stays grandson, mother stays mother).
+4. If a lyric was provided, weave it into one sentence naturally.
+5. Preserve their voice. No AI filler phrases. No invented endings.
+6. FORBIDDEN output phrases: "let me recount", "as exactly", "here are", "I will now", "sentences:" — never include these.
+7. Detect the language the person wrote their memory in and write the letter in that SAME language.
 
-After the prose, on a new line write exactly:
-SALUTATION: [poetic opening, e.g. "To Fast Car, and the road you opened up,"] Max 12 words. Specific to this song.`;
+After the prose, on a new line write:
+SALUTATION: [a personalized poetic salutation, e.g. "To Fast Car, and the road you opened up,"] Under 12 words. Specific to this song and memory.`;
 }
 async function callAPI(prompt){
   const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{role:'user',content:prompt}]})});
