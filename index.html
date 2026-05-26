@@ -585,7 +585,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <button class="btn-final" onclick="showPage('page-register')" data-i18n="final_cta">Write My First Letter — Free →</button>
     <p class="final-note" data-i18n="final_note">✦ &nbsp; Every account starts with one free letter &nbsp; ✦</p>
   </section>
-  <footer><span class="footer-brand">SongScript</span><span class="footer-copy">© 2025 SongScript. All rights reserved.</span></footer>
+  <footer><span class="footer-brand">SongScript</span><div style="display:flex;gap:20px;align-items:center"><a onclick="showPage('page-terms')" style="font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;font-weight:300">Terms of Service</a><a onclick="showPage('page-privacy')" style="font-size:12px;color:var(--muted);cursor:pointer;text-decoration:none;font-weight:300">Privacy Policy</a><a href="mailto:legal@songscript.co" style="font-size:12px;color:var(--muted);text-decoration:none;font-weight:300">legal@songscript.co</a></div><span class="footer-copy">© 2026 SongScript. All rights reserved.</span></footer>
 </div>
 
 <!-- REGISTER PAGE -->
@@ -598,8 +598,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <p class="auth-left-text" id="authLeftText">Create a free account and we'll give you one complete memory letter — no strings, no card, no trial period. Just yours.</p>
         <div class="auth-preview">
           <div class="auth-left-quote">"</div>
-          <div class="auth-preview-line">The windows were down and the whole summer smelled like cedar and gasoline and you, and that song was playing, and nothing — nothing — has ever felt more like a beginning.</div>
-          <div class="auth-preview-attr">From a real SongScript letter · Fast Car · 1998</div>
+          <div class="auth-preview-line" id="quoteText">He packed everything into one car. Eighteen years of a person — reduced to boxes, a mattress, and a coffee maker he’d never used. I helped him carry things down the stairs and we didn’t speak much because neither of us trusted our voices. When I drove home alone the house was so quiet I could hear the refrigerator hum. Fix You came on the radio and I had to pull over — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him. I knew that. But the boy who used to fall asleep on my chest — him, I had lost. That version was gone.</div>
+          <div class="auth-preview-attr" id="quoteAttr">From a real SongScript letter · Fix You · Coldplay</div>
         </div>
       </div>
       <div></div>
@@ -645,7 +645,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <label class="opt-in-label" id="optInLabel" for="emailOptIn">Send me updates about new SongScript features and products. You can unsubscribe anytime.</label>
         </div>
         <button class="btn-register" id="authSubmitBtn" onclick="handleAuth()">Create My Account & Start Writing →</button>
-        <p class="terms-note" id="termsNote">By creating an account you agree to our Terms of Service and Privacy Policy. We will never share your memories.</p>
+        <p class="terms-note" id="termsNote">By creating an account you agree to our <a onclick="showPage('page-terms')" style="color:var(--accent);cursor:pointer;text-decoration:underline">Terms of Service</a> and <a onclick="showPage('page-privacy')" style="color:var(--accent);cursor:pointer;text-decoration:underline">Privacy Policy</a>. We will never share your memories.</p>
       </div>
     </div>
   </div>
@@ -1929,5 +1929,108 @@ function resetBuilder(){
   } catch(e){ console.log('Payment return error:', e); }
 })();
 </script>
+
+<!-- TERMS OF SERVICE PAGE -->
+<div class="page" id="page-terms">
+  <nav class="dashboard-nav">
+    <div class="dashboard-brand" onclick="showPage('page-landing')" style="cursor:pointer">← SongScript</div>
+  </nav>
+  <div style="max-width:760px;margin:0 auto;padding:48px 24px 80px">
+    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink);margin-bottom:8px">Terms of Service</h1>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:40px;font-family:'Cormorant Garamond',serif;font-style:italic">Last updated: May 2026</p>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:var(--ink)">
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">1. Acceptance of Terms</h2>
+      <p>By creating an account or using SongScript ("the Service"), you agree to these Terms of Service. If you do not agree, please do not use the Service.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">2. Description of Service</h2>
+      <p>SongScript is a web-based service that uses artificial intelligence to transform personal memories associated with songs into polished, personalized memory letters. Letters are generated digitally and delivered as downloadable PDF files.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">3. Account Registration</h2>
+      <p>You must create an account to use the Service. You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. You must provide accurate and complete information when registering.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">4. Free Letter and Credits</h2>
+      <p>Each new account receives one free letter upon registration. Additional letters may be purchased in packs. Letter credits are non-transferable and are tied to your account.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">5. Payment and No-Refund Policy</h2>
+      <p>All purchases are final. Because SongScript delivers digital content immediately upon purchase, we do not offer refunds under any circumstances. By completing a purchase, you acknowledge and accept this policy. If you experience a technical issue that prevents letter generation, please contact us at legal@songscript.co and we will work to resolve it.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">6. Your Content</h2>
+      <p>You retain ownership of the memories and personal content you submit to generate letters. By submitting content, you grant SongScript a limited license to process that content solely for the purpose of generating your letter. We do not sell or share your personal memories with third parties.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">7. AI-Generated Content</h2>
+      <p>Letters are generated using artificial intelligence. While we strive for high quality, SongScript does not guarantee that generated letters will meet your specific expectations. The AI may occasionally produce unexpected results. You are free to regenerate or edit your letter using the tools provided.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">8. Prohibited Use</h2>
+      <p>You may not use the Service to submit content that is unlawful, harmful, abusive, defamatory, or that violates the rights of others. SongScript reserves the right to terminate accounts that violate these terms.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">9. Limitation of Liability</h2>
+      <p>SongScript is provided "as is" without warranties of any kind. To the fullest extent permitted by law, SongScript shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">10. Governing Law</h2>
+      <p>These Terms are governed by the laws of the State of Texas, United States. Any disputes shall be resolved in the courts of Texas.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">11. Changes to Terms</h2>
+      <p>We may update these Terms from time to time. Continued use of the Service after changes constitutes acceptance of the new Terms.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">12. Contact</h2>
+      <p>For questions about these Terms, contact us at <a href="mailto:legal@songscript.co" style="color:var(--accent)">legal@songscript.co</a>.</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY PAGE -->
+<div class="page" id="page-privacy">
+  <nav class="dashboard-nav">
+    <div class="dashboard-brand" onclick="showPage('page-landing')" style="cursor:pointer">← SongScript</div>
+  </nav>
+  <div style="max-width:760px;margin:0 auto;padding:48px 24px 80px">
+    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink);margin-bottom:8px">Privacy Policy</h1>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:40px;font-family:'Cormorant Garamond',serif;font-style:italic">Last updated: May 2026</p>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:var(--ink)">
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">1. Information We Collect</h2>
+      <p>When you use SongScript, we collect the following information:</p>
+      <p style="margin-top:12px"><strong>Account information:</strong> Your name and email address when you register.</p>
+      <p style="margin-top:8px"><strong>Content you provide:</strong> Song titles, artist names, and personal memories you write when generating letters.</p>
+      <p style="margin-top:8px"><strong>Payment information:</strong> Payment is processed by Stripe. SongScript does not store your credit card details.</p>
+      <p style="margin-top:8px"><strong>Usage data:</strong> Basic information about how you use the Service, such as letters generated and credits used.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">2. How We Use Your Information</h2>
+      <p>We use your information to provide and improve the Service, generate your memory letters, process payments, send you account-related communications, and respond to your support requests. We do not sell your personal information to third parties.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">3. Third-Party Services</h2>
+      <p>SongScript uses the following third-party services to operate:</p>
+      <p style="margin-top:12px"><strong>Supabase</strong> — database and authentication (supabase.com)</p>
+      <p style="margin-top:8px"><strong>Anthropic</strong> — AI letter generation (anthropic.com)</p>
+      <p style="margin-top:8px"><strong>Stripe</strong> — payment processing (stripe.com)</p>
+      <p style="margin-top:8px"><strong>Vercel</strong> — hosting and infrastructure (vercel.com)</p>
+      <p style="margin-top:8px"><strong>Resend</strong> — transactional email (resend.com)</p>
+      <p style="margin-top:12px">Each of these services has its own privacy policy governing how they handle data.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">4. Data Storage and Security</h2>
+      <p>Your data is stored securely using Supabase, which employs industry-standard security measures. Your letters and memories are stored so you can access them from your dashboard. We take reasonable measures to protect your information but cannot guarantee absolute security.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">5. Your Rights</h2>
+      <p>You may request deletion of your account and associated data at any time by contacting us at legal@songscript.co. Upon request, we will delete your personal information within 30 days, except where retention is required by law.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">6. Cookies</h2>
+      <p>SongScript uses local storage in your browser to remember your language preference and session. We do not use third-party tracking cookies or advertising cookies.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">7. Children's Privacy</h2>
+      <p>SongScript is not intended for children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">8. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by posting the new policy on this page with an updated date.</p>
+
+      <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin:32px 0 12px">9. Contact</h2>
+      <p>For privacy-related questions or data deletion requests, contact us at <a href="mailto:legal@songscript.co" style="color:var(--accent)">legal@songscript.co</a>.</p>
+
+    </div>
+  </div>
+</div>
 </body>
 </html>
