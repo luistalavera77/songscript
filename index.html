@@ -793,17 +793,11 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenBtnText">Regenerate with same tone</span></button>
           <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
         </div>
-        <button class="btn-next" id="downloadBtn" onclick="showPostDownload(); downloadPDF();">Download My PDF Letter →</button>
-
-        <!-- POST DOWNLOAD FEEDBACK -->
-        <div id="postDownloadBox" style="display:none;background:var(--paper2);border:1px solid var(--border);padding:24px 28px;margin-top:20px;text-align:center">
-          <div style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--ink);margin-bottom:8px" id="postDlTitle">Your letter is ready ✦</div>
-          <div style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6" id="postDlText">Did it capture your memory the way you hoped? We'd love to hear from you.</div>
-          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-            <button onclick="sendFeedback()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s" id="feedbackBtn">Share your feedback →</button>
-            <button onclick="startNewLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer;transition:all .25s" id="writeAnotherBtn">Write another letter →</button>
-            <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent;transition:all .25s" id="backDashBtn">← Back to Dashboard</button>
-          </div>
+        <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+          <button onclick="sendFeedback()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="feedbackBtn">Share your feedback →</button>
+          <button onclick="startNewLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer" id="writeAnotherBtn">Write another letter →</button>
+          <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="backDashBtn">← Back to Dashboard</button>
         </div>
       </div>
     </div>
