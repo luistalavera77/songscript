@@ -736,14 +736,14 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <h2 class="pricing-page-title" id="pricingTitle">Get More Letters</h2>
     <p class="pricing-page-sub" id="pricingSubtitle">Every memory deserves to be preserved. Choose a pack and keep writing.</p>
     <div class="pricing-grid">
-      <div class="pcard" onclick="startCheckout('price_1TbE3rLQHnpI1RkHWZRFAFa2')">
+      <div class="pcard" onclick="startCheckout('price_1TbUCJLQHnpI1RkHh4BJRPbz')">
         <div class="pcard-badge" id="starterBadge">Starter</div>
         <div class="pcard-price">$5.99</div>
         <div class="pcard-letters" id="starterLetters">5 memories preserved forever</div>
         <div class="pcard-perunit">$1.20 per memory</div>
         <button class="pcard-cta" id="starterCta">Buy Now →</button>
       </div>
-      <div class="pcard feat" onclick="startCheckout('price_1TbE5kLQHnpI1RkHobUQ8r24')">
+      <div class="pcard feat" onclick="startCheckout('price_1TbUCaLQHnpI1RkHxGOMYk50')">
         <div class="pcard-badge" id="valueBadge">Best Value</div>
         <div class="popular-badge" id="popularBadge">Most Popular</div>
         <div class="pcard-price">$9.99</div>
@@ -1803,10 +1803,10 @@ function confirmNotify(){
 function openPDFWindow(song,artist,salutation,body,signOff,credit,date){
   const win=window.open('','_blank');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SongScript — ${song}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px 70px;max-width:700px;margin:0 auto;color:#2c2010}
+body{background:#fdf8f0;font-family:'Great Vibes',cursive;padding:60px 70px;max-width:700px;margin:0 auto;color:#2c2010}
 @media print{
   body{padding:40px 52px;background:white;max-width:100%}
   .print-btn{display:none!important}
@@ -1815,16 +1815,16 @@ body{background:#fdf8f0;font-family:'Cormorant Garamond',serif;padding:60px 70px
   @page{margin:20mm 18mm;orphans:3;widows:3}
 }
 .header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid #dfd0b0}
-.brand{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:6px}
-.song-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#6b3d2e;font-weight:400}
+.brand{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:6px}
+.song-title{font-family:'Great Vibes',cursive;font-size:26px;color:#6b3d2e}
 .letter-box{background:#f9f4ea;border:1px solid #dfd0b0;padding:48px 52px;position:relative;page-break-inside:auto}
 .side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}
-.date{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8a7a5a;text-align:right;margin-bottom:24px;font-style:italic;font-weight:300}
-.salutation{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:#1a1208;margin-bottom:14px;font-weight:400}
+.date{font-family:'Great Vibes',cursive;font-size:22px;color:#8a7a5a;text-align:right;margin-bottom:24px}
+.salutation{font-family:'Great Vibes',cursive;font-size:26px;color:#1a1208;margin-bottom:14px}
 .ornament{text-align:center;font-size:16px;color:#c9a84c;margin:12px 0;letter-spacing:8px}
-.letter-body{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.95;color:#2c2010;white-space:pre-wrap;font-weight:300;page-break-inside:auto;text-align:justify}
+.letter-body{font-family:'Great Vibes',cursive;font-size:22px;line-height:2.1;color:#2c2010;white-space:pre-wrap;page-break-inside:auto;text-align:justify}
 .letter-body p{margin-bottom:1em;page-break-inside:avoid;orphans:3;widows:3}
-.sign{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:#6b3d2e;margin-top:28px;text-align:right;font-weight:400;page-break-before:avoid}
+.sign{font-family:'Great Vibes',cursive;font-size:28px;color:#6b3d2e;margin-top:28px;text-align:right;page-break-before:avoid}
 .credit{font-family:'Cormorant Garamond',serif;font-size:12px;color:#8a7a5a;text-align:right;margin-top:8px;font-style:italic;font-weight:300;page-break-before:avoid}
 .page-continuation{padding-top:40px}
 .print-btn{display:block;margin:32px auto 0;padding:13px 36px;background:#6b3d2e;color:white;border:none;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;cursor:pointer;letter-spacing:.5px}
