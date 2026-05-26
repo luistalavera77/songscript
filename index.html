@@ -1741,7 +1741,7 @@ function resetBuilder(){
   const userId = params.get('user_id');
   window.history.replaceState({}, '', '/');
   try {
-    // Update credits via API - verified against Stripe, no session needed
+    // Update credits via API
     if(sessionId && userId){
       await fetch('/api/credits', {
         method: 'POST',
@@ -1749,13 +1749,27 @@ function resetBuilder(){
         body: JSON.stringify({ sessionId, userId })
       });
     }
-  } catch(e){ console.log('Credits error:', e); }
-  // Always show sign-in page with success message - user must sign in themselves
-  // This prevents credits going to wrong account due to stale sessions
-  setAuthMode('login');
-  showPage('page-register');
-  const es = currentLang === 'es';
-  showAuthSuccess(es ? '¡Pago exitoso! Inicia sesión para ver tus nuevas cartas.' : 'Payment successful! Sign in to see your new letter credits.');
+    // Restore session and go to dashboard
+    const { data: { session } } = await sb.auth.getSession();
+    if(session){
+      currentUser = session.user;
+      window._accessToken = session.access_token;
+      window._refreshToken = session.refresh_token;
+      await sb.auth.setSession({access_token:session.access_token, refresh_token:session.refresh_token});
+      const freshSb = getAuthSb();
+      const { data: profile } = await freshSb.from('profiles').select('*').eq('id', currentUser.id).single();
+      if(profile){
+        currentProfile = profile;
+        if(profile.language && profile.language !== 'en'){ currentLang = profile.language; localStorage.setItem('ss_lang', profile.language); }
+      }
+      showPage('page-dashboard');
+    } else {
+      setAuthMode('login');
+      showPage('page-register');
+      const es = currentLang === 'es';
+      showAuthSuccess(es ? '¡Pago exitoso! Inicia sesión para ver tus nuevas cartas.' : 'Payment successful! Sign in to see your new letter credits.');
+    }
+  } catch(e){ console.log('Payment return error:', e); }
 })();
 </script>
 </body>
