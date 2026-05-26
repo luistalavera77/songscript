@@ -423,6 +423,31 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
   .tone-grid { grid-template-columns: repeat(2, 1fr); }
   .nav { padding: 14px 16px; }
 }
+
+/* ── TARGETED MOBILE FIXES ── */
+@media (max-width: 768px) {
+
+  /* NAV — hide CTA button, keep logo + lang + sign in */
+  .nav-cta { display: none; }
+  .nav { padding: 14px 20px; gap: 12px; }
+
+  /* STEPS — 2 columns instead of 5 in a row */
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+  .steps-grid::before { display: none; }
+  .how-step { padding: 0 8px; }
+
+  /* FOOTER — stack vertically */
+  footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 32px 20px;
+    text-align: center;
+  }
+}
 </style>
 </head>
 <body>
@@ -492,10 +517,10 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       </svg>
       <div class="hero-image-overlay"></div>
       <div class="hero-letter-preview">
-        <div class="preview-date">June 14, 1998</div>
+        <div class="preview-date" id="heroLetterDate">September 3, 2019</div>
         <div class="preview-ornament">✦ ✦ ✦</div>
-        <div class="preview-body">The windows were down on Highway 40. You came through the static and everything — the dust, the heat, the way the sky went gold — suddenly made sense.</div>
-        <div class="preview-sign">With all that you carry,</div>
+        <div class="preview-body" id="heroLetterBody">...He packed everything into one car. Eighteen years of a person — reduced to boxes, a mattress, and a coffee maker he’d never used. I helped him carry things down the stairs and we didn’t speak much because neither of us trusted our voices. When I drove home alone the house was so quiet I could hear the refrigerator hum. Fix You came on the radio and I had to pull over — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him. I knew that. But the boy who used to fall asleep on my chest — him, I had lost. That version was gone...</div>
+        <div style="font-size:10px;color:var(--muted);text-align:right;margin-top:8px;letter-spacing:1px;text-transform:uppercase" id="heroLetterCredit">“Fix You” · Coldplay</div>
       </div>
       <svg class="hero-record" viewBox="0 0 110 110" style="position:absolute;top:48px;right:40px;width:110px;height:110px;animation:spin 18s linear infinite;opacity:.6;z-index:2">
         <circle cx="55" cy="55" r="52" fill="#2a1f0e" opacity=".7"/>
@@ -521,22 +546,22 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     <h2 class="samples-headline" data-i18n="samples_headline">This is what your letter could look like</h2>
     <div class="samples-grid">
       <div class="sample-card">
-        <div class="sample-sal">To Fast Car, and the road you opened up,</div>
+        <div class="sample-sal" data-en="A Thousand Years, and the moment I stopped being afraid," data-es="Oye Mi Amor, y la noche que me atreví a decírselo,">A Thousand Years, and the moment I stopped being afraid,</div>
         <div class="sample-orn">✦ ✦ ✦</div>
-        <div class="sample-body">I was eighteen when I first heard you. The lyrics hit me hard — and that voice, unlike anything I'd ever heard. You were about me: living fast, leaving my small town, heading for something bigger than what I could see from my front porch.</div>
-        <div class="sample-meta"><span class="sample-song">"Fast Car" · Tracy Chapman</span><span class="sample-tone">Nostalgic</span></div>
+        <div class="sample-body" data-en="...She walked toward me and everything else disappeared — the guests, the flowers, the years of almost not making it here. When the first notes played I felt it in my chest before I understood it. “I have loved you for a thousand years, I’ll love you for a thousand more.” I had never believed a lyric until that one. I believed it completely..." data-es="...Llevaba semanas buscando el momento. Esa noche salimos a caminar sin rumbo y de un carro que pasó sonó Oye Mi Amor — “oye mi amor, no me abandones ahora.” Me detuve en la esquina y se lo dije. No planifiqué nada. Las palabras simplemente salieron. Me tomó la mano y no la soltó en todo el camino de regreso...">...She walked toward me and everything else disappeared — the guests, the flowers, the years of almost not making it here. When the first notes played I felt it in my chest before I understood it. “I have loved you for a thousand years, I’ll love you for a thousand more.” I had never believed a lyric until that one. I believed it completely...</div>
+        <div class="sample-meta"><span class="sample-song" data-en="“A Thousand Years” · Christina Perri" data-es="“Oye Mi Amor” · Maná">“A Thousand Years” · Christina Perri</span><span class="sample-tone" data-en="Love Letter" data-es="Carta de Amor">Love Letter</span></div>
       </div>
       <div class="sample-card">
-        <div class="sample-sal">To Landslide, and the night before everything changed,</div>
+        <div class="sample-sal" data-en="Isn't She Lovely, and the first morning she was in my hands," data-es="Gracias a la Vida, y la mañana que mi madre me la enseñó,">Isn't She Lovely, and the first morning she was in my hands,</div>
         <div class="sample-orn">✦ ✦ ✦</div>
-        <div class="sample-body">She played you the night before I left for college. We sat in the kitchen, late, neither of us wanting to say what we both knew. You said it for us. When you ended she held me for a long time and said I was ready.</div>
-        <div class="sample-meta"><span class="sample-song">"Landslide" · Fleetwood Mac</span><span class="sample-tone">Family</span></div>
+        <div class="sample-body" data-en="...The nurses left us alone and I didn't know what to do so I just held her. She smelled like something I had no word for. I put on this song on my phone because I needed something to fill the silence — “Isn't she lovely, isn't she wonderful.” I sang it badly, quietly, into the top of her head. She didn't cry. I did..." data-es="...Tenía ocho años y no entenía todas las palabras pero entenía su voz. “Gracias a la vida que me ha dado tanto.” La cantaba mientras doblaba ropa, sin darse cuenta. Ahora tengo su misma edad en esa memoria y a veces me sorprendo cantándola igual, sin darme cuenta, mientras doblo la ropa de mis hijos...">...The nurses left us alone and I didn't know what to do so I just held her. She smelled like something I had no word for. I put on this song on my phone because I needed something to fill the silence — “Isn't she lovely, isn't she wonderful.” I sang it badly, quietly, into the top of her head. She didn't cry. I did...</div>
+        <div class="sample-meta"><span class="sample-song" data-en="“Isn't She Lovely” · Stevie Wonder" data-es="“Gracias a la Vida” · Violeta Parra">“Isn't She Lovely” · Stevie Wonder</span><span class="sample-tone" data-en="Family" data-es="Familia">Family</span></div>
       </div>
       <div class="sample-card">
-        <div class="sample-sal">To September, and every dance floor you ever found me on,</div>
+        <div class="sample-sal" data-en="See You Again, and the day we said goodbye to my dad," data-es="Inevitable, y la última noche que fingimos que todo estaba bien,">See You Again, and the day we said goodbye to my dad,</div>
         <div class="sample-orn">✦ ✦ ✦</div>
-        <div class="sample-body">Every wedding, without fail, my father and I would find each other the moment your horns came in. He was a terrible dancer. He never cared. Three years since he's been gone. Last summer I stood at the edge of the floor for the whole song.</div>
-        <div class="sample-meta"><span class="sample-song">"September" · Earth, Wind &amp; Fire</span><span class="sample-tone">Family</span></div>
+        <div class="sample-body" data-en="...My brother put it on in the car. None of us said anything. We just watched the highway and let it play. “It's been a long day without you my friend, and I'll tell you all about it when I see you again.” Dad would have hated the rap part. He would have loved that we played it anyway. We laughed for the first time in four days..." data-es="...Pusimos música para no hablar. Esa canción sonó y los dos nos quedamos quietos — “es inevitable no pensar en ti.” No dijimos nada. Ya no había nada que decir. A la mañana siguiente recogió sus cosas. La canción siguió sonando en mi cabeza durante semanas...">...My brother put it on in the car. None of us said anything. We just watched the highway and let it play. “It's been a long day without you my friend, and I'll tell you all about it when I see you again.” Dad would have hated the rap part. He would have loved that we played it anyway. We laughed for the first time in four days...</div>
+        <div class="sample-meta"><span class="sample-song" data-en="“See You Again” · Wiz Khalifa" data-es="“Inevitable” · Shakira">“See You Again” · Wiz Khalifa</span><span class="sample-tone" data-en="Heartbreak" data-es="Corazón Roto">Heartbreak</span></div>
       </div>
     </div>
   </section>
@@ -1207,6 +1232,22 @@ function applyLangToUI(lang){
   if(confirmPassLbl) confirmPassLbl.textContent = es ? 'Confirmar contrase\u00f1a' : 'Confirm Password';
   const resetBtn = document.getElementById('resetSubmitBtn');
   if(resetBtn) resetBtn.textContent = es ? 'Guardar nueva contrase\u00f1a \u2192' : 'Save New Password \u2192';
+  // Hero letter translation
+  const heroBody = document.getElementById('heroLetterBody');
+  const heroSal = document.getElementById('heroLetterSalutation');
+  if(heroBody){
+    if(es){
+      heroBody.innerHTML = '...Empacó todo en su carro. Dieciocho años reducidos a cajas, un colchón, y una cafetera que nunca había usado. Lo ayudé a bajar las cosas por las escaleras y no hablamos mucho en el camino porque ninguno de los dos sabía qué decir. Cuando manejé a casa sola, la casa estaba tan silenciosa que podía escuchar el refrigerador. Fix You sonó en la radio — “Tears stream down your face when you lose something you cannot replace.” Tuve que detenerme. No lo había perdido, lo sabía. Pero ese niño ya no existía...';
+      const heroCredit = document.getElementById('heroLetterCredit');
+      if(heroCredit) heroCredit.textContent = '“Fix You” · Coldplay';
+    } else {
+      heroBody.innerHTML = '...He packed everything into one car. Eighteen years of a person — reduced to boxes, a mattress, and a coffee maker he’d never used. I helped him carry things down the stairs and we didn’t speak much because neither of us trusted our voices. When I drove home alone the house was so quiet I could hear the refrigerator hum. Fix You came on the radio and I had to pull over — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him. I knew that. But the boy who used to fall asleep on my chest — him, I had lost. That version was gone...';
+    }
+  }
+  // Switch sample cards
+  document.querySelectorAll('[data-en][data-es]').forEach(el => {
+    el.textContent = es ? el.getAttribute('data-es') : el.getAttribute('data-en');
+  });
 }
 
 function showPage(id){
