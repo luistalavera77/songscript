@@ -273,16 +273,18 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
 .letter-outer::before{left:18px}
 .letter-outer::after{right:18px}
 .letter-outer.original{opacity:.7;background:var(--paper3)}
-.letter-editable{width:100%;background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:"Playfair Display",serif;font-size:15px;font-style:italic;color:var(--ink);outline:none;padding:4px 0;margin-bottom:12px;transition:border .2s}
-.letter-editable:focus{border-bottom-color:var(--gold)}
+.letter-editable{width:100%;background:transparent;border:none;border-bottom:2px dashed var(--gold);font-family:"Playfair Display",serif;font-size:15px;font-style:italic;color:var(--accent2);outline:none;padding:4px 0;margin-bottom:12px;transition:all .2s;cursor:text}
+.letter-editable:focus{border-bottom-color:var(--accent);color:var(--ink)}
+.letter-editable::placeholder{color:var(--gold2);font-style:italic}
 .letter-date{font-family:"Cormorant Garamond",serif;font-size:13px;color:var(--muted);text-align:right;margin-bottom:16px;font-style:italic}
 .letter-ornament{text-align:center;font-size:16px;color:var(--gold);margin:10px 0;letter-spacing:6px}
 .letter-body{font-family:"Cormorant Garamond",serif;font-size:15px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300}
 .letter-sign-wrap{margin-top:20px;text-align:right}
-.letter-sign-editable{background:transparent;border:none;border-bottom:1px dashed var(--border);font-family:"Playfair Display",serif;font-size:17px;font-style:italic;color:var(--accent);outline:none;text-align:right;width:100%;padding:4px 0;transition:border .2s}
-.letter-sign-editable:focus{border-bottom-color:var(--gold)}
+.letter-sign-editable{background:transparent;border:none;border-bottom:2px dashed var(--gold);font-family:"Playfair Display",serif;font-size:17px;font-style:italic;color:var(--accent2);outline:none;text-align:right;width:100%;padding:4px 0;transition:all .2s;cursor:text}
+.letter-sign-editable:focus{border-bottom-color:var(--accent);color:var(--accent)}
+.letter-sign-editable::placeholder{color:var(--gold2);font-style:italic}
 .letter-credit{font-family:"Cormorant Garamond",serif;font-size:11px;color:var(--muted);text-align:right;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
-.edit-hint{font-size:11px;color:var(--muted);font-style:italic;text-align:center;margin-bottom:16px}
+.edit-hint{font-size:12px;color:var(--accent2);font-style:italic;text-align:center;margin-bottom:16px;background:var(--gold3);padding:8px 16px;border-radius:1px;border-left:3px solid var(--gold)}
 .result-actions{background:var(--paper2);border:1px solid var(--border);padding:24px 28px;margin-bottom:20px}
 .result-actions-title{font-family:"Playfair Display",serif;font-size:16px;font-style:italic;color:var(--ink);margin-bottom:16px}
 .result-tone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
@@ -791,7 +793,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenBtnText">Regenerate with same tone</span></button>
           <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
         </div>
-        <button class="btn-next" id="downloadBtn" onclick="downloadPDF(); showPostDownload()">Download My PDF Letter →</button>
+        <button class="btn-next" id="downloadBtn" onclick="showPostDownload(); downloadPDF();">Download My PDF Letter →</button>
 
         <!-- POST DOWNLOAD FEEDBACK -->
         <div id="postDownloadBox" style="display:none;background:var(--paper2);border:1px solid var(--border);padding:24px 28px;margin-top:20px;text-align:center">
@@ -1345,17 +1347,16 @@ THE ${sentences.length} SENTENCES TO POLISH:
 ${sentenceList}
 
 RULES:
-1. Return ONLY the polished prose — no meta-commentary, no counting notes, no explanations.
-2. Return exactly ${sentences.length} sentences. Do NOT add, split, or merge sentences.
-3. Same meaning, same events, same people — better words only. Do NOT invent new details.
-4. If a lyric was provided, weave it into one sentence naturally.
-5. Preserve their voice. No AI filler phrases. No invented endings.
-6. NEVER include phrases like "let me recount", "as exactly X sentences", or any self-referential commentary.
+1. Output ONLY the finished letter prose. Zero meta-commentary, zero counting notes, zero self-reference.
+2. Return exactly ${sentences.length} sentences - no more, no less. Do NOT split or merge sentences.
+3. Keep the same events, people, meaning. Better words only. Do NOT invent any new details.
+4. If a lyric is provided, weave it into one sentence naturally.
+5. Write in the person's voice. No AI filler. No invented endings.
+6. FORBIDDEN: "let me recount", "as exactly", "here are", "I will now", "sentences:", or any phrase revealing you are counting or processing.
 
-After the prose, on a new line write:
-SALUTATION: [a personalized poetic salutation, e.g. "To Fast Car, and the road you opened up,"] Under 12 words. Specific to this song and memory. No meta-commentary.`;
+After the prose, on a new line write exactly:
+SALUTATION: [poetic opening, e.g. "To Fast Car, and the road you opened up,"] Max 12 words. Specific to this song.`;
 }
-
 async function callAPI(prompt){
   const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{role:'user',content:prompt}]})});
   const data=await res.json();
@@ -1438,7 +1439,7 @@ async function generateLetter(){
   const memory=document.getElementById('bMemory').value.trim();
   const lyric=document.getElementById('bLyric').value.trim();
   const dateContext=month&&year?`The memory took place in ${month} ${year}.`:year?`The memory is from ${year}.`:'';
-  const lang=currentProfile?.language||currentLang||'en';
+  const lang=currentLang||'en';
   sessionState={song,artist,month,year,memory,lyric,salutation:'',signOff:'',originalTone:selectedTone,currentTone:selectedTone,originalText:'',currentText:'',tonesUsed:[selectedTone],regenUsed:false,memEditUsed:false,isFirstLetter:profile.letters_used===0};
   document.getElementById('resultSong').textContent=`"${song}" by ${artist}${month||year?' · '+[month,year].filter(Boolean).join(' '):''}`;
   showLoading(selectedTone);
@@ -1472,7 +1473,7 @@ async function switchTone(el,tone){
   }
   sessionState.tonesUsed=tonesUsedNew; sessionState.currentTone=tone;
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
-  const lang=currentProfile?.language||currentLang||'en';
+  const lang=currentLang||'en';
   showLoading(tone);
   try{
     const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,tone,sessionState.memory,sessionState.lyric,dateContext,lang));
@@ -1491,7 +1492,7 @@ async function regenerateLetter(){
   }
   sessionState.regenUsed=true;
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
-  const lang=currentProfile?.language||currentLang||'en';
+  const lang=currentLang||'en';
   showLoading(sessionState.currentTone);
   try{
     const raw=await callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang));
@@ -1519,7 +1520,7 @@ function confirmEditMemory(){
   document.getElementById('lBodyOrig').textContent=newMemory;
   closeEditMemoryModal();
   const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
-  const lang=currentProfile?.language||currentLang||'en';
+  const lang=currentLang||'en';
   showLoading(sessionState.currentTone);
   callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang))
     .then(raw=>{const {body,salutation}=parseResponse(raw);renderResult(body,salutation,sessionState.currentTone,false);})
@@ -1631,7 +1632,7 @@ function sendFeedback(){
 I just generated a letter for "${song}" and wanted to share my feedback:
 
 `);
-  window.open(`mailto:feedback@songscript.com?subject=${subject}&body=${body}`);
+  window.open(`mailto:feedback@songscript.co?subject=${subject}&body=${body}`);
 }
 
 function checkResetStrength(inp){
