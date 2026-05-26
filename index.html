@@ -519,7 +519,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <div class="hero-letter-preview">
         <div class="preview-date" id="heroLetterDate">September 3, 2019</div>
         <div class="preview-ornament">✦ ✦ ✦</div>
-        <div class="preview-body" id="heroLetterBody">...He packed everything into one car. Eighteen years of a person — reduced to boxes, a mattress, and a coffee maker he’d never used. I helped him carry things down the stairs and we didn’t speak much because neither of us trusted our voices. When I drove home alone the house was so quiet I could hear the refrigerator hum. Fix You came on the radio and I had to pull over — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him. I knew that. But the boy who used to fall asleep on my chest — him, I had lost. That version was gone...</div>
+        <div class="preview-body" id="heroLetterBody">...He packed everything into one car. Eighteen years reduced to boxes, a mattress, and a coffee maker he’d never used. Fix You came on the radio — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him, I knew that. But that version was gone...</div>
         <div style="font-size:10px;color:var(--muted);text-align:right;margin-top:8px;letter-spacing:1px;text-transform:uppercase" id="heroLetterCredit">“Fix You” · Coldplay</div>
       </div>
       <svg class="hero-record" viewBox="0 0 110 110" style="position:absolute;top:48px;right:40px;width:110px;height:110px;animation:spin 18s linear infinite;opacity:.6;z-index:2">
@@ -1241,14 +1241,37 @@ function applyLangToUI(lang){
       const heroCredit = document.getElementById('heroLetterCredit');
       if(heroCredit) heroCredit.textContent = '“Fix You” · Coldplay';
     } else {
-      heroBody.innerHTML = '...He packed everything into one car. Eighteen years of a person — reduced to boxes, a mattress, and a coffee maker he’d never used. I helped him carry things down the stairs and we didn’t speak much because neither of us trusted our voices. When I drove home alone the house was so quiet I could hear the refrigerator hum. Fix You came on the radio and I had to pull over — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him. I knew that. But the boy who used to fall asleep on my chest — him, I had lost. That version was gone...';
+      heroBody.innerHTML = '...He packed everything into one car. Eighteen years reduced to boxes, a mattress, and a coffee maker he’d never used. Fix You came on the radio — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him, I knew that. But that version was gone...';
     }
   }
   // Switch sample cards
   document.querySelectorAll('[data-en][data-es]').forEach(el => {
     el.textContent = es ? el.getAttribute('data-es') : el.getAttribute('data-en');
   });
+  // Switch quote block
+  const quoteText = document.getElementById('quoteText');
+  const quoteAttr = document.getElementById('quoteAttr');
+  if(quoteText){
+    quoteText.textContent = es
+      ? 'Empacó todo en su carro. Dieciocho años reducidos a cajas, un colchón, y una cafetera que nunca había usado. Lo ayudé a bajar las cosas por las escaleras y no hablamos mucho en el camino porque ninguno de los dos sabía qué decir. Cuando manejé a casa sola, la casa estaba tan silenciosa que podía escuchar el refrigerador. Fix You sonó en la radio — “Tears stream down your face when you lose something you cannot replace.” No lo había perdido, lo sabía. Pero el niño que dormía sobre mi pecho — a él, sí lo había perdido. Ese niño ya no existía.'
+      : 'He packed everything into one car. Eighteen years of a person — reduced to boxes, a mattress, and a coffee maker he’d never used. I helped him carry things down the stairs and we didn’t speak much because neither of us trusted our voices. When I drove home alone the house was so quiet I could hear the refrigerator hum. Fix You came on the radio and I had to pull over — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him. I knew that. But the boy who used to fall asleep on my chest — him, I had lost. That version was gone.';
+  }
+  if(quoteAttr){
+    quoteAttr.textContent = es
+      ? 'De una carta real de SongScript · Fix You · Coldplay'
+      : 'From a real SongScript letter · Fix You · Coldplay';
+  }
+  // Switch hero short version
+  const heroBodyEl = document.getElementById('heroLetterBody');
+  if(heroBodyEl){
+    heroBodyEl.innerHTML = es
+      ? '...Empacó dieciocho años en un solo carro. Bajamos las cajas en silencio porque ninguno de los dos sabía qué decir. Fix You sonó en la radio — “Tears stream down your face when you lose something you cannot replace.” No lo había perdido, lo sabía. Pero ese niño ya no existía...'
+      : '...He packed everything into one car. Eighteen years reduced to boxes, a mattress, and a coffee maker he’d never used. Fix You came on the radio — “Tears stream down your face when you lose something you cannot replace.” I hadn’t lost him, I knew that. But that version was gone...';
+  }
 }
+
+
+
 
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
