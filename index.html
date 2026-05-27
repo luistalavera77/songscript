@@ -1726,7 +1726,7 @@ RULES:
 4. If a lyric was provided, weave it into one sentence naturally.
 5. Preserve their voice. No AI filler phrases. No invented endings.
 6. FORBIDDEN output phrases: "let me recount", "as exactly", "here are", "I will now", "sentences:" — never include these.
-7. Write the letter EXCLUSIVELY in {langName}. This is non-negotiable regardless of what language the user wrote their memory in.
+7. Write the letter EXCLUSIVELY in ${langName}. This is non-negotiable regardless of what language the user wrote their memory in.
 
 After the prose, on a new line write:
 SALUTATION: [poetic opening WITHOUT "To" or "A" prefix, e.g. "Fast Car, and the road you opened up," or "Yellow, and the night the crowd disappeared,"] Under 12 words. Specific to this song and memory. NEVER start with "To" or "A".`;
@@ -1779,6 +1779,21 @@ function renderResult(body,salutation,tone,isNew){
   document.getElementById('lBodyCurr').textContent=body;
   document.getElementById('lSignCurr').value=signOff;
   document.getElementById('lCreditCurr').textContent=credit;
+  // Build tone switcher buttons
+  const tones=[
+    {id:'Love Letter',icon:'💌',en:'Love Letter',es:'Carta de amor'},
+    {id:'Nostalgic',icon:'🌅',en:'Nostalgic',es:'Nostálgico'},
+    {id:'Adventure',icon:'🌍',en:'Adventure',es:'Aventura'},
+    {id:'Family',icon:'🏡',en:'Family',es:'Familia'},
+    {id:'Heartbreak',icon:'💔',en:'Heartbreak',es:'Corazón roto'},
+    {id:'Inspirational',icon:'✨',en:'Inspirational',es:'Inspiracional'},
+    {id:'Funny',icon:'😄',en:'Funny',es:'Divertido'},
+    {id:'Friendship',icon:'🤝',en:'Friendship',es:'Amistad'},
+  ];
+  const tsr = document.getElementById('toneSwitchRow');
+  if(tsr){
+    tsr.innerHTML = tones.map(t=>`<button onclick="switchTone(this,'${t.id}')" style="font-family:'Playfair Display',serif;font-size:12px;font-style:italic;padding:7px 14px;border:1.5px solid ${t.id===tone?'var(--accent)':'var(--border)'};border-radius:1px;cursor:pointer;background:${t.id===tone?'var(--accent)':'var(--paper)'};color:${t.id===tone?'white':'var(--muted)'};transition:all .2s;margin:2px">${t.icon} ${es?t.es:t.en}</button>`).join('');
+  }
   document.getElementById('currentColLabel').textContent=isNew?(es?'Carta de IA':'AI Letter'):`${es?'Actual':'Current'} · ${tone}`;
   sessionState.currentText=body; sessionState.currentTone=tone;
   document.querySelectorAll('.result-tone-btn').forEach(b=>{
@@ -1978,7 +1993,7 @@ body{background:#fdf8f0;font-family:'Great Vibes',cursive;padding:60px 70px;max-
   <div class="sign">${signOff}</div>
   <div class="credit">${credit}</div>
 </div>
-<button class="print-btn" onclick="window.print()">Save as PDF / Print →</button>
+<button class="print-btn" onclick="window.print()">Download My SongScript →</button>
 </body></html>`);
   win.document.close();
 }
