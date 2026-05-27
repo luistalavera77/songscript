@@ -1646,10 +1646,10 @@ function viewLetter(id){
     <div style="text-align:center;font-size:18px;color:var(--gold);margin:12px 0;letter-spacing:8px">❖ ❖ ❖</div>
     <div style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-weight:300">${l.letter_body}</div>
     <div style="font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:var(--accent);margin-top:28px;text-align:right">${l.sign_off||'With all that you carry,'}</div>
-    <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase">&#8220;${l.song}&#8221; · ${l.artist} · ${l.tone}</div>
-    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download PDF →</button>
+    <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:6px;letter-spacing:1px;text-transform:uppercase">&#8220;${l.song}&#8221; · ${l.artist}</div>
+    <button class="btn-dl" style="margin-top:20px;width:100%" onclick="downloadLetterPDF('${l.id}')">Download My SongScript →</button>
     <div style="display:flex;gap:10px;margin-top:10px;justify-content:center">
-      <button onclick="closeModal();startNewLetter();" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer">Write another →</button>
+      <button onclick="closeModal();startNewLetter();" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer">Write another SongScript →</button>
       <button onclick="closeModal()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent">← Dashboard</button>
     </div>`;
   document.getElementById('letterModal').classList.add('open');
@@ -1658,7 +1658,7 @@ function viewLetter(id){
 function downloadLetterPDF(id){
   const l=window._letters[id]; if(!l)return;
   const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  openPDFWindow(l.song,l.artist,l.salutation||`To ${l.song},`,l.letter_body,l.sign_off||'With all that you carry,',`"${l.song}" · ${l.artist} · ${l.tone}`,date);
+  openPDFWindow(l.song,l.artist,l.salutation||`To ${l.song},`,l.letter_body,l.sign_off||'With all that you carry,',`"${l.song}" · ${l.artist}`,date);
 }
 
 async function deleteLetter(id){
@@ -1723,10 +1723,11 @@ RULES:
 1. Return ONLY the polished prose — no meta-commentary, no counting notes, no explanations.
 2. Return exactly ${sentences.length} sentences. Do NOT add, split, or merge sentences.
 3. Same meaning, same events, same people — better words only. Do NOT invent new details. NEVER change who the people are (grandson stays grandson, mother stays mother).
-4. If a lyric was provided, weave it into one sentence naturally.
-5. Preserve their voice. No AI filler phrases. No invented endings.
-6. FORBIDDEN output phrases: "let me recount", "as exactly", "here are", "I will now", "sentences:" — never include these.
-7. Write the letter EXCLUSIVELY in ${langName}. This is non-negotiable regardless of what language the user wrote their memory in.
+4. Better words means cleaner phrasing, stronger verbs, more precise nouns — NOT adding new ideas or metaphors the user did not write.
+5. Preserve their voice. If they wrote simply, keep it simple. No flowery AI language they did not use.
+6. If a lyric was provided, weave it into one sentence naturally.
+7. FORBIDDEN output phrases: "let me recount", "as exactly", "here are", "I will now", "sentences:" — never include these.
+8. Write the letter EXCLUSIVELY in ${langName}. This is non-negotiable regardless of what language the user wrote their memory in.
 
 After the prose, on a new line write:
 SALUTATION: [poetic opening WITHOUT "To" or "A" prefix, e.g. "Fast Car, and the road you opened up," or "Yellow, and the night the crowd disappeared,"] Under 12 words. Specific to this song and memory. NEVER start with "To" or "A".`;
@@ -1859,8 +1860,16 @@ async function generateLetter(){
     renderResult(body,salutation,selectedTone,true);
     updatePostGenFlow();
   }catch(e){
+    console.error('Generate error:', e);
     hideBPanels(); document.getElementById('bp5-result').classList.add('active');
+    updateProgress(4);
+    // Show state 1 and error message
+    const s1e=document.getElementById('s1-wrap'); const s2e=document.getElementById('s2-wrap'); const s3e=document.getElementById('s3-wrap');
+    if(s1e) s1e.style.display='block'; if(s2e) s2e.style.display='none'; if(s3e) s3e.style.display='none';
     document.getElementById('lBodyCurr').textContent=es?'Algo salió mal. Por favor intenta de nuevo.':'Something went wrong. Please try again.';
+    document.getElementById('lSalCurr').value='';
+    document.getElementById('lSignCurr').value=currentProfile?.name||'';
+    document.getElementById('lDateCurr').textContent=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   }
 }
 
