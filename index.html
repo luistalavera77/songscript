@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SongScript — Memory Letters for the Songs That Made You</title>
+<title>SongScript — SongScripts for the Songs That Made You</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -491,7 +491,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
   </nav>
   <section class="hero">
     <div class="hero-left">
-      <p class="hero-eyebrow" data-i18n="hero_eyebrow">Memory Letters for the Songs That Made You</p>
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">SongScripts for the Songs That Made You</p>
       <h1 class="hero-headline" data-i18n="hero_headline">There's a song that takes<br>you back <em>every time.</em></h1>
       <p class="hero-sub" data-i18n="hero_sub">The first note plays and you're there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong></p>
       <div class="hero-cta-wrap">
@@ -709,8 +709,8 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <button class="btn-buy-more" id="buyMoreBtn" onclick="showPage('page-pricing')">Get More Letters →</button>
       </div>
     </div>
-    <button class="btn-new-letter" id="newLetterBtn" onclick="startNewLetter()">✦ Write a New Letter</button>
-    <div class="letters-title" id="dashLettersTitle">Your Letters</div>
+    <button class="btn-new-letter" id="newLetterBtn" onclick="startNewLetter()">✦ Write a New SongScript</button>
+    <div class="letters-title" id="dashLettersTitle">Your SongScripts</div>
     <div id="dashLettersList">
       <div class="empty-state">
         <div class="empty-state-icon">✦</div>
@@ -748,7 +748,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
       <div class="pcard" onclick="startCheckout('price_1TbUCJLQHnpI1RkHh4BJRPbz')">
         <div class="pcard-badge" id="starterBadge">Starter</div>
         <div class="pcard-price">$5.99</div>
-        <div class="pcard-letters" id="starterLetters">5 memories preserved forever</div>
+        <div class="pcard-letters" id="starterLetters">5 SongScripts forever</div>
         <div class="pcard-perunit">$1.20 per memory</div>
         <button class="pcard-cta" id="starterCta">Buy Now →</button>
       </div>
@@ -756,7 +756,7 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
         <div class="pcard-badge" id="valueBadge">Best Value</div>
         <div class="popular-badge" id="popularBadge">Most Popular</div>
         <div class="pcard-price">$9.99</div>
-        <div class="pcard-letters" id="valueLetters">10 memories preserved forever</div>
+        <div class="pcard-letters" id="valueLetters">10 SongScripts forever</div>
         <div class="pcard-perunit">$1.00 per memory</div>
         <button class="pcard-cta" id="valueCta">Buy Now →</button>
       </div>
@@ -909,130 +909,134 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
     </div>
     <!-- Result -->
     <div class="bpanel" id="bp5-result">
-      <div class="bcard">
-        <div class="bcard-title" id="resultTitle" style="margin-bottom:4px">Your Memory Letter</div>
-        <p class="bcard-sub" style="margin-bottom:8px"><em id="resultSong"></em></p>
-        <p class="edit-hint" id="editHint">✎ Click the salutation or sign-off to personalize before downloading</p>
-        <div class="result-cols">
-          <div>
-            <div class="result-col-label" id="colLabelOrig">Your Memory</div>
-            <div class="letter-outer original">
-              <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:400" id="origMemLabel">What you wrote</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.85;color:var(--ink);white-space:pre-wrap;font-weight:300" id="lBodyOrig"></div>
-              <div style="font-size:11px;color:var(--muted);margin-top:16px;font-style:italic" id="origSongLabel"></div>
+      <!-- STATE 1: Working on letter -->
+      <div id="s1-wrap">
+        <div class="bcard">
+          <div class="bcard-title" id="resultTitle" style="margin-bottom:4px">Your SongScript</div>
+          <p class="bcard-sub" style="margin-bottom:8px"><em id="resultSong"></em></p>
+          <p class="edit-hint" id="editHint" style="display:none">✎ Click the title or signature to personalize</p>
+          <div class="result-cols">
+            <div>
+              <div class="result-col-label" id="colLabelOrig">Your Memory</div>
+              <div class="letter-orig-box">
+                <div class="letter-orig-body" id="lBodyOrig"></div>
+                <div class="letter-orig-ref" id="lOrigRef"></div>
+              </div>
+            </div>
+            <div>
+              <div class="result-col-label" id="colLabelAI">AI Letter</div>
+              <div class="letter-paper" id="letterPaperCurr">
+                <div class="letter-date" id="lDateCurr"></div>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <span style="font-size:14px;color:var(--gold);flex-shrink:0;cursor:text">✎</span>
+                  <input class="letter-editable" id="lSalCurr" placeholder="Salutation…" style="flex:1" onfocus="hideEditHint()"/>
+                </div>
+                <div class="letter-ornament">✦ ✦ ✦</div>
+                <div class="letter-body" id="lBodyCurr"></div>
+                <div class="letter-sign-wrap" style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
+                  <input class="letter-sign-editable" id="lSignCurr" placeholder="Your name…" style="flex:1" onfocus="hideEditHint()"/>
+                  <span style="font-size:14px;color:var(--gold);flex-shrink:0;cursor:text">✎</span>
+                </div>
+                <div class="letter-credit" id="lCreditCurr"></div>
+              </div>
             </div>
           </div>
-          <div>
-            <div class="result-col-label" id="currentColLabel">AI Letter</div>
-            <div class="letter-outer">
-              <div class="letter-date" id="lDateCurr"></div>
-              <div id="editHint" style="font-size:11px;color:var(--gold);text-align:center;margin-bottom:8px;font-style:italic;letter-spacing:.5px" id="editHintText">✎ Click the title or signature to personalize</div>
-              <div style="display:flex;align-items:center;gap:6px">
-                <span style="font-size:14px;color:var(--gold);flex-shrink:0;cursor:text">✎</span>
-                <input class="letter-editable" id="lSalCurr" placeholder="Salutation…" style="flex:1" onfocus="hideEditHint()"/>
-              </div>
-              <div class="letter-ornament">✦ ✦ ✦</div>
-              <div class="letter-body" id="lBodyCurr"></div>
-              <div class="letter-sign-wrap" style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
-                <input class="letter-sign-editable" id="lSignCurr" placeholder="Your name…" style="flex:1" onfocus="hideEditHint()"/>
-                <span style="font-size:14px;color:var(--gold);flex-shrink:0;cursor:text">✎</span>
-              </div>
-              <div class="letter-credit" id="lCreditCurr"></div>
-            </div>
+
+          <!-- Tone switcher -->
+          <div id="toneSection">
+            <div style="text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px" id="changeToneLabel">Change tone</div>
+            <div class="tone-switch-row" id="toneSwitchRow"></div>
           </div>
+
+          <!-- Actions -->
+          <div style="display:flex;gap:10px;margin-bottom:20px;justify-content:center;flex-wrap:wrap" id="actionBtns">
+            <button class="btn-regen" id="editMemBtn" onclick="editMemory()">✎ <span id="editMemLabel">Edit my memory &amp; regenerate</span></button>
+            <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenLabel">Regenerate</span></button>
+          </div>
+
+          <button class="btn-next" id="downloadBtn" onclick="goToState2()">
+            <span id="downloadBtnLabel">I'm ready — Download My SongScript →</span>
+          </button>
         </div>
-        <!-- ACTIONS -->
-        <div class="result-actions">
-          <div class="result-actions-title" id="resultActionsTitle">Try a different tone or regenerate</div>
-          <div class="result-tone-grid">
-            <div class="result-tone-btn" onclick="switchTone(this,'Love Letter')"><span class="result-tone-icon">💌</span><span class="result-tone-name" data-en="Love Letter" data-es="Carta de amor">Love Letter</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Nostalgic')"><span class="result-tone-icon">🌅</span><span class="result-tone-name" data-en="Nostalgic" data-es="Nostálgico">Nostalgic</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Adventure')"><span class="result-tone-icon">🌍</span><span class="result-tone-name" data-en="Adventure" data-es="Aventura">Adventure</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Family')"><span class="result-tone-icon">🏡</span><span class="result-tone-name" data-en="Family" data-es="Familia">Family</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Heartbreak')"><span class="result-tone-icon">💔</span><span class="result-tone-name" data-en="Heartbreak" data-es="Desamor">Heartbreak</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Inspirational')"><span class="result-tone-icon">✨</span><span class="result-tone-name" data-en="Inspirational" data-es="Inspirador">Inspirational</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Funny')"><span class="result-tone-icon">😄</span><span class="result-tone-name" data-en="Funny" data-es="Divertido">Funny</span></div>
-            <div class="result-tone-btn" onclick="switchTone(this,'Friendship')"><span class="result-tone-icon">🤝</span><span class="result-tone-name" data-en="Friendship" data-es="Amistad">Friendship</span></div>
+      </div>
+
+      <!-- STATE 2: Download & Share -->
+      <div id="s2-wrap" style="display:none">
+        <div class="bcard" style="text-align:center;padding:40px 36px">
+          <div style="font-size:22px;color:var(--gold);letter-spacing:8px;margin-bottom:24px">✦ ✦ ✦</div>
+          <div style="font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--ink);margin-bottom:32px;line-height:1.4" id="s2Title">"Elevation" SongScript is ready.</div>
+
+          <!-- Letter preview in box -->
+          <div class="letter-paper" id="s2LetterPreview" style="text-align:left;margin-bottom:24px">
+            <div class="letter-date" id="s2Date"></div>
+            <div style="font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--ink);margin-bottom:10px" id="s2Sal"></div>
+            <div class="letter-ornament">✦ ✦ ✦</div>
+            <div class="letter-body" id="s2Body" style="font-size:15px"></div>
+            <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--accent);text-align:right;margin-top:20px" id="s2Sign"></div>
+            <div class="letter-credit" id="s2Credit"></div>
           </div>
-          <div class="credit-info">Free attempts: <span id="freeAttemptsLeft"></span></div>
-          <button class="btn-regen" id="regenBtn" onclick="regenerateLetter()">↺ <span id="regenBtnText">Regenerate with same tone</span></button>
-          <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
+
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+            <button onclick="downloadPDF()" style="width:100%;padding:16px;background:var(--accent);color:white;border:none;border-radius:1px;font-family:'Playfair Display',serif;font-size:17px;font-style:italic;cursor:pointer" id="s2DownloadBtn">⬇ Download My SongScript</button>
+            <button onclick="shareLetter()" style="width:100%;padding:14px;background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:1px;font-family:'Playfair Display',serif;font-size:16px;font-style:italic;cursor:pointer" id="s2ShareBtn">Share My SongScript →</button>
+          </div>
+          <button onclick="goToState3()" style="width:100%;padding:13px;background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:1px;font-family:'Playfair Display',serif;font-size:15px;font-style:italic;cursor:pointer" id="s2ContinueBtn">Keep the memories coming →</button>
         </div>
-        <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
+      </div>
 
-        <!-- POST GENERATION FLOW -->
-        <div style="margin-top:28px" id="postGenFlow">
-
-          <!-- C: Collection count -->
-          <div style="text-align:center;padding:24px;background:white;border:1px solid var(--border);border-radius:2px;margin-bottom:24px;position:relative;overflow:hidden">
-            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent))"></div>
-            <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px" id="pgCollectionLabel">Your Collection</div>
-            <div style="font-family:'Playfair Display',serif;font-size:32px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCollectionCount"></div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted)" id="pgCollectionSub">Each one yours forever.</div>
+      <!-- STATE 3: What's next -->
+      <div id="s3-wrap" style="display:none">
+        <div class="bcard">
+          <div style="text-align:center;padding:32px 20px 28px;margin-bottom:28px;border-bottom:1px solid var(--border)">
+            <div style="font-family:'Playfair Display',serif;font-size:26px;font-style:italic;color:var(--ink);margin-bottom:10px;line-height:1.4" id="s3SongLine"></div>
+            <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto"></div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--muted);margin-bottom:6px" id="s3CountLine"></div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted)" id="s3SubLine">Each one a memory no one can take from you.</div>
           </div>
 
-          <!-- ALBUM TEASER -->
-          <div style="background:linear-gradient(135deg,var(--accent),#9b3a2a);border-radius:2px;padding:20px 24px;margin-bottom:24px;cursor:pointer" onclick="showPage('page-pricing')">
-            <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px" id="pgAlbumBadge">❖ Coming in June</div>
-            <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:white;margin-bottom:8px" id="pgAlbumTitle">Your Life Album</div>
-            <p style="font-family:'Cormorant Garamond',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.8);margin-bottom:10px" id="pgAlbumBody">Buy the 10-memory pack today and receive Your Life Album free when it launches in June.</p>
-            <span style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--gold2)" id="pgAlbumCta">Learn more →</span>
-          </div>
+          <div style="font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:var(--ink);margin-bottom:6px" id="s3InspirationTitle">Do you feel like writing another SongScript?</div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:300" id="s3InspirationSub">Here are some ideas to inspire you.</p>
 
-          <!-- B: Inspiration cards -->
-          <div style="margin-bottom:24px">
-            <div style="font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:var(--ink);margin-bottom:6px" id="pgInspirationTitle">Here are some ideas to spark your next memory</div>
-            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:300" id="pgInspirationSub">Every song has a story worth keeping.</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
-                <div style="font-size:20px;margin-bottom:8px">🏡</div>
-                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard1Title">For family</div>
-                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard1Desc">A song that reminds you of your mother or father.</div>
-              </div>
-              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
-                <div style="font-size:20px;margin-bottom:8px">✨</div>
-                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard2Title">For your younger self</div>
-                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard2Desc">A song that changed who you became.</div>
-              </div>
-              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
-                <div style="font-size:20px;margin-bottom:8px">🥂</div>
-                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard3Title">For celebration</div>
-                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard3Desc">A graduation, wedding, or milestone song.</div>
-              </div>
-              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
-                <div style="font-size:20px;margin-bottom:8px">💌</div>
-                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard4Title">For someone you love</div>
-                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard4Desc">A song that reminds you of your partner.</div>
-              </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px">
+            <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="font-size:20px;margin-bottom:8px">🏡</div>
+              <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="s3Card1Title">For family</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="s3Card1Desc">A song that reminds you of your mother or father.</div>
+            </div>
+            <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="font-size:20px;margin-bottom:8px">✨</div>
+              <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="s3Card2Title">For your younger self</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="s3Card2Desc">A song that changed who you became.</div>
+            </div>
+            <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="font-size:20px;margin-bottom:8px">🥂</div>
+              <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="s3Card3Title">For celebration</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="s3Card3Desc">A graduation, wedding, or milestone song.</div>
+            </div>
+            <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="font-size:20px;margin-bottom:8px">💌</div>
+              <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="s3Card4Title">For someone you love</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="s3Card4Desc">A song that reminds you of your partner.</div>
             </div>
           </div>
 
-          <!-- A: Share -->
-          <div style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:24px;margin-bottom:16px">
-            <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--ink);margin-bottom:10px" id="pgShareTitle">Share your letter</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:12px 16px;background:white;border:1px solid var(--border);border-radius:1px" id="pgSharePreview"></div>
-            <button onclick="shareLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:12px 24px;border-radius:1px;cursor:pointer" id="pgShareBtn">Share your letter →</button>
-          </div>
-
-          <!-- Feedback + Dashboard -->
-          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <!-- Feedback form -->
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
             <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="feedbackBtn">Share your feedback →</button>
             <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="backDashBtn">← Back to Dashboard</button>
           </div>
-        </div>
-        <div id="feedbackForm" style="display:none;margin-top:16px;background:var(--paper2);border:1px solid var(--border);padding:20px;border-radius:1px">
-          <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:12px" id="feedbackFormTitle">Did your letter capture your memory?</div>
-          <textarea id="feedbackText" rows="3" style="width:100%;background:white;border:1px solid var(--border);padding:10px;font-family:'Lato',sans-serif;font-size:14px;color:var(--ink);outline:none;resize:none;border-radius:1px" placeholder="Tell us what you loved or what could be better..."></textarea>
-          <div style="display:flex;gap:10px;margin-top:10px;justify-content:flex-end">
-            <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);background:transparent;border:none;cursor:pointer;padding:8px 16px" id="feedbackCancelBtn">Cancel</button>
-            <button onclick="submitFeedback()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:8px 20px;border-radius:1px;cursor:pointer" id="feedbackSendBtn">Send →</button>
+
+          <div id="feedbackForm" style="display:none;background:var(--paper2);border:1px solid var(--border);padding:20px;border-radius:1px;margin-top:8px">
+            <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:12px" id="feedbackFormTitle">Did your SongScript capture your memory?</div>
+            <textarea id="feedbackText" rows="3" style="width:100%;background:white;border:1px solid var(--border);padding:10px;font-family:'Lato',sans-serif;font-size:14px;color:var(--ink);outline:none;resize:none;border-radius:1px" placeholder="Tell us what you loved or what could be better..."></textarea>
+            <div style="display:flex;gap:10px;margin-top:10px;justify-content:flex-end">
+              <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);background:transparent;border:none;cursor:pointer;padding:8px 16px" id="feedbackCancelBtn">Cancel</button>
+              <button onclick="submitFeedback()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:white;background:var(--accent);border:none;padding:8px 20px;border-radius:1px;cursor:pointer" id="feedbackSendBtn">Send →</button>
+            </div>
+            <div id="feedbackThanks" style="display:none;text-align:center;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);margin-top:10px">Thank you — your feedback means everything. ✦</div>
           </div>
-          <div id="feedbackThanks" style="display:none;text-align:center;font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);margin-top:10px">Thank you — your feedback means everything. ✦</div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
 <!-- EDIT MEMORY MODAL -->
 <div class="custom-modal-overlay" id="editMemoryModal">
@@ -1097,7 +1101,7 @@ function applyLangOnLoad(lang){
 const i18n = {
   en:{
     nav_signin:'Sign In', nav_cta:'Begin Your First Letter →',
-    hero_eyebrow:'Memory Letters for the Songs That Made You',
+    hero_eyebrow:'SongScripts for the Songs That Made You',
     hero_headline:"There's a song that takes<br>you back <em>every time.</em>",
     hero_sub:"The first note plays and you're there again — in the car, in that room, with those people. <strong>SongScript turns that feeling into a letter you can hold onto forever.</strong>",
     hero_cta:"Write Your First Letter — It's Free",
@@ -1217,7 +1221,7 @@ function applyLangToUI(lang){
   const buyBtn = document.getElementById('buyMoreBtn');
   if(buyBtn) buyBtn.textContent = es ? 'Conseguir más cartas →' : 'Get More Letters →';
   const newLetterBtn = document.getElementById('newLetterBtn');
-  if(newLetterBtn) newLetterBtn.textContent = es ? '❖ Escribir una nueva carta' : '❖ Write a New Letter';
+  if(newLetterBtn) newLetterBtn.textContent = es ? '❖ Escribir una nueva carta' : '❖ Write a New SongScript';
   const signOutBtn = document.getElementById('signOutBtn');
   if(signOutBtn) signOutBtn.textContent = es ? 'Cerrar sesión' : 'Sign Out';
   const signOutBtn2 = document.getElementById('signOutBtn2');
@@ -1296,7 +1300,7 @@ function applyLangToUI(lang){
   if(bBack3) bBack3.textContent = es ? '← Atrás' : '← Back';
   // Result page
   const resultTitle = document.getElementById('resultTitle');
-  if(resultTitle) resultTitle.textContent = es ? 'Tu Carta de Memoria' : 'Your Memory Letter';
+  if(resultTitle) resultTitle.textContent = es ? 'Tu Carta de Memoria' : 'Your SongScript';
   const editHint = document.getElementById('editHint');
   if(editHint) editHint.textContent = es ? '✎ Haz clic en el saludo o la firma para personalizarlos antes de descargar' : '✎ Click the salutation or sign-off to personalize before downloading';
   const colLabelOrig = document.getElementById('colLabelOrig');
@@ -1337,7 +1341,7 @@ function applyLangToUI(lang){
   const feedbackBtn = document.getElementById('feedbackBtn');
   if(feedbackBtn) feedbackBtn.textContent = es ? 'Comparte tu opini\u00f3n \u2192' : 'Share your feedback \u2192';
   const writeAnotherBtn = document.getElementById('writeAnotherBtn');
-  if(writeAnotherBtn) writeAnotherBtn.textContent = es ? 'Escribir otra carta \u2192' : 'Write another letter \u2192';
+  if(writeAnotherBtn) writeAnotherBtn.textContent = es ? 'Escribir otra carta \u2192' : 'Write another SongScript \u2192';
   // Password reset page
   const resetTitle = document.getElementById('resetTitle');
   if(resetTitle) resetTitle.textContent = es ? 'Crear nueva contrase\u00f1a' : 'Create new password';
@@ -1374,9 +1378,9 @@ function applyLangToUI(lang){
   if(csNotifyBtn) csNotifyBtn.textContent = es ? 'Avísame cuando esté disponible' : 'Notify me when available';
   // Pricing copy
   const starterL = document.getElementById('starterLetters');
-  if(starterL) starterL.textContent = es ? '5 recuerdos preservados para siempre' : '5 memories preserved forever';
+  if(starterL) starterL.textContent = es ? '5 SongScripts para siempre' : '5 SongScripts forever';
   const valueL = document.getElementById('valueLetters');
-  if(valueL) valueL.textContent = es ? '10 recuerdos preservados para siempre' : '10 memories preserved forever';
+  if(valueL) valueL.textContent = es ? '10 SongScripts para siempre' : '10 SongScripts forever';
 
   // Album announcement translations
   const albumBadge = document.getElementById('albumAnnounceBadge');
@@ -1614,7 +1618,7 @@ async function loadDashboard(){
     list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">❖</div><div class="empty-state-text">${es?'Aún no tienes cartas — escribe tu primera arriba.':'No letters yet — write your first one above.'}</div></div>`;
     return;
   }
-  document.getElementById('dashLettersTitle').textContent=`${es?'Tus cartas':'Your Letters'} (${letters.length})`;
+  document.getElementById('dashLettersTitle').textContent=`${es?'Tus cartas':'Your SongScripts'} (${letters.length})`;
   list.innerHTML=letters.map(l=>{
     const date=new Date(l.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     return `<div class="letter-row" id="row-${l.id}">
@@ -1702,7 +1706,8 @@ function countLyric(){ const len=document.getElementById('bLyric').value.length;
 function buildPrompt(song,artist,tone,memory,lyric,dateContext,lang){
   const sentences=memory.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>0);
   const sentenceList=sentences.map((s,i)=>`Sentence ${i+1}: "${s}"`).join('\n');
-  const langInstruction=lang==='es'?'Write the letter in Spanish. Write naturally as a native Spanish speaker would.':'';
+  const langName=lang==='es'?'Spanish':'English';
+  const langInstruction=`Write the letter EXCLUSIVELY in ${langName}. This is non-negotiable regardless of what language the user wrote their memory in.`;
   return `You are a copy editor. Rewrite each sentence to be more vivid and precise. Return exactly ${sentences.length} sentences plus a personalized salutation.
 
 THE SONG: "${song}" by ${artist}
@@ -1721,7 +1726,7 @@ RULES:
 4. If a lyric was provided, weave it into one sentence naturally.
 5. Preserve their voice. No AI filler phrases. No invented endings.
 6. FORBIDDEN output phrases: "let me recount", "as exactly", "here are", "I will now", "sentences:" — never include these.
-7. Detect the language the person wrote their memory in and write the letter in that SAME language.
+7. Write the letter EXCLUSIVELY in {langName}. This is non-negotiable regardless of what language the user wrote their memory in.
 
 After the prose, on a new line write:
 SALUTATION: [poetic opening WITHOUT "To" or "A" prefix, e.g. "Fast Car, and the road you opened up," or "Yellow, and the night the crowd disappeared,"] Under 12 words. Specific to this song and memory. NEVER start with "To" or "A".`;
@@ -1751,8 +1756,21 @@ function renderResult(body,salutation,tone,isNew){
   const credit=`"${sessionState.song}" · ${sessionState.artist}`;
   const signOff=currentProfile?.name||'With all that you carry,';
   const es=currentLang==='es';
+  // Reset to state 1
+  const s1=document.getElementById('s1-wrap'); const s2=document.getElementById('s2-wrap'); const s3=document.getElementById('s3-wrap');
+  if(s1) s1.style.display='block'; if(s2) s2.style.display='none'; if(s3) s3.style.display='none';
+  // Update download button
+  const dlLbl=document.getElementById('downloadBtnLabel');
+  if(dlLbl) dlLbl.textContent=es?'Listo — Descargar mi SongScript →':"I’m ready — Download My SongScript →";
+  // Update result title
+  const rTitle=document.getElementById('resultTitle');
+  if(rTitle) rTitle.textContent=isNew?(es?'Tu SongScript':'Your SongScript'):(es?'SongScript Actualizado':'Updated SongScript');
+  // Update col labels
+  const colOrig=document.getElementById('colLabelOrig'); if(colOrig) colOrig.textContent=es?'Tu Recuerdo':'Your Memory';
+  const colAI=document.getElementById('colLabelAI'); if(colAI) colAI.textContent=es?'Carta de IA':'AI Letter';
   if(isNew){
     document.getElementById('lBodyOrig').textContent=sessionState.memory;
+    const lRef=document.getElementById('lOrigRef'); if(lRef) lRef.textContent=`"${sessionState.song}" · ${sessionState.artist}`;
     document.getElementById('origSongLabel').textContent=`"${sessionState.song}" · ${sessionState.artist}`;
     sessionState.originalText=body; sessionState.originalTone=tone; sessionState.salutation=salutation; sessionState.signOff=signOff;
   }
@@ -1842,7 +1860,7 @@ async function switchTone(el,tone){
     document.getElementById('dashCredits').textContent=profile.letters_allowed-profile.letters_used-1;
   }
   sessionState.tonesUsed=tonesUsedNew; sessionState.currentTone=tone;
-  const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
+  const dateContext=sessionState.month&&sessionState.year?`IMPORTANT: The memory took place in ${sessionState.month} ${sessionState.year}. Reference this time period naturally in the letter.`:sessionState.year?`IMPORTANT: The memory is from ${sessionState.year}. Reference this year naturally in the letter.`:'';
   const lang=currentLang||'en';
   showLoading(tone);
   try{
@@ -1861,7 +1879,7 @@ async function regenerateLetter(){
     document.getElementById('dashCredits').textContent=profile.letters_allowed-profile.letters_used-1;
   }
   sessionState.regenUsed=true;
-  const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
+  const dateContext=sessionState.month&&sessionState.year?`IMPORTANT: The memory took place in ${sessionState.month} ${sessionState.year}. Reference this time period naturally in the letter.`:sessionState.year?`IMPORTANT: The memory is from ${sessionState.year}. Reference this year naturally in the letter.`:'';
   const lang=currentLang||'en';
   showLoading(sessionState.currentTone);
   try{
@@ -1889,7 +1907,7 @@ function confirmEditMemory(){
   // Update left column to show edited memory
   document.getElementById('lBodyOrig').textContent=newMemory;
   closeEditMemoryModal();
-  const dateContext=sessionState.month&&sessionState.year?`The memory took place in ${sessionState.month} ${sessionState.year}.`:sessionState.year?`The memory is from ${sessionState.year}.`:'';
+  const dateContext=sessionState.month&&sessionState.year?`IMPORTANT: The memory took place in ${sessionState.month} ${sessionState.year}. Reference this time period naturally in the letter.`:sessionState.year?`IMPORTANT: The memory is from ${sessionState.year}. Reference this year naturally in the letter.`:'';
   const lang=currentLang||'en';
   showLoading(sessionState.currentTone);
   callAPI(buildPrompt(sessionState.song,sessionState.artist,sessionState.currentTone,sessionState.memory,sessionState.lyric,dateContext,lang))
@@ -1935,7 +1953,7 @@ body{background:#fdf8f0;font-family:'Great Vibes',cursive;padding:60px 70px;max-
   @page{margin:20mm 18mm;orphans:3;widows:3}
 }
 .header{text-align:center;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid #dfd0b0}
-.brand{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:6px}
+.brand{font-family:'Great Vibes',cursive;font-size:32px;color:#6b3d2e;margin-bottom:4px}
 .song-title{font-family:'Great Vibes',cursive;font-size:26px;color:#6b3d2e}
 .letter-box{background:#f9f4ea;border:1px solid #dfd0b0;padding:48px 52px;position:relative;page-break-inside:auto}
 .side-line{position:absolute;top:14px;bottom:14px;width:1px;background:#dfd0b0}
@@ -1950,7 +1968,7 @@ body{background:#fdf8f0;font-family:'Great Vibes',cursive;padding:60px 70px;max-
 .print-btn{display:block;margin:32px auto 0;padding:13px 36px;background:#6b3d2e;color:white;border:none;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;cursor:pointer;letter-spacing:.5px}
 </style></head>
 <body>
-<div class="header"><div class="brand">SongScript · Memory Letter</div><div class="song-title">"${song}" · ${artist}</div></div>
+<div class="header"><div class="brand">SongScript</div><div style="font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#8a7a5a;margin-bottom:8px">SongScript</div><div class="song-title">"${song}" · ${artist}</div></div>
 <div class="letter-box">
   <div class="side-line" style="left:26px"></div><div class="side-line" style="right:26px"></div>
   <div class="date">${date}</div>
@@ -2038,6 +2056,67 @@ function updatePostGenFlow(){
       ? `“Acabo de preservar uno de mis recuerdos favoritos con SongScript — una carta sobre <em>${song}</em> de ${artist}. Cada canción tiene una historia que vale la pena guardar. Escribe la tuya en songscript.co 🎵”`
       : `“I just preserved one of my favorite memories with SongScript — a letter about <em>${song}</em> by ${artist}. Every song has a story worth keeping. Write yours at songscript.co 🎵”`;
   }
+}
+
+function goToState2(){
+  const es = currentLang === 'es';
+  // Populate state 2 letter preview
+  document.getElementById('s2Date').textContent = document.getElementById('lDateCurr').textContent;
+  document.getElementById('s2Sal').textContent = document.getElementById('lSalCurr').value;
+  document.getElementById('s2Body').textContent = document.getElementById('lBodyCurr').textContent;
+  document.getElementById('s2Sign').textContent = document.getElementById('lSignCurr').value;
+  document.getElementById('s2Credit').textContent = document.getElementById('lCreditCurr').textContent;
+  const song = sessionState.song || '';
+  document.getElementById('s2Title').textContent = es
+    ? `SongScript de "${song}" listo.`
+    : `"${song}" SongScript is ready.`;
+  document.getElementById('s2DownloadBtn').textContent = es ? '⬇ Descargar mi SongScript' : '⬇ Download My SongScript';
+  document.getElementById('s2ShareBtn').textContent = es ? 'Compartir mi SongScript →' : 'Share My SongScript →';
+  document.getElementById('s2ContinueBtn').textContent = es ? 'Seguir preservando recuerdos →' : 'Keep the memories coming →';
+  // Show state 2
+  document.getElementById('s1-wrap').style.display = 'none';
+  document.getElementById('s2-wrap').style.display = 'block';
+  document.getElementById('s3-wrap').style.display = 'none';
+  window.scrollTo(0,0);
+  // Also open PDF
+  downloadPDF();
+}
+
+function goToState3(){
+  const es = currentLang === 'es';
+  const song = sessionState.song || '';
+  const count = (currentProfile?.letters_used || 0);
+  document.getElementById('s3SongLine').innerHTML = es
+    ? `<em style="color:var(--accent)">${song}</em> SongScript es tuyo ahora.`
+    : `<em style="color:var(--accent)">${song}</em> SongScript is yours now.`;
+  document.getElementById('s3CountLine').textContent = es
+    ? `Tienes ${count} SongScript${count!==1?'s':''} para siempre.`
+    : `You have ${count} SongScript${count!==1?'s':''} forever.`;
+  document.getElementById('s3SubLine').textContent = es
+    ? 'Cada uno, un recuerdo que nadie te puede quitar.'
+    : 'Each one a memory no one can take from you.';
+  // Inspiration cards
+  document.getElementById('s3InspirationTitle').textContent = es
+    ? '¿Te sientes con ganas de escribir otro SongScript?'
+    : 'Do you feel like writing another SongScript?';
+  document.getElementById('s3InspirationSub').textContent = es
+    ? 'Aquí hay algunas ideas para inspirarte.'
+    : 'Here are some ideas to inspire you.';
+  document.getElementById('s3Card1Title').textContent = es ? 'Para la familia' : 'For family';
+  document.getElementById('s3Card1Desc').textContent = es ? 'Una canción que te recuerda a tu madre o padre.' : 'A song that reminds you of your mother or father.';
+  document.getElementById('s3Card2Title').textContent = es ? 'Para tu yo más joven' : 'For your younger self';
+  document.getElementById('s3Card2Desc').textContent = es ? 'Una canción que cambió quien llegaste a ser.' : 'A song that changed who you became.';
+  document.getElementById('s3Card3Title').textContent = es ? 'Para celebrar' : 'For celebration';
+  document.getElementById('s3Card3Desc').textContent = es ? 'Una canción de graduación, boda o momento importante.' : 'A graduation, wedding, or milestone song.';
+  document.getElementById('s3Card4Title').textContent = es ? 'Para alguien que amas' : 'For someone you love';
+  document.getElementById('s3Card4Desc').textContent = es ? 'Una canción que te recuerda a tu pareja.' : 'A song that reminds you of your partner.';
+  document.getElementById('feedbackBtn').textContent = es ? 'Comparte tu opinión →' : 'Share your feedback →';
+  document.getElementById('backDashBtn').textContent = es ? '← Volver al panel' : '← Back to Dashboard';
+  // Show state 3
+  document.getElementById('s1-wrap').style.display = 'none';
+  document.getElementById('s2-wrap').style.display = 'none';
+  document.getElementById('s3-wrap').style.display = 'block';
+  window.scrollTo(0,0);
 }
 
 function hideEditHint(){
