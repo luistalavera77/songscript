@@ -1733,7 +1733,7 @@ After the prose, on a new line write:
 SALUTATION: [poetic opening WITHOUT "To" or "A" prefix, e.g. "Fast Car, and the road you opened up," or "Yellow, and the night the crowd disappeared,"] Under 12 words. Specific to this song and memory. NEVER start with "To" or "A".`;
 }
 async function callAPI(prompt){
-  const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5-20251001',max_tokens:800,messages:[{role:'user',content:prompt}]})});
+  const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{role:'user',content:prompt}]})});
   const data=await res.json();
   return data.content?.[0]?.text||'';
 }
