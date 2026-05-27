@@ -735,6 +735,15 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
   <div class="pricing-page-inner">
     <h2 class="pricing-page-title" id="pricingTitle">Get More Letters</h2>
     <p class="pricing-page-sub" id="pricingSubtitle">Every memory deserves to be preserved. Choose a pack and keep writing.</p>
+    <!-- ALBUM ANNOUNCEMENT -->
+    <div style="background:linear-gradient(135deg,var(--accent),#9b3a2a);border-radius:2px;padding:28px 32px;margin-bottom:28px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:rgba(255,255,255,.03);border-radius:50%;transform:translate(60px,-60px)"></div>
+      <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px" id="albumAnnounceBadge">❖ Coming in June</div>
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:white;margin-bottom:14px" id="albumAnnounceTitle">Your Life Album</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.8;color:rgba(255,255,255,.85);margin-bottom:16px" id="albumAnnounceBody">Imagine holding a book where every page is a song that shaped you. Your love story. Your losses. Your milestones. All of it, beautifully written, yours to keep and share with the people who lived it with you. Download it, share it, print it if you want — it’s yours forever.</p>
+      <p style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:#e8c97a" id="albumAnnounceOffer">Buy the 10-memory pack today and receive Your Life Album free when it launches in June.</p>
+    </div>
+
     <div class="pricing-grid">
       <div class="pcard" onclick="startCheckout('price_1TbUCJLQHnpI1RkHh4BJRPbz')">
         <div class="pcard-badge" id="starterBadge">Starter</div>
@@ -950,10 +959,66 @@ footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;align-i
           <button class="btn-edit-memory" id="editMemoryBtn" onclick="editMemory()">✎ <span id="editMemBtnText">Edit my memory and regenerate</span></button>
         </div>
         <button class="btn-next" id="downloadBtn" onclick="downloadPDF()">Download My PDF Letter →</button>
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
-          <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="feedbackBtn">Share your feedback →</button>
-          <button onclick="startNewLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:10px 20px;border-radius:1px;cursor:pointer" id="writeAnotherBtn">Write another letter →</button>
-          <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="backDashBtn">← Back to Dashboard</button>
+
+        <!-- POST GENERATION FLOW -->
+        <div style="margin-top:28px" id="postGenFlow">
+
+          <!-- C: Collection count -->
+          <div style="text-align:center;padding:24px;background:white;border:1px solid var(--border);border-radius:2px;margin-bottom:24px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent))"></div>
+            <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:8px" id="pgCollectionLabel">Your Collection</div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCollectionCount"></div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted)" id="pgCollectionSub">Each one yours forever.</div>
+          </div>
+
+          <!-- ALBUM TEASER -->
+          <div style="background:linear-gradient(135deg,var(--accent),#9b3a2a);border-radius:2px;padding:20px 24px;margin-bottom:24px;cursor:pointer" onclick="showPage('page-pricing')">
+            <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px" id="pgAlbumBadge">❖ Coming in June</div>
+            <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:white;margin-bottom:8px" id="pgAlbumTitle">Your Life Album</div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.8);margin-bottom:10px" id="pgAlbumBody">Buy the 10-memory pack today and receive Your Life Album free when it launches in June.</p>
+            <span style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--gold2)" id="pgAlbumCta">Learn more →</span>
+          </div>
+
+          <!-- B: Inspiration cards -->
+          <div style="margin-bottom:24px">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:var(--ink);margin-bottom:6px" id="pgInspirationTitle">Here are some ideas to spark your next memory</div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;font-weight:300" id="pgInspirationSub">Every song has a story worth keeping.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+                <div style="font-size:20px;margin-bottom:8px">🏡</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard1Title">For family</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard1Desc">A song that reminds you of your mother or father.</div>
+              </div>
+              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+                <div style="font-size:20px;margin-bottom:8px">✨</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard2Title">For your younger self</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard2Desc">A song that changed who you became.</div>
+              </div>
+              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+                <div style="font-size:20px;margin-bottom:8px">🥂</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard3Title">For celebration</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard3Desc">A graduation, wedding, or milestone song.</div>
+              </div>
+              <div onclick="startNewLetter()" style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:18px;cursor:pointer;transition:border .2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+                <div style="font-size:20px;margin-bottom:8px">💌</div>
+                <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:4px" id="pgCard4Title">For someone you love</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--muted);line-height:1.6" id="pgCard4Desc">A song that reminds you of your partner.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- A: Share -->
+          <div style="background:var(--paper2);border:1px solid var(--border);border-radius:2px;padding:24px;margin-bottom:16px">
+            <div style="font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--ink);margin-bottom:10px" id="pgShareTitle">Share your letter</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:12px 16px;background:white;border:1px solid var(--border);border-radius:1px" id="pgSharePreview"></div>
+            <button onclick="shareLetter()" style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:white;background:var(--accent);border:none;padding:12px 24px;border-radius:1px;cursor:pointer" id="pgShareBtn">Share your letter →</button>
+          </div>
+
+          <!-- Feedback + Dashboard -->
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button onclick="toggleFeedbackForm()" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--accent);border:1.5px solid var(--accent);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="feedbackBtn">Share your feedback →</button>
+            <button onclick="showPage('page-dashboard')" style="font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--muted);border:1.5px solid var(--border);padding:10px 20px;border-radius:1px;cursor:pointer;background:transparent" id="backDashBtn">← Back to Dashboard</button>
+          </div>
         </div>
         <div id="feedbackForm" style="display:none;margin-top:16px;background:var(--paper2);border:1px solid var(--border);padding:20px;border-radius:1px">
           <div style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--ink);margin-bottom:12px" id="feedbackFormTitle">Did your letter capture your memory?</div>
@@ -1313,6 +1378,55 @@ function applyLangToUI(lang){
   const valueL = document.getElementById('valueLetters');
   if(valueL) valueL.textContent = es ? '10 recuerdos preservados para siempre' : '10 memories preserved forever';
 
+  // Album announcement translations
+  const albumBadge = document.getElementById('albumAnnounceBadge');
+  if(albumBadge) albumBadge.textContent = es ? '❖ Llega en Junio' : '❖ Coming in June';
+  const albumTitle = document.getElementById('albumAnnounceTitle');
+  if(albumTitle) albumTitle.textContent = es ? 'Tu Álbum de Vida' : 'Your Life Album';
+  const albumBody = document.getElementById('albumAnnounceBody');
+  if(albumBody) albumBody.textContent = es ? 'Imagina un libro donde cada página es una canción que te formó. Tu historia de amor. Tus pérdidas. Tus momentos importantes. Todo, hermosamente escrito, tuyo para guardar y compartir con quienes lo vivieron contigo. Descárgalo, compártelo, imprímelo si quieres — es tuyo para siempre.' : "Imagine holding a book where every page is a song that shaped you. Your love story. Your losses. Your milestones. All of it, beautifully written, yours to keep and share with the people who lived it with you. Download it, share it, print it if you want — it’s yours forever.";
+  const albumOffer = document.getElementById('albumAnnounceOffer');
+  if(albumOffer) albumOffer.textContent = es ? 'Compra el paquete de 10 recuerdos hoy y recibe Tu Álbum de Vida gratis cuando lance en junio.' : 'Buy the 10-memory pack today and receive Your Life Album free when it launches in June.';
+  const pgAlbumBadge = document.getElementById('pgAlbumBadge');
+  if(pgAlbumBadge) pgAlbumBadge.textContent = es ? '❖ Llega en Junio' : '❖ Coming in June';
+  const pgAlbumTitle = document.getElementById('pgAlbumTitle');
+  if(pgAlbumTitle) pgAlbumTitle.textContent = es ? 'Tu Álbum de Vida' : 'Your Life Album';
+  const pgAlbumBody = document.getElementById('pgAlbumBody');
+  if(pgAlbumBody) pgAlbumBody.textContent = es ? 'Compra el paquete de 10 recuerdos hoy y recibe Tu Álbum de Vida gratis cuando lance en junio.' : 'Buy the 10-memory pack today and receive Your Life Album free when it launches in June.';
+  const pgAlbumCta = document.getElementById('pgAlbumCta');
+  if(pgAlbumCta) pgAlbumCta.textContent = es ? 'Saber más →' : 'Learn more →';
+
+  // Post-gen flow translations
+  const pgLabel = document.getElementById('pgCollectionLabel');
+  if(pgLabel) pgLabel.textContent = es ? 'Tu colección' : 'Your Collection';
+  const pgSub = document.getElementById('pgCollectionSub');
+  if(pgSub) pgSub.textContent = es ? 'Cada uno tuyo para siempre.' : 'Each one yours forever.';
+  const pgInsTitle = document.getElementById('pgInspirationTitle');
+  if(pgInsTitle) pgInsTitle.textContent = es ? 'Aquí hay algunas ideas para inspirar tu próximo recuerdo' : 'Here are some ideas to spark your next memory';
+  const pgInsSub = document.getElementById('pgInspirationSub');
+  if(pgInsSub) pgInsSub.textContent = es ? 'Cada canción tiene una historia que vale la pena guardar.' : 'Every song has a story worth keeping.';
+  const pgC1T = document.getElementById('pgCard1Title');
+  if(pgC1T) pgC1T.textContent = es ? 'Para la familia' : 'For family';
+  const pgC1D = document.getElementById('pgCard1Desc');
+  if(pgC1D) pgC1D.textContent = es ? 'Una canción que te recuerda a tu madre o padre.' : 'A song that reminds you of your mother or father.';
+  const pgC2T = document.getElementById('pgCard2Title');
+  if(pgC2T) pgC2T.textContent = es ? 'Para tu yo más joven' : 'For your younger self';
+  const pgC2D = document.getElementById('pgCard2Desc');
+  if(pgC2D) pgC2D.textContent = es ? 'Una canción que cambió quien llegaste a ser.' : 'A song that changed who you became.';
+  const pgC3T = document.getElementById('pgCard3Title');
+  if(pgC3T) pgC3T.textContent = es ? 'Para celebrar' : 'For celebration';
+  const pgC3D = document.getElementById('pgCard3Desc');
+  if(pgC3D) pgC3D.textContent = es ? 'Una canción de graduación, boda o momento importante.' : 'A graduation, wedding, or milestone song.';
+  const pgC4T = document.getElementById('pgCard4Title');
+  if(pgC4T) pgC4T.textContent = es ? 'Para alguien que amas' : 'For someone you love';
+  const pgC4D = document.getElementById('pgCard4Desc');
+  if(pgC4D) pgC4D.textContent = es ? 'Una canción que te recuerda a tu pareja.' : 'A song that reminds you of your partner.';
+  const pgShareTitle = document.getElementById('pgShareTitle');
+  if(pgShareTitle) pgShareTitle.textContent = es ? 'Comparte tu carta' : 'Share your letter';
+  const pgShareBtn = document.getElementById('pgShareBtn');
+  if(pgShareBtn) pgShareBtn.textContent = es ? 'Compartir tu carta →' : 'Share your letter →';
+  updatePostGenFlow();
+
   const resetBtn = document.getElementById('resetSubmitBtn');
   if(resetBtn) resetBtn.textContent = es ? 'Guardar nueva contrase\u00f1a \u2192' : 'Save New Password \u2192';
   // Hero letter translation
@@ -1553,6 +1667,11 @@ async function deleteLetter(id){
 }
 
 async function startNewLetter(){
+  const remaining = (currentProfile?.letters_allowed || 0) - (currentProfile?.letters_used || 0);
+  if(remaining <= 0){
+    showPage('page-pricing');
+    return;
+  }
   const freshSb=getAuthSb();
   const {data:profile}=await freshSb.from('profiles').select('*').eq('id',currentUser.id).single();
   if(profile&&profile.letters_used>=profile.letters_allowed){ showPage('page-pricing'); return; }
@@ -1705,6 +1824,7 @@ async function generateLetter(){
     // Notify on new letter
     fetch('/api/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'letter',name:currentProfile?.name||'',email:currentProfile?.email||'',song,artist,tone:selectedTone})}).catch(()=>{});
     renderResult(body,salutation,selectedTone,true);
+    updatePostGenFlow();
   }catch(e){
     hideBPanels(); document.getElementById('bp5-result').classList.add('active');
     document.getElementById('lBodyCurr').textContent=es?'Algo salió mal. Por favor intenta de nuevo.':'Something went wrong. Please try again.';
@@ -1880,6 +2000,44 @@ async function getLettersFromStripe(sessionId){
 function showPostDownload(){
   document.getElementById('postDownloadBox').style.display = 'block';
   document.getElementById('postDownloadBox').scrollIntoView({behavior:'smooth'});
+}
+
+function shareLetter(){
+  const es = currentLang === 'es';
+  const song = sessionState.song || '';
+  const artist = sessionState.artist || '';
+  const msg = es
+    ? `Acabo de preservar uno de mis recuerdos favoritos con SongScript — una carta sobre "${song}" de ${artist}. Cada canción tiene una historia que vale la pena guardar. Escribe la tuya en songscript.co 🎵`
+    : `I just preserved one of my favorite memories with SongScript — a letter about "${song}" by ${artist}. Every song has a story worth keeping. Write yours at songscript.co 🎵`;
+  if(navigator.share){
+    navigator.share({ text: msg }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(msg).then(()=>{
+      const btn = document.getElementById('pgShareBtn');
+      const orig = btn.textContent;
+      btn.textContent = es ? '¡Copiado! ✔' : 'Copied! ✔';
+      setTimeout(()=>{ btn.textContent = orig; }, 2000);
+    }).catch(()=>{ alert(msg); });
+  }
+}
+
+function updatePostGenFlow(){
+  const es = currentLang === 'es';
+  const profile = currentProfile;
+  if(!profile) return;
+  const count = profile.letters_used || 0;
+  const el = document.getElementById('pgCollectionCount');
+  if(el) el.textContent = es
+    ? `${count} recuerdo${count!==1?'s':''} preservado${count!==1?'s':''}`
+    : `${count} ${count!==1?'memories':'memory'} preserved`;
+  const sharePreview = document.getElementById('pgSharePreview');
+  if(sharePreview){
+    const song = sessionState.song || '';
+    const artist = sessionState.artist || '';
+    sharePreview.innerHTML = es
+      ? `“Acabo de preservar uno de mis recuerdos favoritos con SongScript — una carta sobre <em>${song}</em> de ${artist}. Cada canción tiene una historia que vale la pena guardar. Escribe la tuya en songscript.co 🎵”`
+      : `“I just preserved one of my favorite memories with SongScript — a letter about <em>${song}</em> by ${artist}. Every song has a story worth keeping. Write yours at songscript.co 🎵”`;
+  }
 }
 
 function hideEditHint(){
