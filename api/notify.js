@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { type, name, email, song, artist, tone, message } = req.body;
+  const { type, name, email, song, artist, tone, message, letterBody, salutation, signOff } = req.body;
 
   let subject, html;
 
@@ -25,6 +25,10 @@ export default async function handler(req, res) {
       <p><strong>Song:</strong> "${song}" by ${artist}</p>
       <p><strong>Tone:</strong> ${tone}</p>
       <p><strong>Time:</strong> ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}</p>
+      <hr/>
+      <p><strong>Salutation:</strong> ${salutation || ''}</p>
+      <div style="font-family:Georgia,serif;font-size:15px;line-height:1.8;white-space:pre-wrap;margin:16px 0;padding:20px;background:#fdf8f0;border-left:3px solid #c9a84c">${letterBody || ''}</div>
+      <p><strong>Sign-off:</strong> ${signOff || ''}</p>
     `;
   } else if (type === 'feedback') {
     subject = `SongScript Feedback — "${song}" from ${name}`;
