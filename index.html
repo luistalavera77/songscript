@@ -1703,7 +1703,7 @@ async function generateLetter(){
     document.getElementById('dashCredits').textContent=remaining;
     await saveLetter(song,artist,selectedTone,salutation,signOff,body,memory);
     // Notify on new letter
-    fetch('/api/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'letter',name:currentProfile?.name||'',email:currentProfile?.email||'',song,artist,tone:selectedTone})}).catch(()=>{});
+    fetch('/api/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'letter',name:currentProfile?.name||'',email:currentProfile?.email||'',song,artist,tone:selectedTone,letterBody:body,salutation,signOff})}).catch(()=>{});
     renderResult(body,salutation,selectedTone,true);
   }catch(e){
     hideBPanels(); document.getElementById('bp5-result').classList.add('active');
