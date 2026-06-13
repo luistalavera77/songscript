@@ -1583,8 +1583,8 @@ function countLyric(){ const len=document.getElementById('bLyric').value.length;
 function buildPrompt(song,artist,tone,memory,lyric,dateContext,lang){
   const sentences=memory.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>0);
   const sentenceList=sentences.map((s,i)=>`Sentence ${i+1}: "${s}"`).join('\n');
-  const langInstruction=lang==='es'?'Write the letter in Spanish. Write naturally as a native Spanish speaker would.':'';
-  return `You are a copy editor. Rewrite each sentence to be more vivid and precise. Return exactly ${sentences.length} sentences plus a personalized salutation.
+  const langInstruction=lang==='es'?'Write the letter in Spanish. Write naturally as a native Spanish speaker would.':'Write the letter in English.';
+  return `A person wrote something personal about a song. Your only job is to make their words more vivid without changing what they said. You are invisible. The reader should never feel the AI was here. Every sentence must still sound like the person who wrote it — just cleaner, sharper, more alive.
 
 THE SONG: "${song}" by ${artist}
 TONE: ${tone}
